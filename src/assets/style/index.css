@@ -1,0 +1,65 @@
+:root {
+  --theme-text-color: var(--tg-theme-text-color, #aaa);
+  --theme-bg-color: var(--tg-theme-bg-color, #444);
+  --theme-secondary-bg-color: var(--tg-theme-secondary-bg-color, #222);
+  --theme-header-bg-color: var(--tg-theme-header-bg-color, #111);
+}
+
+html {
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+	color: var(--theme-text-color);
+	background: var(--theme-bg-color);
+}
+
+body {
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+}
+
+#root {
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+}
+
+#App {
+  font-family: sans-serif;
+  height: 100vh;
+  margin: 0;
+}
+
+#page-wrap {
+  text-align: center;
+  overflow: auto;
+  top: 45%;
+  position: relative;
+}
+
+.header {
+  /* color: red; */
+  padding-top: 4px;
+  padding-left: 45px;
+  background-color: var(--theme-header-bg-color);
+}
+
+.header h1 {
+  padding-bottom: 5px;
+}
+
+.menu {
+  /* background-color: red; */
+  /* margin-top: 20px; */
+  display: block;
+  float: left;
+  color: var(--theme-header-bg-color);
+  /* position: absolute; */
+}
+
+.fabAdd {
+  position: fixed;
+  /* width: 100px; */
+  /* height: 100px; */
+  bottom: 0;
+  right: 0;
+  margin: 35px 25px;
+}
