@@ -17,6 +17,12 @@ body {
   padding: 0px 0px 0px 0px;
 }
 
+a {
+  color: #000 !important;
+  text-decoration: none
+}
+
+
 #root {
   margin: 0px 0px 0px 0px;
   padding: 0px 0px 0px 0px;
@@ -53,6 +59,10 @@ body {
   float: left;
   color: var(--theme-header-bg-color);
   /* position: absolute; */
+}
+
+.linkMenu {
+  width: 100%;
 }
 
 .fabAdd {

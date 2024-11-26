@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/Drawer';
@@ -27,102 +28,124 @@ export default function Sidebar(props) {
       </Typography>
       <List>
         <ListItem key="Inbox" disablePadding>
-          <ListItemButton onClick={props.tooglePage("Inbox")}>
-            <ListItemIcon>
-              <Icon>inbox_text</Icon>
-            </ListItemIcon>
-            <ListItemText primary="Inbox" />
-          </ListItemButton>
+          <Link to="/" className="linkMenu">
+            <ListItemButton>
+              <ListItemIcon>
+                <Icon>inbox_text</Icon>
+              </ListItemIcon>
+              <ListItemText primary="Inbox" />
+            </ListItemButton>
+          </Link>
         </ListItem>
         <ListItem key="Next" disablePadding>
-          <ListItemButton onClick={props.tooglePage("Next")}>
-            <ListItemIcon>
-              <Icon>arrow_circle_right</Icon>
-            </ListItemIcon>
-            <ListItemText primary="Next" />
-          </ListItemButton>
+          <Link to="/next" className="linkMenu">
+            <ListItemButton>
+              <ListItemIcon>
+                <Icon>arrow_circle_right</Icon>
+              </ListItemIcon>
+              <ListItemText primary="Next" />
+            </ListItemButton>
+          </Link>
         </ListItem>
         <ListItem key="Waiting" disablePadding>
-          <ListItemButton onClick={props.tooglePage("Waiting")}>
-            <ListItemIcon>
-              <Icon>hourglass_empty</Icon>
-            </ListItemIcon>
-            <ListItemText primary="Waiting" />
-          </ListItemButton>
+          <Link to="/waiting" className="linkMenu">
+            <ListItemButton>
+              <ListItemIcon>
+                <Icon>hourglass_empty</Icon>
+              </ListItemIcon>
+              <ListItemText primary="Waiting" />
+            </ListItemButton>
+          </Link>
         </ListItem>
         <ListItem key="Scheduled" disablePadding>
-          <ListItemButton onClick={props.tooglePage("Scheduled")}>
-            <ListItemIcon>
-              <Icon>calendar_month</Icon>
-            </ListItemIcon>
-            <ListItemText primary="Scheduled" />
-          </ListItemButton>
+          <Link to="/scheduled" className="linkMenu">
+            <ListItemButton>
+              <ListItemIcon>
+                <Icon>calendar_month</Icon>
+              </ListItemIcon>
+              <ListItemText primary="Scheduled" />
+            </ListItemButton>
+          </Link>
         </ListItem>
         <ListItem key="Someday" disablePadding>
-          <ListItemButton onClick={props.tooglePage("Someday")}>
-            <ListItemIcon>
-              <Icon>wb_twilight</Icon>
-            </ListItemIcon>
-            <ListItemText primary="Someday" />
-          </ListItemButton>
+          <Link to="/someday" className="linkMenu">
+            <ListItemButton>
+              <ListItemIcon>
+                <Icon>wb_twilight</Icon>
+              </ListItemIcon>
+              <ListItemText primary="Someday" />
+            </ListItemButton>
+          </Link>
         </ListItem>
         <ListItem key="Focus" disablePadding>
-          <ListItemButton onClick={props.tooglePage("Focus")}>
-            <ListItemIcon>
-              <Icon>star</Icon>
-            </ListItemIcon>
-            <ListItemText primary="Focus" />
-          </ListItemButton>
+          <Link to="/focus" className="linkMenu">
+            <ListItemButton>
+              <ListItemIcon>
+                <Icon>star</Icon>
+              </ListItemIcon>
+              <ListItemText primary="Focus" />
+            </ListItemButton>
+          </Link>
         </ListItem>
       </List>
 
       <Divider />
       
       <List>
-      <ListItem key="Projects" disablePadding>
-          <ListItemButton onClick={props.tooglePage("Projects")}>
-            <ListItemIcon>
-              <Icon>business_center</Icon>
-            </ListItemIcon>
-            <ListItemText primary="Projects" />
-          </ListItemButton>
+        <ListItem key="Projects" disablePadding>
+          <Link to="/projects" className="linkMenu">
+            <ListItemButton>
+              <ListItemIcon>
+                <Icon>business_center</Icon>
+              </ListItemIcon>
+              <ListItemText primary="Projects" />
+            </ListItemButton>
+          </Link>
         </ListItem>
         <ListItem key="Notebooks" disablePadding>
-          <ListItemButton onClick={props.tooglePage("Notebooks")}>
-            <ListItemIcon>
-              <Icon>description</Icon>
-            </ListItemIcon>
-            <ListItemText primary="Notebooks" />
-          </ListItemButton>
+          <Link to="/notebooks" className="linkMenu">
+            <ListItemButton>
+              <ListItemIcon>
+                <Icon>description</Icon>
+              </ListItemIcon>
+              <ListItemText primary="Notebooks" />
+            </ListItemButton>
+          </Link>
         </ListItem>
         <ListItem key="Tags" disablePadding>
-          <ListItemButton onClick={props.tooglePage("Tags")}>
-            <ListItemIcon>
-              <Icon>sell</Icon>
-            </ListItemIcon>
-            <ListItemText primary="Tags" />
-          </ListItemButton>
+          <Link to="/tags" className="linkMenu">
+            <ListItemButton>
+              <ListItemIcon>
+                <Icon>sell</Icon>
+              </ListItemIcon>
+              <ListItemText primary="Tags" />
+            </ListItemButton>
+          </Link>
         </ListItem>
       </List>
 
       <Divider />
       
       <List>
-      <ListItem key="Archive" disablePadding>
-          <ListItemButton onClick={props.tooglePage("Archive")}>
-            <ListItemIcon>
-              <Icon>archive</Icon>
-            </ListItemIcon>
-            <ListItemText primary="Archive" />
-          </ListItemButton>
+        <ListItem key="Archive" disablePadding>
+          <Link to="/archive" className="linkMenu">
+            <ListItemButton>
+              <ListItemIcon>
+                <Icon>archive</Icon>
+              </ListItemIcon>
+              <ListItemText primary="Archive" />
+            </ListItemButton>
+          </Link>
         </ListItem>
         <ListItem key="Trash" disablePadding>
-          <ListItemButton onClick={props.tooglePage("Trash")}>
-            <ListItemIcon>
-              <Icon>delete</Icon>
-            </ListItemIcon>
-            <ListItemText primary="Trash" />
-          </ListItemButton>
+          <Link to="/trash" className="linkMenu">
+            <ListItemButton>
+              <ListItemIcon>
+                <Icon>delete</Icon>
+              </ListItemIcon>
+              <ListItemText primary="Trash" />
+            </ListItemButton>
+          </Link>
         </ListItem>
       </List>
     </Box>
