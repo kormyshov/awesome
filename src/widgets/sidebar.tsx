@@ -102,7 +102,7 @@ export default function Sidebar(props) {
             </ListItemButton>
           </Link>
         </ListItem>
-        <ListItem key="Notebooks" disablePadding>
+        {/* <ListItem key="Notebooks" disablePadding>
           <Link to="/notebooks" className="linkMenu">
             <ListItemButton>
               <ListItemIcon>
@@ -121,7 +121,7 @@ export default function Sidebar(props) {
               <ListItemText primary="Tags" />
             </ListItemButton>
           </Link>
-        </ListItem>
+        </ListItem> */}
       </List>
 
       <Divider />
