@@ -12,7 +12,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
 import Icon from '@mui/material/Icon';
-import Typography from '@mui/material/Typography';
 
 export default function Sidebar(props) {
   const [open, setOpen] = React.useState(false);
@@ -23,9 +22,6 @@ export default function Sidebar(props) {
 
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
-      <Typography variant="h4" gutterBottom>
-        AWESOME
-      </Typography>
       <List>
         <ListItem key="Inbox" disablePadding>
           <Link to="/" className="linkMenu">
@@ -155,7 +151,7 @@ export default function Sidebar(props) {
     <div>
       <div className="menu" onClick={toggleDrawer(true)}>
         <IconButton>
-          <Icon fontSize="large">menu</Icon>
+          <Icon fontSize="medium">menu</Icon>
         </IconButton>
       </div>
       <SwipeableDrawer open={open} onClose={toggleDrawer(false)}>
