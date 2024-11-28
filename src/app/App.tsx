@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 
 import ToDoList from "../pages/todo_list.tsx";
 import ProjectList from "../pages/project_list.tsx";
+import NotFound from '../pages/not_found.tsx';
 import Sidebar from '../widgets/sidebar.tsx';
 
 export default function App() {
@@ -13,6 +14,7 @@ export default function App() {
       <Sidebar />
 
       <Routes>
+        <Route index element={<ToDoList page_name="Inbox" />} />
         <Route path="/" element={<ToDoList page_name="Inbox" />} />
         <Route path="/next" element={<ToDoList page_name="Next" />} />
         <Route path="/waiting" element={<ToDoList page_name="Waiting" />} />
@@ -24,6 +26,7 @@ export default function App() {
 
         <Route path="/archive" element={<ToDoList page_name="Archive" />} />
         <Route path="/trash" element={<ToDoList page_name="Trash" />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
 
