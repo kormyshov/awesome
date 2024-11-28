@@ -73,3 +73,21 @@ a {
   right: 0;
   margin: 35px 25px;
 }
+
+.pageWrapper {
+  padding-left: 20px;
+  padding-top: 10px;
+  padding-right: 20px;
+}
+
+.pageWrapperInput {
+  width: 100%;
+}
+
+.pageWrapperButtonGroup {
+  margin-top: 15px;
+}
+
+.pageWrapperButton {
+  width: 50%;
+}
