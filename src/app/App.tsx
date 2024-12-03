@@ -7,6 +7,7 @@ import NotFound from '../pages/not_found.tsx';
 import Sidebar from '../widgets/sidebar.tsx';
 import NewProject from '../pages/new_project.tsx';
 
+
 export default function App() {
 
   return (
