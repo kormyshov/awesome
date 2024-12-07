@@ -6,18 +6,20 @@ import AddIcon from '@mui/icons-material/Add';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import NamedList from '../widgets/named_list.tsx';
+
+
 export default function ProjectList(props) {
 
   const projectList = useSelector((state) => state.projects);
 
-  const lst = projectList.map(e => <li>{e.projectName}</li>)
+  const items = projectList.map(e => ({value: e.projectName, key: "124"}));
 
   return (
     <>
       <Header page_name="Projects" />
-      <ul>
-        {lst}
-      </ul>
+      <NamedList list_name="Active" items={items} />
+
       <div className="fabAdd">
         <Link to="new">
           <Fab color="secondary" aria-label="add">
