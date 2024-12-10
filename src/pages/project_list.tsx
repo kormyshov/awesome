@@ -13,7 +13,7 @@ export default function ProjectList(props) {
 
   const projectList = useSelector((state) => state.projects);
 
-  const items = projectList.map(e => ({value: e.projectName, key: "124"}));
+  const items = projectList.filter(e => e.isActive).map(e => ({value: e.projectName, key: e.key}));
 
   return (
     <>
