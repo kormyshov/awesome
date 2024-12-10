@@ -1,17 +1,36 @@
 import React from 'react';
 
-import ListHeader from '../features/list_header';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import Collapse from '@mui/material/Collapse';
 
 export default function NamedList(props) {
 
-  const lst = props.items.map(e => <li>{e.value}</li>)
+  const [open, setOpen] = React.useState(true);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  const lst = props.items.map(e => <ListItemButton sx={{ pl: 2 }}><ListItemText secondary={e.value} /></ListItemButton>)
 
   return (
     <>
-      <ListHeader list_name={props.list_name} />
-      <ul>
-        {lst}
-      </ul>
+      <List>
+        <ListItemButton onClick={handleClick}>
+          <ListItemText primary={props.list_name} />
+          {open ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            {lst}
+          </List>
+        </Collapse>
+      </List>
     </>
   );
 }
