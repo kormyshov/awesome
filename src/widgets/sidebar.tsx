@@ -21,12 +21,6 @@ export default function Sidebar(props) {
   const sidebarIsOpen = useSelector((state) => state.sidebar);
   const dispatch = useDispatch();
 
-  const [open, setOpen] = React.useState(false);
-
-  const toggleDrawer = (newOpen: boolean) => () => {
-    setOpen(newOpen);
-  };
-
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={()=>dispatch(closeSidebar())}>
       <List>
