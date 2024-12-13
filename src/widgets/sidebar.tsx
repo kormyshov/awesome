@@ -14,7 +14,7 @@ import ListItemText from '@mui/material/ListItemText';
 
 import Icon from '@mui/material/Icon';
 
-import { openSidebar, closeSidebar } from '../entities/actions/sidebar.tsx';
+import { closeSidebar } from '../entities/actions/sidebar.tsx';
 
 export default function Sidebar(props) {
 
