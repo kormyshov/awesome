@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -16,7 +17,7 @@ export default function NamedList(props) {
     setOpen(!open);
   };
 
-  const lst = props.items.map(e => <ListItemButton sx={{ pl: 2 }}><ListItemText secondary={e.value} /></ListItemButton>)
+  const lst = props.items.map(e => <Link to={e.key} className="linkMenu"><ListItemButton sx={{ pl: 2 }}><ListItemText secondary={e.value} /></ListItemButton></Link>)
 
   return (
     <>

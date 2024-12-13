@@ -8,11 +8,13 @@ import { Provider } from 'react-redux';
 import './app/style/index.css';
 import App from './app/App.tsx';
 import { projectReducer } from './entities/reducers/projects.tsx';
+import { sidebarReducer } from './entities/reducers/sidebar.tsx';
 
 
 const store = configureStore({
   reducer: {
     projects: projectReducer,
+    sidebar: sidebarReducer,
   },
   middleware(getDefaultMiddleware) {
     return getDefaultMiddleware().concat(thunk)

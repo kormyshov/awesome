@@ -1,9 +1,9 @@
-:root {
-  --theme-text-color: var(--tg-theme-text-color, #aaa);
-  --theme-bg-color: var(--tg-theme-bg-color, #444);
-  --theme-secondary-bg-color: var(--tg-theme-secondary-bg-color, #222);
-  --theme-header-bg-color: var(--tg-theme-header-bg-color, #111);
-}
+/* :root { */
+  /* --theme-text-color: var(--tg-theme-text-color, #aaa); */
+  /* --theme-bg-color: var(--tg-theme-bg-color, #444); */
+  /* --theme-secondary-bg-color: var(--tg-theme-secondary-bg-color, #222); */
+  /* --theme-header-bg-color: var(--tg-theme-header-bg-color, #111); */
+/* } */
 
 html {
   margin: 0px 0px 0px 0px;
@@ -61,7 +61,7 @@ a {
 }
 
 .list_header h6 {
-  
+
 }
 
 .menu {

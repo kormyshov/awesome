@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/Button';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
@@ -13,7 +14,13 @@ import ListItemText from '@mui/material/ListItemText';
 
 import Icon from '@mui/material/Icon';
 
+import { openSidebar, closeSidebar } from '../entities/actions/sidebar.tsx';
+
 export default function Sidebar(props) {
+
+  const sidebarIsOpen = useSelector((state) => state.sidebar);
+  const dispatch = useDispatch();
+
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -21,7 +28,7 @@ export default function Sidebar(props) {
   };
 
   const DrawerList = (
-    <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
+    <Box sx={{ width: 250 }} role="presentation" onClick={()=>dispatch(closeSidebar())}>
       <List>
         <ListItem key="Inbox" disablePadding>
           <Link to="/" className="linkMenu">
@@ -149,12 +156,7 @@ export default function Sidebar(props) {
 
   return (
     <div>
-      <div className="menu" onClick={toggleDrawer(true)}>
-        <IconButton>
-          <Icon fontSize="medium">menu</Icon>
-        </IconButton>
-      </div>
-      <SwipeableDrawer open={open} onClose={toggleDrawer(false)}>
+      <SwipeableDrawer open={sidebarIsOpen} onClose={()=>dispatch(closeSidebar())}>
         {DrawerList}
       </SwipeableDrawer>
     </div>

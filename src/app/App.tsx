@@ -27,6 +27,7 @@ export default function App() {
         <Route path="projects">
           <Route index element={<ProjectList />} />
           <Route path="new" element={<NewProject />} />
+          <Route path=":id" element={<ToDoList page_name="TMP" />} />
         </Route>
 
         <Route path="archive" element={<ToDoList page_name="Archive" />} />
