@@ -8,8 +8,8 @@
 html {
   margin: 0px 0px 0px 0px;
   padding: 0px 0px 0px 0px;
-	color: var(--theme-text-color) !important;
-	background: var(--theme-bg-color);
+	/* color: var(--theme-text-color) !important; */
+	/* background: var(--theme-bg-color); */
 }
 
 body {
@@ -45,7 +45,7 @@ a {
   /* color: red; */
   padding-top: 4px;
   padding-left: 45px;
-  background-color: var(--theme-header-bg-color);
+  /* background-color: var(--theme-header-bg-color); */
 }
 
 .header h5 {
@@ -53,10 +53,10 @@ a {
 }
 
 .list_header {
-  background-color: var(--theme-secondary-bg-color);
-  border-color: black;
-  border-top: black 2px solid;
-  border-bottom: black 1px solid;
+  /* background-color: var(--theme-secondary-bg-color); */
+  /* border-color: black; */
+  /* border-top: black 2px solid; */
+  /* border-bottom: black 1px solid; */
   padding-left: 10px;
 }
 
@@ -69,7 +69,7 @@ a {
   /* margin-top: 20px; */
   display: block;
   float: left;
-  color: var(--theme-header-bg-color);
+  /* color: var(--theme-header-bg-color); */
   /* position: absolute; */
 }
 

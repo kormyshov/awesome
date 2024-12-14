@@ -7,7 +7,6 @@ import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -24,7 +23,6 @@ export default function Sidebar(props) {
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={()=>dispatch(closeSidebar())}>
       <List>
-        <ListItem key="Inbox" disablePadding>
           <Link to="/" className="linkMenu">
             <ListItemButton>
               <ListItemIcon>
@@ -33,8 +31,6 @@ export default function Sidebar(props) {
               <ListItemText primary="Inbox" />
             </ListItemButton>
           </Link>
-        </ListItem>
-        <ListItem key="Next" disablePadding>
           <Link to="/next" className="linkMenu">
             <ListItemButton>
               <ListItemIcon>
@@ -43,8 +39,6 @@ export default function Sidebar(props) {
               <ListItemText primary="Next" />
             </ListItemButton>
           </Link>
-        </ListItem>
-        <ListItem key="Waiting" disablePadding>
           <Link to="/waiting" className="linkMenu">
             <ListItemButton>
               <ListItemIcon>
@@ -53,8 +47,6 @@ export default function Sidebar(props) {
               <ListItemText primary="Waiting" />
             </ListItemButton>
           </Link>
-        </ListItem>
-        <ListItem key="Scheduled" disablePadding>
           <Link to="/scheduled" className="linkMenu">
             <ListItemButton>
               <ListItemIcon>
@@ -63,8 +55,6 @@ export default function Sidebar(props) {
               <ListItemText primary="Scheduled" />
             </ListItemButton>
           </Link>
-        </ListItem>
-        <ListItem key="Someday" disablePadding>
           <Link to="/someday" className="linkMenu">
             <ListItemButton>
               <ListItemIcon>
@@ -73,8 +63,6 @@ export default function Sidebar(props) {
               <ListItemText primary="Someday" />
             </ListItemButton>
           </Link>
-        </ListItem>
-        <ListItem key="Focus" disablePadding>
           <Link to="/focus" className="linkMenu">
             <ListItemButton>
               <ListItemIcon>
@@ -83,13 +71,11 @@ export default function Sidebar(props) {
               <ListItemText primary="Focus" />
             </ListItemButton>
           </Link>
-        </ListItem>
       </List>
 
       <Divider />
       
       <List>
-        <ListItem key="Projects" disablePadding>
           <Link to="/projects" className="linkMenu">
             <ListItemButton>
               <ListItemIcon>
@@ -98,8 +84,7 @@ export default function Sidebar(props) {
               <ListItemText primary="Projects" />
             </ListItemButton>
           </Link>
-        </ListItem>
-        {/* <ListItem key="Notebooks" disablePadding>
+        {/* 
           <Link to="/notebooks" className="linkMenu">
             <ListItemButton>
               <ListItemIcon>
@@ -108,8 +93,6 @@ export default function Sidebar(props) {
               <ListItemText primary="Notebooks" />
             </ListItemButton>
           </Link>
-        </ListItem>
-        <ListItem key="Tags" disablePadding>
           <Link to="/tags" className="linkMenu">
             <ListItemButton>
               <ListItemIcon>
@@ -117,14 +100,12 @@ export default function Sidebar(props) {
               </ListItemIcon>
               <ListItemText primary="Tags" />
             </ListItemButton>
-          </Link>
-        </ListItem> */}
+          </Link> */}
       </List>
 
       <Divider />
       
       <List>
-        <ListItem key="Archive" disablePadding>
           <Link to="/archive" className="linkMenu">
             <ListItemButton>
               <ListItemIcon>
@@ -133,8 +114,6 @@ export default function Sidebar(props) {
               <ListItemText primary="Archive" />
             </ListItemButton>
           </Link>
-        </ListItem>
-        <ListItem key="Trash" disablePadding>
           <Link to="/trash" className="linkMenu">
             <ListItemButton>
               <ListItemIcon>
@@ -143,7 +122,6 @@ export default function Sidebar(props) {
               <ListItemText primary="Trash" />
             </ListItemButton>
           </Link>
-        </ListItem>
       </List>
     </Box>
   );

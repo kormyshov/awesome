@@ -9,6 +9,8 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import Collapse from '@mui/material/Collapse';
 
+import CircleIcon from '@mui/icons-material/Circle';
+
 export default function NamedList(props) {
 
   const [open, setOpen] = React.useState(true);
@@ -17,7 +19,14 @@ export default function NamedList(props) {
     setOpen(!open);
   };
 
-  const lst = props.items.map(e => <Link to={e.key} className="linkMenu"><ListItemButton sx={{ pl: 2 }}><ListItemText secondary={e.value} /></ListItemButton></Link>)
+  const lst = props.items.map(e => (
+    <Link to={e.key} className="linkMenu">
+      <ListItemButton sx={{ pl: 2 }}>
+        {e.status == "ACTIVE" ? <CircleIcon sx={{ fontSize: 12, marginRight: 1 }} color="primary" /> : <CircleIcon sx={{ fontSize: 12, marginRight: 1 }} color="disabled" />}
+        <ListItemText secondary={e.value} />
+      </ListItemButton>
+    </Link>
+  ));
 
   return (
     <>
