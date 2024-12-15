@@ -20,7 +20,7 @@ export default function NamedList(props) {
   };
 
   const lst = props.items.map(e => (
-    <Link to={e.key} className="linkMenu">
+    <Link to={e.id} className="linkMenu">
       <ListItemButton sx={{ pl: 2 }}>
         {e.status === "ACTIVE" ? <CircleIcon sx={{ fontSize: 12, marginRight: 1 }} color="primary" /> : <CircleIcon sx={{ fontSize: 12, marginRight: 1 }} color="disabled" />}
         <ListItemText secondary={e.value} />
