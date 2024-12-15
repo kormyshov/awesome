@@ -11,3 +11,16 @@ export const addProject = (projectName, projectDescription, projectStatus) => {
         },
     }
 }
+
+export const deleteProject = (projectId, projectName, projectDescription) => {
+    return {
+        type: "DELETE",
+        id: projectId,
+        item: {
+            id: projectId,
+            projectName: projectName,
+            projectDescription: projectDescription,
+            projectStatus: "DELETED",
+        },
+    }
+}
