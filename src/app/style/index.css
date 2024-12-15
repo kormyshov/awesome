@@ -8,6 +8,7 @@
 html {
   margin: 0px 0px 0px 0px;
   padding: 0px 0px 0px 0px;
+  background-color: white;
 	/* color: var(--theme-text-color) !important; */
 	/* background: var(--theme-bg-color); */
 }
