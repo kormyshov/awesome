@@ -61,7 +61,9 @@ export default function Project(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Edit</Button>
+          <Link to="./edit">
+            <Button size="small">Edit</Button>
+          </Link>
           <Button size="small" color="error" onClick={handleDialogDeleteOpen}>Delete</Button>
         </CardActions>
       </Card>

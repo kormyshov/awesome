@@ -3,8 +3,9 @@ export const projectReducer = (state = [], action) => {
         case "ADD":
             return [action.item, ...state]
         case "DELETE":
-            const old = state.filter(item => item.id !== action.id);
-            return [...old, action.item];
+            return [...state.filter(item => item.id !== action.id), action.item];
+        case "SAVE":
+            return [action.item, ...state.filter(item => item.id !== action.item.id)];
         default:
             return state;
     }

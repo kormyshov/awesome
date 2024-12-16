@@ -7,6 +7,7 @@ import NotFound from '../pages/not_found.tsx';
 import Sidebar from '../widgets/sidebar.tsx';
 import NewProject from '../pages/new_project.tsx';
 import Project from '../pages/project.tsx';
+import EditProject from '../pages/edit_project.tsx';
 
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
           <Route index element={<ProjectList />} />
           <Route path="new" element={<NewProject />} />
           <Route path=":id" element={<Project />} />
+          <Route path=":id/edit" element={<EditProject />} />
         </Route>
 
         <Route path="archive" element={<ToDoList page_name="Archive" />} />

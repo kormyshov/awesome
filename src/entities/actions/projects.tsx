@@ -24,3 +24,15 @@ export const deleteProject = (projectId, projectName, projectDescription) => {
         },
     }
 }
+
+export const saveProject = (projectId, projectName, projectDescription, projectStatus) => {
+    return {
+        type: "SAVE",
+        item: {
+            id: projectId,
+            projectName: projectName,
+            projectDescription: projectDescription,
+            projectStatus: projectStatus,
+        },
+    }
+}
