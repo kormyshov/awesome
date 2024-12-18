@@ -57,10 +57,10 @@ export default function EditProject(props) {
         </FormControl>
 
         <div className="pageWrapperButtonGroup">
-          <Link to="/projects">
+          <Link to={"/projects/" + id}>
             <Button variant="outlined" size="small" className="pageWrapperButton">Cancel</Button>
           </Link>
-          <Link to="/projects">
+          <Link to={"/projects/" + id}>
             <Button variant="contained" size="small" className="pageWrapperButton" onClick={()=>dispatch(saveProject(id, projectName, projectDescription, projectStatus))}>Save</Button>
           </Link>
         </div>
