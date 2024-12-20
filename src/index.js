@@ -9,11 +9,13 @@ import './app/style/index.css';
 import App from './app/App.tsx';
 import { projectReducer } from './entities/reducers/projects.tsx';
 import { sidebarReducer } from './entities/reducers/sidebar.tsx';
+import { taskReducer } from './entities/reducers/tasks.tsx';
 
 
 const store = configureStore({
   reducer: {
     projects: projectReducer,
+    tasks: taskReducer,
     sidebar: sidebarReducer,
   },
   middleware(getDefaultMiddleware) {

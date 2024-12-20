@@ -9,6 +9,7 @@ import NewProject from '../pages/new_project.tsx';
 import Project from '../pages/project.tsx';
 import EditProject from '../pages/edit_project.tsx';
 
+import NewTask from '../pages/new_task.tsx';
 
 export default function App() {
 
@@ -19,7 +20,10 @@ export default function App() {
 
       <Routes>
         <Route index element={<ToDoList page_name="Inbox" />} />
-        <Route path="/" element={<ToDoList page_name="Inbox" />} />
+        <Route path="/">
+          <Route index element={<ToDoList page_name="Inbox" />} />
+          <Route path="new" element={<NewTask from="" />} />
+        </Route>
         <Route path="next" element={<ToDoList page_name="Next" />} />
         <Route path="waiting" element={<ToDoList page_name="Waiting" />} />
         <Route path="scheduled" element={<ToDoList page_name="Scheduled" />} />

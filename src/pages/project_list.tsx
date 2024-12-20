@@ -25,7 +25,7 @@ export default function ProjectList(props) {
 
       <div className="fabAdd">
         <Link to="new">
-          <Fab color="secondary" aria-label="add">
+          <Fab color="primary" aria-label="add">
             <AddIcon />
           </Fab>
         </Link>
