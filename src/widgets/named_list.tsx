@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { useDispatch } from 'react-redux';
-
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
@@ -13,8 +11,6 @@ import Collapse from '@mui/material/Collapse';
 import ChecklistItem from '../features/checklist_item.tsx';
 import ListItem from '../features/list_item.tsx';
 
-import { switchTask } from '../entities/actions/tasks.tsx';
-
 
 export default function NamedList(props) {
 
@@ -24,14 +20,8 @@ export default function NamedList(props) {
     setOpen(!open);
   };
 
-  const dispatch = useDispatch();
-
-  const handleSwitchTask = (taskId, taskName, taskDescription, isChecked) => {
-    dispatch(switchTask(taskId, taskName, taskDescription, isChecked));
-  };
-
   const lst = props.is_checked ?
-    props.items.map(e => <ChecklistItem item_id={e.id} item_is_checked={e.is_checked} item_value={e.value} switchTask={handleSwitchTask} />) :
+    props.items.map(e => <ChecklistItem item_id={e.id} item_is_checked={e.is_checked} item_value={e.value} />) :
     props.items.map(e => <ListItem item_id={e.id} item_status={e.status} item_value={e.value} />)
   ;
 
