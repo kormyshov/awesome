@@ -12,7 +12,7 @@ export default function ChecklistItem(props) {
 
   const task = useSelector((state) => state.tasks.filter(task => task.id === props.item_id))[0];
 
-  const [isChecked, _] = React.useState(task.isChecked);
+  const [isChecked] = React.useState(task.isChecked);
 
   return (
       <>
