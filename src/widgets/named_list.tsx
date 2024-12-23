@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from "react-router-dom";
 
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -9,7 +8,8 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import Collapse from '@mui/material/Collapse';
 
-import CircleIcon from '@mui/icons-material/Circle';
+import ChecklistItem from '../features/checklist_item.tsx';
+import ListItem from '../features/list_item.tsx';
 
 export default function NamedList(props) {
 
@@ -19,14 +19,10 @@ export default function NamedList(props) {
     setOpen(!open);
   };
 
-  const lst = props.items.map(e => (
-    <Link to={e.id} className="linkMenu">
-      <ListItemButton sx={{ pl: 2 }}>
-        {e.status === "ACTIVE" ? <CircleIcon sx={{ fontSize: 12, marginRight: 1 }} color="primary" /> : <CircleIcon sx={{ fontSize: 12, marginRight: 1 }} color="disabled" />}
-        <ListItemText secondary={e.value} />
-      </ListItemButton>
-    </Link>
-  ));
+  const lst = props.is_checked ?
+    props.items.map(e => <ChecklistItem item_id={e.id} item_is_checked={e.is_checked} item_value={e.value} />) :
+    props.items.map(e => <ListItem item_id={e.id} item_status={e.status} item_value={e.value} />)
+  ;
 
   return (
     <>
