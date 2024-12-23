@@ -25,14 +25,14 @@ export const addTask = (taskName, taskDescription) => {
 //     }
 // }
 
-// export const saveProject = (projectId, projectName, projectDescription, projectStatus) => {
-//     return {
-//         type: "SAVE",
-//         item: {
-//             id: projectId,
-//             projectName: projectName,
-//             projectDescription: projectDescription,
-//             projectStatus: projectStatus,
-//         },
-//     }
-// }
+export const switchTask = (taskId, taskName, taskDescription, isChecked) => {
+    return {
+        type: "SWITCH",
+        item: {
+            id: taskId,
+            taskName: taskName,
+            taskDescription: taskDescription,
+            isChecked: isChecked,
+        },
+    }
+}
