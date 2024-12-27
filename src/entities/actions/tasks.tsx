@@ -2,7 +2,7 @@ import { v4 } from 'uuid';
 
 export const addTask = (taskName, taskDescription) => {
     return {
-        type: "ADD",
+        type: "ADD_TASK",
         item: {
             id: v4(taskName),
             taskName: taskName,
@@ -27,7 +27,7 @@ export const addTask = (taskName, taskDescription) => {
 
 export const switchTask = (taskId, taskName, taskDescription, isChecked) => {
     return {
-        type: "SWITCH",
+        type: "SWITCH_TASK",
         item: {
             id: taskId,
             taskName: taskName,
