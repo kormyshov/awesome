@@ -3,13 +3,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import Header from '../features/header';
+import Header from '../features/header.js';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import NamedList from '../widgets/named_list.tsx';
 
 
-export default function ToDoList(props) {
+export default function TaskList(props) {
 
   const taskList = useSelector((state) => state.tasks);
   const items = taskList.map(e => ({value: e.taskName, id: e.id, is_checked: e.isChecked}));
