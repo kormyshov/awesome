@@ -22,13 +22,19 @@ export default function App() {
         <Route index element={<TaskList page_name="Inbox" />} />
         <Route path="/">
           <Route index element={<TaskList page_name="Inbox" />} />
-          <Route path="new" element={<NewTask from="" />} />
+        </Route>
+        <Route path="inbox">
+          <Route index element={<TaskList page_name="Inbox" />} />
         </Route>
         <Route path="next" element={<TaskList page_name="Next" />} />
         <Route path="waiting" element={<TaskList page_name="Waiting" />} />
         <Route path="scheduled" element={<TaskList page_name="Scheduled" />} />
         <Route path="someday" element={<TaskList page_name="Someday" />} />
         <Route path="focus" element={<TaskList page_name="Focus" />} />
+
+        <Route path="tasks">
+          <Route path=":from/new" element={<NewTask />} />
+        </Route>
 
         <Route path="projects">
           <Route index element={<ProjectList />} />

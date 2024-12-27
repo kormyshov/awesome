@@ -1,4 +1,6 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
+
 import { Link } from "react-router-dom";
 
 import TextField from '@mui/material/TextField';
@@ -12,6 +14,8 @@ import { useState } from 'react';
 
 
 export default function NewTask(props) {
+
+  const { from } = useParams();
 
   const dispatch = useDispatch();
 
@@ -43,10 +47,10 @@ export default function NewTask(props) {
         <br />
 
         <div className="pageWrapperButtonGroup">
-          <Link to={"/" + props.from}>
+          <Link to={"/" + from}>
             <Button variant="outlined" size="small" className="pageWrapperButton">Cancel</Button>
           </Link>
-          <Link to={"/" + props.from}>
+          <Link to={"/" + from}>
             <Button 
               variant="contained" 
               size="small" 

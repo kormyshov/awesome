@@ -21,7 +21,7 @@ export default function TaskList(props) {
       <NamedList list_name={props.page_name} is_checked={true} items={items} />
 
       <div className="fabAdd">
-        <Link to="new">
+        <Link to={"/tasks/" + props.page_name + "/new"}>
           <Fab color="secondary" aria-label="add">
             <AddIcon />
           </Fab>
