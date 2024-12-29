@@ -37,3 +37,15 @@ export const switchTask = (taskId, taskName, taskDescription, isChecked) => {
         },
     }
 }
+
+export const saveTask = (taskId, taskName, taskDescription, isChecked) => {
+    return {
+        type: "SAVE_TASK",
+        item: {
+            id: taskId,
+            taskName: taskName,
+            taskDescription: taskDescription,
+            isChecked: isChecked,
+        },
+    }
+}

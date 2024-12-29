@@ -8,6 +8,7 @@ import Sidebar from '../widgets/sidebar.tsx';
 import NewProject from '../pages/new_project.tsx';
 import Project from '../pages/project.tsx';
 import EditProject from '../pages/edit_project.tsx';
+import EditTask from '../pages/edit_task.tsx';
 
 import NewTask from '../pages/new_task.tsx';
 
@@ -34,6 +35,7 @@ export default function App() {
 
         <Route path="tasks">
           <Route path=":from/new" element={<NewTask />} />
+          <Route path=":id/edit/:from" element={<EditTask />} />
         </Route>
 
         <Route path="projects">

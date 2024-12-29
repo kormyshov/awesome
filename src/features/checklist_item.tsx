@@ -31,7 +31,7 @@ export default function ChecklistItem(props) {
             checked={isChecked}
             onChange={(e) => handleSwitchTask(e.target.checked)}
           />
-          <Link to={props.item_id} className="linkMenu">
+          <Link to={"/tasks/" + props.item_id + "/edit/" + props.from} className="linkMenu">
             <ListItemText secondary={props.item_value} />
           </Link>
         </ListItemButton>
