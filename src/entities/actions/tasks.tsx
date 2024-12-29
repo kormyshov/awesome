@@ -33,7 +33,7 @@ export const switchTask = (taskId, taskName, taskDescription, isChecked) => {
             taskName: taskName,
             taskDescription: taskDescription,
             isChecked: isChecked,
-            switchDate: new Date(),
+            switchDate: new Date().toISOString(),
         },
     }
 }
