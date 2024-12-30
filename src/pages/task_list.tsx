@@ -12,7 +12,9 @@ import NamedList from '../widgets/named_list.tsx';
 export default function TaskList(props) {
 
   const taskList = useSelector((state) => state.tasks);
-  const items = taskList.map(e => ({value: e.taskName, id: e.id, is_checked: e.isChecked}));
+  const items = taskList
+    .map(e => ({value: e.taskName, id: e.id, is_checked: e.isChecked, status: e.taskStatus}))
+    .filter(e => e.status !== "DELETED");
 
   return (
     <>

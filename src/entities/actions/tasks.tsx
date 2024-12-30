@@ -8,22 +8,24 @@ export const addTask = (taskName, taskDescription) => {
             taskName: taskName,
             taskDescription: taskDescription,
             isChecked: false,
+            taskStatus: "",
         },
     }
 }
 
-// export const deleteProject = (projectId, projectName, projectDescription) => {
-//     return {
-//         type: "DELETE",
-//         id: projectId,
-//         item: {
-//             id: projectId,
-//             projectName: projectName,
-//             projectDescription: projectDescription,
-//             projectStatus: "DELETED",
-//         },
-//     }
-// }
+export const deleteTask = (taskId, taskName, taskDescription, isChecked) => {
+    return {
+        type: "DELETE_TASK",
+        id: taskId,
+        item: {
+            id: taskId,
+            taskName: taskName,
+            taskDescription: taskDescription,
+            isChecked: isChecked,
+            taskStatus: "DELETED",
+        },
+    }
+}
 
 export const switchTask = (taskId, taskName, taskDescription, isChecked) => {
     return {
@@ -34,6 +36,7 @@ export const switchTask = (taskId, taskName, taskDescription, isChecked) => {
             taskDescription: taskDescription,
             isChecked: isChecked,
             switchDate: new Date().toISOString(),
+            taskStatus: "",
         },
     }
 }
@@ -46,6 +49,7 @@ export const saveTask = (taskId, taskName, taskDescription, isChecked) => {
             taskName: taskName,
             taskDescription: taskDescription,
             isChecked: isChecked,
+            taskStatus: "",
         },
     }
 }
