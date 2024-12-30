@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
+import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
@@ -12,6 +13,7 @@ import { useDispatch } from 'react-redux';
 import { saveTask } from '../entities/actions/tasks.tsx'; 
 
 import { useState } from 'react';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 
 export default function EditTask(props) {
@@ -31,15 +33,29 @@ export default function EditTask(props) {
     <>
       <Header page_name="Edit task" />
       <div className="pageWrapper">
-        <TextField 
-          id="task_name" 
-          label="Task name" 
-          variant="standard" 
-          size="small" 
-          className="pageWrapperInput" 
-          value={taskName} 
-          onChange={(e)=>setTaskName(e.target.value)}
+        <FormControlLabel 
+          control={
+            <Checkbox
+              checked={taskIsChecked}
+              onChange={(e) => setTaskIsChecked(e.target.checked)}
+            />
+          }
+          label={
+            <TextField 
+              id="task_name" 
+              label="Task name" 
+              variant="standard" 
+              size="small" 
+              className="pageWrapperInput" 
+              value={taskName} 
+              onChange={(e)=>setTaskName(e.target.value)}
+              style={{ width: '205%'}}
+            />
+          }
+          style={{ width: '105%' }}
         />
+        <br /><br />
+
         <TextField 
           id="task_description" 
           label="Description" 
