@@ -49,7 +49,7 @@ export default function EditTask(props) {
               className="pageWrapperInput" 
               value={taskName} 
               onChange={(e)=>setTaskName(e.target.value)}
-              style={{ width: '100%'}}
+              style={{ width: '150%'}}
             />
           }
           style={{ width: '100%' }}
