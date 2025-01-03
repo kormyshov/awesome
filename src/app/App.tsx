@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from "react-router-dom";
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 
 import TaskList from "../pages/task_list.tsx";
 import ProjectList from "../pages/project_list.tsx";
@@ -14,13 +14,13 @@ import EditTask from '../pages/edit_task.tsx';
 
 import NewTask from '../pages/new_task.tsx';
 
-import { initProjects } from '../entities/actions/projects.tsx';
-import { initTasks } from '../entities/actions/tasks.tsx';
+// import { initProjects } from '../entities/actions/projects.tsx';
+// import { initTasks } from '../entities/actions/tasks.tsx';
 
 
 export default function App() {
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const fetchData = async () => {
     window.Telegram.WebApp.expand();
@@ -30,8 +30,8 @@ export default function App() {
     const response = await fetch("https://functions.yandexcloud.net/d4e8kmjr3ahqqj1u4jbr?method=get_tasks&user=" + user_id)
     const data = await response.json()
     console.log(data)
-    dispatch(initProjects(data.projects));
-    dispatch(initTasks(data.tasks));
+    // dispatch(initProjects(data.projects));
+    // dispatch(initTasks(data.tasks));
   }
 
   useEffect(() => {
