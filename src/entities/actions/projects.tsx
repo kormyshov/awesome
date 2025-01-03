@@ -1,5 +1,13 @@
 import { v4 } from 'uuid';
 
+
+export const initProjects = (projects) => {
+    return {
+        type: "INIT",
+        items: projects,
+    }
+}
+
 export const addProject = (projectName, projectDescription, projectStatus) => {
     return {
         type: "ADD",

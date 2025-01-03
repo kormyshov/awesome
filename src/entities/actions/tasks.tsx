@@ -1,5 +1,13 @@
 import { v4 } from 'uuid';
 
+
+export const initTasks = (tasks) => {
+    return {
+        type: "INIT_TASKS",
+        items: tasks,
+    }
+}
+
 export const addTask = (taskName, taskDescription) => {
     return {
         type: "ADD_TASK",

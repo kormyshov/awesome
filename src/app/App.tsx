@@ -13,15 +13,21 @@ import EditTask from '../pages/edit_task.tsx';
 
 import NewTask from '../pages/new_task.tsx';
 
+import { initProjects } from '../entities/actions/projects.tsx';
+import { initTasks } from '../entities/actions/tasks.tsx';
+
 export default function App() {
 
   const fetchData = async () => {
-    // window.Telegram.expand();
-    const user_id = window.Telegram.WebApp.initDataUnsafe.user.id;
-    window.alert("" + user_id);
+    window.Telegram.WebApp.expand();
+    let user_id = window.Telegram.WebApp.initDataUnsafe.user?.id;
+    if (typeof user_id === "undefined") user_id = "64906703"
+    // window.alert("" + user_id);
     const response = await fetch("https://functions.yandexcloud.net/d4e8kmjr3ahqqj1u4jbr?method=get_tasks&user=" + user_id)
     const data = await response.json()
     console.log(data)
+    await initProjects(data.projects);
+    await initTasks(data.tasks);
   }
 
   useEffect(() => {

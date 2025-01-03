@@ -1,7 +1,9 @@
 export const projectReducer = (state = [], action) => {
     switch (action.type) {
+        case "INIT":
+            return action.items;
         case "ADD":
-            return [action.item, ...state]
+            return [action.item, ...state];
         case "DELETE":
             return [...state.filter(item => item.id !== action.id), action.item];
         case "SAVE":
