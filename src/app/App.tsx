@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Routes } from "react-router-dom";
+import { useEffect } from 'react';
 
 import TaskList from "../pages/task_list.tsx";
 import ProjectList from "../pages/project_list.tsx";
@@ -13,6 +14,19 @@ import EditTask from '../pages/edit_task.tsx';
 import NewTask from '../pages/new_task.tsx';
 
 export default function App() {
+
+  const fetchData = async () => {
+    const d = window.Telegram.WebApp.initData;
+    console.log(d);
+    window.alert("" + d);
+    const response = await fetch("https://functions.yandexcloud.net/d4e8kmjr3ahqqj1u4jbr")
+    const data = await response.json()
+    console.log(data)
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   return (
 
