@@ -16,11 +16,10 @@ import NewTask from '../pages/new_task.tsx';
 export default function App() {
 
   const fetchData = async () => {
-    window.Telegram.expand();
-    const d = window.Telegram.WebApp.initData;
-    console.log(d);
-    window.alert("" + d);
-    const response = await fetch("https://functions.yandexcloud.net/d4e8kmjr3ahqqj1u4jbr")
+    // window.Telegram.expand();
+    const user_id = window.Telegram.WebApp.initDataUnsafe.user.id;
+    window.alert("" + user_id);
+    const response = await fetch("https://functions.yandexcloud.net/d4e8kmjr3ahqqj1u4jbr?method=get_tasks&user=" + user_id)
     const data = await response.json()
     console.log(data)
   }
