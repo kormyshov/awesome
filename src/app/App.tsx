@@ -16,6 +16,7 @@ import NewTask from '../pages/new_task.tsx';
 export default function App() {
 
   const fetchData = async () => {
+    window.Telegram.expand();
     const d = window.Telegram.WebApp.initData;
     console.log(d);
     window.alert("" + d);
