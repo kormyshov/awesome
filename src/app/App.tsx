@@ -22,19 +22,19 @@ export default function App() {
 
   const dispatch = useDispatch();
 
-  const fetchData = async () => {
+  const fetchData = () => async (dispatch) => {
     window.Telegram.WebApp.expand();
     let user_id = window.Telegram.WebApp.initDataUnsafe.user?.id;
     if (typeof user_id === "undefined") user_id = "64906703"
     const response = await fetch("https://functions.yandexcloud.net/d4e8kmjr3ahqqj1u4jbr?method=get_tasks&user=" + user_id)
     const data = await response.json()
     console.log(data)
-    await dispatch(initProjects(data.projects));
-    await dispatch(initTasks(data.tasks));
+    dispatch(initProjects(data.projects));
+    dispatch(initTasks(data.tasks));
   }
 
   useEffect(() => {
-    fetchData()
+    dispatch(fetchData())
   }, [])
 
   return (
