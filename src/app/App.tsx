@@ -25,7 +25,7 @@ export default function App() {
   const fetchData = () => async (dispatch) => {
     window.Telegram.WebApp.expand();
     let user_id = window.Telegram.WebApp.initDataUnsafe.user?.id;
-    const validation = window.Telegram.WebApp.initData.encodeURIComponent();
+    const validation = encodeURIComponent(window.Telegram.WebApp.initData);
     if (typeof user_id === "undefined") user_id = "64906703"
     const response = await fetch("https://functions.yandexcloud.net/d4e343ukvmnpbmhsmf0u?method=get_tasks&user=" + user_id + "&validate=" + validation)
     const data = await response.json()
