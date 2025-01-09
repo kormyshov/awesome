@@ -26,7 +26,7 @@ export default function App() {
     window.Telegram.WebApp.expand();
     let user_id = window.Telegram.WebApp.initDataUnsafe.user?.id;
     if (typeof user_id === "undefined") user_id = "64906703"
-    const response = await fetch("https://functions.yandexcloud.net/d4e8kmjr3ahqqj1u4jbr?method=get_tasks&user=" + user_id)
+    const response = await fetch("https://functions.yandexcloud.net/d4e343ukvmnpbmhsmf0u?method=get_tasks&user=" + user_id)
     const data = await response.json()
     console.log(data)
     dispatch(initProjects(data.projects));
