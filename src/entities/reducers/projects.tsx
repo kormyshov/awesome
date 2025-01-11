@@ -26,7 +26,13 @@ export const projectReducer = (state = [], action) => {
         const validation = encodeURIComponent(window.Telegram.WebApp.initData);
         if (typeof user_id === "undefined") user_id = "test"
 
-        fetch("https://functions.yandexcloud.net/d4e343ukvmnpbmhsmf0u?method=set_projects&user=" + user_id + "&validate=" + validation + "&projects=" + JSON.stringify(new_state))
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify(new_state)
+        };
+
+        fetch("https://functions.yandexcloud.net/d4e343ukvmnpbmhsmf0u?method=set_projects&user=" + user_id + "&validate=" + validation, requestOptions)
     }
     return new_state;
 }
