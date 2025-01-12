@@ -20,9 +20,16 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 
 export default function EditTask(props) {
@@ -46,6 +53,31 @@ export default function EditTask(props) {
 
   const handleDialogDeleteClose = () => {
     setDialogDeleteOpen(false);
+  };
+
+  const [taskStatus, setTaskStatus] = React.useState(task.taskStatus);
+
+  const taskStatusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTaskStatus((event.target as HTMLInputElement).value);
+    if ((event.target as HTMLInputElement).value === "") {
+      setTaskProject("");
+    }
+  };
+
+  const project = useSelector((state) => state.projects);
+  const projectList = project.map(project => (
+    <MenuItem key={project.id} value={project.id}>
+      {project.projectName}
+    </MenuItem>
+  ));
+
+  const [taskProject, setTaskProject] = React.useState(task.taskProject);
+
+  const taskProjectChange = (event: SelectChangeEvent) => {
+    setTaskProject(event.target.value);
+    if (event.target.value !== "" && taskStatus === "") {
+      setTaskStatus("NEXT");
+    }
   };
 
   return (
@@ -85,6 +117,36 @@ export default function EditTask(props) {
           onChange={(e)=>setTaskDescription(e.target.value)} 
         />
         <br /><br />
+        <FormControl>
+          <FormLabel id="task_status">Status</FormLabel>
+          <RadioGroup
+            aria-labelledby="task_status"
+            name="radio-buttons-group"
+            value={taskStatus}
+            onChange={taskStatusChange}
+          >
+            <FormControlLabel value="" control={<Radio />} label="Inbox" />
+            <FormControlLabel value="NEXT" control={<Radio />} label="Next" />
+            <FormControlLabel value="SOMEDAY" control={<Radio />} label="Someday" />
+          </RadioGroup>
+        </FormControl>
+        <br /><br />
+
+        <FormControl variant="standard" sx={{ m: 1, width: "100%" }}>
+          <InputLabel id="task_project">Project</InputLabel>
+          <Select
+            labelId="demo-simple-select-standard-label"
+            id="demo-simple-select-standard"
+            value={taskProject}
+            onChange={taskProjectChange}
+            label="Age"
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {projectList}
+          </Select>
+        </FormControl>
 
         <div className="pageWrapperButtonGroup">
           <Link to={"/" + from}>
@@ -95,7 +157,7 @@ export default function EditTask(props) {
               variant="contained" 
               size="small" 
               className="pageWrapperButton" 
-              onClick={()=>dispatch(saveTask(id, taskName, taskDescription, taskIsChecked))}
+              onClick={()=>dispatch(saveTask(id, taskName, taskDescription, taskIsChecked, taskStatus, taskProject))}
             >
               Save
             </Button>
@@ -116,16 +178,11 @@ export default function EditTask(props) {
         <DialogTitle id="alert-dialog-delete-title">
           {"Would you like to delete task?"}
         </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-delete-description">
-            All tasks will be deleted.
-          </DialogContentText>
-        </DialogContent>
         <DialogActions>
           <Button onClick={handleDialogDeleteClose}>Cancel</Button>
           <Link to={"/" + from}>
             <Button 
-              onClick={()=>dispatch(deleteTask(id, taskName, taskDescription, taskIsChecked))} 
+              onClick={()=>dispatch(deleteTask(id, taskName, taskDescription, taskIsChecked, taskProject))} 
               autoFocus 
               color="error"
             >
