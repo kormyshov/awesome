@@ -84,6 +84,14 @@ export default function Sidebar(props) {
               <ListItemText primary="Projects" />
             </ListItemButton>
           </Link>
+          <Link to="/contacts" className="linkMenu">
+            <ListItemButton>
+              <ListItemIcon>
+                <Icon>person</Icon>
+              </ListItemIcon>
+              <ListItemText primary="Contacts" />
+            </ListItemButton>
+          </Link>
         {/* 
           <Link to="/notebooks" className="linkMenu">
             <ListItemButton>

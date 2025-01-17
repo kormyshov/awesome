@@ -12,6 +12,10 @@ import Project from '../pages/project.tsx';
 import EditProject from '../pages/edit_project.tsx';
 import EditTask from '../pages/edit_task.tsx';
 
+import NewContact from '../pages/new_contact.tsx';
+import EditContact from '../pages/edit_contact.tsx';
+import ContactList from '../pages/contact_list.tsx';
+
 import NewTask from '../pages/new_task.tsx';
 
 import { initProjects } from '../entities/actions/projects.tsx';
@@ -68,6 +72,12 @@ export default function App() {
           <Route path="new" element={<NewProject />} />
           <Route path=":id" element={<Project />} />
           <Route path=":id/edit" element={<EditProject />} />
+        </Route>
+
+        <Route path="contacts">
+          <Route index element={<ContactList />} />
+          <Route path="new" element={<NewContact />} />
+          <Route path=":id" element={<EditContact />} />
         </Route>
 
         <Route path="archive" element={<TaskList page_name="Archive" />} />
