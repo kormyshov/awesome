@@ -36,6 +36,9 @@ export default function EditTask(props) {
 
   const { id } = useParams();
   const { from } = useParams();
+  const { project_id } = useParams();
+  const ext_from = from !== null && from !== undefined ? from : "projects/" + project_id;
+
   const task = useSelector((state) => state.tasks.filter(task => task.id === id))[0];
 
   const dispatch = useDispatch();
@@ -149,10 +152,10 @@ export default function EditTask(props) {
         </FormControl>
 
         <div className="pageWrapperButtonGroup">
-          <Link to={"/" + from}>
+          <Link to={"/" + ext_from}>
             <Button variant="outlined" size="small" className="pageWrapperButton">Cancel</Button>
           </Link>
-          <Link to={"/" + from}>
+          <Link to={"/" + ext_from}>
             <Button
               variant="contained" 
               size="small" 
@@ -180,7 +183,7 @@ export default function EditTask(props) {
         </DialogTitle>
         <DialogActions>
           <Button onClick={handleDialogDeleteClose}>Cancel</Button>
-          <Link to={"/" + from}>
+          <Link to={"/" + ext_from}>
             <Button 
               onClick={()=>dispatch(deleteTask(id, taskName, taskDescription, taskIsChecked, taskProject))} 
               autoFocus 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
@@ -31,6 +31,8 @@ export default function Project(props) {
   const { id } = useParams();
   const project = useSelector((state) => state.projects.filter(project => project.id === id))[0];
 
+  const location = useLocation();
+
   const [dialogDelete, setDialogDeleteOpen] = React.useState(false);
 
   const handleDialogDeleteOpen = () => {
@@ -55,7 +57,7 @@ export default function Project(props) {
       tasks: items.filter(t => t.taskStatus.toLowerCase() === e.toLowerCase()).map(t => ({value: t.taskName, id: t.id, is_checked: t.isChecked, status: t.taskStatus}))
     }))
     .filter(e => e.tasks.length > 0)
-    .map(e => (<NamedList list_name={e.status} is_checked={true} items={e.tasks} />))
+    .map(e => (<NamedList list_name={e.status} is_checked={true} items={e.tasks} from={location.pathname.substring(1)} />))
     ;
 
   return (

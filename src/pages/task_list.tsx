@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import Header from '../features/header.js';
@@ -14,11 +14,15 @@ export default function TaskList(props) {
   const taskList = useSelector((state) => state.tasks);
   const projectList = useSelector((state) => state.projects);
 
+  const location = useLocation();
+
   const items = taskList
     .filter(e => e.taskStatus.toLowerCase() === props.page_name.toLowerCase() || (e.taskStatus === "" && props.page_name === "Inbox"))
     ;
 
   const actions = items.filter(e => !("taskProject" in e) || e.taskProject === "").map(e => ({value: e.taskName, id: e.id, is_checked: e.isChecked, status: e.taskStatus}));
+
+  const current_page = location.pathname === "/" ? "inbox" : location.pathname.substring(1);
 
   const actions_with_project = projectList
     .map(e => ({
@@ -26,7 +30,7 @@ export default function TaskList(props) {
       tasks: items.filter(t => t.taskProject === e.id).map(t => ({value: t.taskName, id: t.id, is_checked: t.isChecked, status: t.taskStatus}))
     }))
     .filter(e => e.tasks.length > 0)
-    .map(e => (<NamedList list_name={e.projectName} is_checked={true} items={e.tasks} />))
+    .map(e => (<NamedList list_name={e.projectName} is_checked={true} items={e.tasks} from={current_page} />))
     ;
 
 
@@ -36,7 +40,7 @@ export default function TaskList(props) {
 
       
       {actions.length > 0 ?
-        <NamedList list_name="Actions" is_checked={true} items={actions} /> : <></>
+        <NamedList list_name="Actions" is_checked={true} items={actions} from={current_page} /> : <></>
       }
       {actions_with_project}
       

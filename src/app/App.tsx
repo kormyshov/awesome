@@ -59,6 +59,7 @@ export default function App() {
 
         <Route path="tasks">
           <Route path=":from/new" element={<NewTask />} />
+          <Route path=":id/edit/projects/:project_id" element={<EditTask />} />
           <Route path=":id/edit/:from" element={<EditTask />} />
         </Route>
 
