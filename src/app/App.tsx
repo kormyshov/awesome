@@ -20,6 +20,7 @@ import NewTask from '../pages/new_task.tsx';
 
 import { initProjects } from '../entities/actions/projects.tsx';
 import { initTasks } from '../entities/actions/tasks.tsx';
+import { initContacts } from '../entities/actions/contacts.tsx';
 
 
 export default function App() {
@@ -36,6 +37,7 @@ export default function App() {
     console.log(data)
     dispatch(initProjects(data.projects));
     dispatch(initTasks(data.tasks));
+    dispatch(initContacts(data.contacts));
   }
 
   useEffect(() => {
