@@ -60,10 +60,16 @@ export default function EditTask(props) {
 
   const [taskStatus, setTaskStatus] = React.useState(task.taskStatus);
 
+  let cantSelectContact = taskStatus !== "WAITING";
+
   const taskStatusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTaskStatus((event.target as HTMLInputElement).value);
     if ((event.target as HTMLInputElement).value === "") {
       setTaskProject("");
+    }
+    cantSelectContact = taskStatus !== "WAITING";
+    if ((event.target as HTMLInputElement).value !== "WAITING") {
+      setWaitingContact("");
     }
   };
 
@@ -81,6 +87,21 @@ export default function EditTask(props) {
     if (event.target.value !== "" && taskStatus === "") {
       setTaskStatus("NEXT");
     }
+  };
+
+  const contacts = useSelector((state) => state.contacts);
+  const contactList = contacts
+    .filter(contact => contact.contactStatus !== "DELETED")
+    .map(contact => (
+      <MenuItem key={contact.id} value={contact.id}>
+        {contact.contactName}
+      </MenuItem>
+    ));
+
+  const [waitingContact, setWaitingContact] = React.useState(task.waitingContact);
+
+  const waitingContactChange = (event: SelectChangeEvent) => {
+    setWaitingContact(event.target.value);
   };
 
   return (
@@ -120,7 +141,7 @@ export default function EditTask(props) {
           onChange={(e)=>setTaskDescription(e.target.value)} 
         />
         <br /><br />
-        <FormControl>
+        <FormControl sx={{ width: "100%" }}>
           <FormLabel id="task_status">Status</FormLabel>
           <RadioGroup
             aria-labelledby="task_status"
@@ -130,6 +151,19 @@ export default function EditTask(props) {
           >
             <FormControlLabel value="" control={<Radio />} label="Inbox" />
             <FormControlLabel value="NEXT" control={<Radio />} label="Next" />
+            <FormControlLabel value="WAITING" control={<Radio />} label="Waiting" />
+            <FormControl variant="standard" disabled={cantSelectContact}>
+              <InputLabel id="task_waiting_contact">Contact</InputLabel>
+              <Select
+                labelId="simple-select-standard-label"
+                id="simple-select-standard"
+                value={waitingContact}
+                onChange={waitingContactChange}
+                label="Contact"
+              >
+                {contactList}
+              </Select>
+            </FormControl>
             <FormControlLabel value="SOMEDAY" control={<Radio />} label="Someday" />
           </RadioGroup>
         </FormControl>
@@ -142,7 +176,7 @@ export default function EditTask(props) {
             id="demo-simple-select-standard"
             value={taskProject}
             onChange={taskProjectChange}
-            label="Age"
+            label="Project"
           >
             <MenuItem value="">
               <em>None</em>
@@ -160,7 +194,7 @@ export default function EditTask(props) {
               variant="contained" 
               size="small" 
               className="pageWrapperButton" 
-              onClick={()=>dispatch(saveTask(id, taskName, taskDescription, taskIsChecked, taskStatus, taskProject))}
+              onClick={()=>dispatch(saveTask(id, taskName, taskDescription, taskIsChecked, taskStatus, taskProject, waitingContact))}
             >
               Save
             </Button>
@@ -185,7 +219,7 @@ export default function EditTask(props) {
           <Button onClick={handleDialogDeleteClose}>Cancel</Button>
           <Link to={"/" + ext_from}>
             <Button 
-              onClick={()=>dispatch(deleteTask(id, taskName, taskDescription, taskIsChecked, taskProject))} 
+              onClick={()=>dispatch(deleteTask(id, taskName, taskDescription, taskIsChecked, taskProject, waitingContact))} 
               autoFocus 
               color="error"
             >

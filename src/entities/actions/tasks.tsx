@@ -18,11 +18,12 @@ export const addTask = (taskName, taskDescription) => {
             isChecked: false,
             taskStatus: "",
             taskProject: "",
+            waitingContact: "",
         },
     }
 }
 
-export const deleteTask = (taskId, taskName, taskDescription, isChecked, taskProject) => {
+export const deleteTask = (taskId, taskName, taskDescription, isChecked, taskProject, waitingContact) => {
     return {
         type: "DELETE_TASK",
         id: taskId,
@@ -33,11 +34,12 @@ export const deleteTask = (taskId, taskName, taskDescription, isChecked, taskPro
             isChecked: isChecked,
             taskStatus: "DELETED",
             taskProject: taskProject,
+            waitingContact: waitingContact,
         },
     }
 }
 
-export const switchTask = (taskId, taskName, taskDescription, isChecked, taskStatus, taskProject) => {
+export const switchTask = (taskId, taskName, taskDescription, isChecked, taskStatus, taskProject, waitingContact) => {
     return {
         type: "SWITCH_TASK",
         item: {
@@ -48,11 +50,12 @@ export const switchTask = (taskId, taskName, taskDescription, isChecked, taskSta
             switchDate: new Date().toISOString(),
             taskStatus: taskStatus,
             taskProject: taskProject,
+            waitingContact: waitingContact,
         },
     }
 }
 
-export const saveTask = (taskId, taskName, taskDescription, isChecked, taskStatus, taskProject) => {
+export const saveTask = (taskId, taskName, taskDescription, isChecked, taskStatus, taskProject, waitingContact) => {
     return {
         type: "SAVE_TASK",
         item: {
@@ -62,6 +65,7 @@ export const saveTask = (taskId, taskName, taskDescription, isChecked, taskStatu
             isChecked: isChecked,
             taskStatus: taskStatus,
             taskProject: taskProject,
+            waitingContact: waitingContact,
         },
     }
 }

@@ -21,8 +21,8 @@ export default function NamedList(props) {
   };
 
   const lst = props.is_checked ?
-    props.items.map(e => <ChecklistItem item_id={e.id} item_is_checked={e.is_checked} item_value={e.value} from={props.from} />) :
-    props.items.map(e => <ListItem item_id={e.id} item_status={e.status} item_value={e.value} />)
+    props.items.map(e => <ChecklistItem key={e.id} item_id={e.id} item_is_checked={e.is_checked} item_value={e.value} from={props.from} />) :
+    props.items.map(e => <ListItem key={e.id} item_id={e.id} item_status={e.status} item_value={e.value} />)
   ;
 
   return (

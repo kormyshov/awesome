@@ -21,7 +21,7 @@ export default function ChecklistItem(props) {
 
   const handleSwitchTask = (isChecked) => {
     setIsChecked(isChecked);
-    dispatch(switchTask(task.id, task.taskName, task.taskDescription, isChecked, task.taskStatus, task.taskProject));
+    dispatch(switchTask(task.id, task.taskName, task.taskDescription, isChecked, task.taskStatus, task.taskProject, task.waitingContact));
   };
 
   return (
