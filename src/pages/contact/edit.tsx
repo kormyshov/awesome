@@ -9,7 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-import Header from '../features/header';
+import Header from '../../features/header';
 import { useDispatch } from 'react-redux';
 
 import { useState } from 'react';
@@ -20,18 +20,20 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 
-import { deleteContact, saveContact } from '../entities/actions/contacts.tsx';
+import { deleteContact, saveContact } from '../../entities/actions/contacts.tsx';
+import { Contact } from '../../entities/types/contact/contact.tsx';
 
 
 export default function EditContact(props) {
 
   const { id } = useParams();
 
-  const contact = useSelector((state) => state.contacts.filter(contact => contact.id === id))[0];
+  const contact: Contact = useSelector((state) => state.contacts.items).get(id);
+  console.log('contact', contact);
 
   const dispatch = useDispatch();
 
-  const [contactName, setContactName] = useState(contact.contactName);
+  const [contactName, setContactName] = useState(contact.name);
 
   const [dialogDelete, setDialogDeleteOpen] = React.useState(false);
 

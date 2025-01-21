@@ -1,22 +1,24 @@
 import React from 'react';
-import Header from '../features/header';
+import Header from '../../features/header';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import NamedList from '../widgets/named_list.tsx';
+import NamedList from '../../widgets/named_list.tsx';
+import { Contact } from '../../entities/types/contact/contact.tsx';
+import { Contacts } from '../../entities/types/contact/contacts.tsx';
 
 
 export default function ContactList(props) {
 
-  const contactList = useSelector((state) => state.contacts);
-  console.log(contactList);
+  const contacts: Contacts = useSelector((state) => state.contacts);
+  console.log('list contacts', contacts);
 
-  const items = contactList
-    .filter(e => e.contactStatus === "ACTIVE")
-    .map(e => ({value: e.contactName, id: e.id, status: e.contactStatus}));
+  const items = contacts
+    .filter(Contact.prototype.isActive)
+    .map(contact => ({value: contact.name, id: contact.id, status: contact.status}));
 
   return (
     <>

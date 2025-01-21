@@ -1,21 +1,29 @@
-export const contactReducer = (state = [], action) => {
-    let new_state = state;
+import { Contacts } from "../types/contact/contacts.tsx";
+import { ContactActionType } from "../types/contact/contact_action_type.tsx";
+
+
+export const contactReducer = (state: Contacts = new Contacts(), contactAction) => {
+
+    let new_state: Contacts = state;
     let flag = false;
-    switch (action.type) {
-        case "INIT_CONTACTS":
-            return action.items;
-        case "ADD_CONTACT":
-            new_state = [action.item, ...state];
+
+    switch (contactAction.type) {
+
+        case ContactActionType.ADD_CONTACT:
+            new_state.set(contactAction.item);
             flag = true;
             break;
-        case "DELETE_CONTACT":
-            new_state = [...state.filter(item => item.id !== action.id), action.item];
+
+        case ContactActionType.DELETE_CONTACT:
+            new_state.setDeleted(contactAction.item);
             flag = true;
             break;
-        case "SAVE_CONTACT":
-            new_state = [action.item, ...state.filter(item => item.id !== action.item.id)];
+
+        case ContactActionType.SAVE_CONTACT:
+            new_state.set(contactAction.item);
             flag = true;
             break;
+
         default:
             new_state = state;
     }
@@ -29,7 +37,7 @@ export const contactReducer = (state = [], action) => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'text/plain' },
-            body: JSON.stringify(new_state)
+            body: new_state.toString()
         };
 
         fetch("https://functions.yandexcloud.net/d4e343ukvmnpbmhsmf0u?method=set_contacts&user=" + user_id + "&validate=" + validation, requestOptions)

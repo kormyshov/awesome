@@ -12,15 +12,15 @@ import Project from '../pages/project.tsx';
 import EditProject from '../pages/edit_project.tsx';
 import EditTask from '../pages/edit_task.tsx';
 
-import NewContact from '../pages/new_contact.tsx';
-import EditContact from '../pages/edit_contact.tsx';
-import ContactList from '../pages/contact_list.tsx';
+import NewContact from '../pages/contact/new.tsx';
+import EditContact from '../pages/contact/edit.tsx';
+import ContactList from '../pages/contact/list.tsx';
 
 import NewTask from '../pages/new_task.tsx';
 
 import { initProjects } from '../entities/actions/projects.tsx';
 import { initTasks } from '../entities/actions/tasks.tsx';
-import { initContacts } from '../entities/actions/contacts.tsx';
+import { saveContact } from '../entities/actions/contacts.tsx';
 
 
 export default function App() {
@@ -37,7 +37,10 @@ export default function App() {
     console.log(data)
     dispatch(initProjects(data.projects));
     dispatch(initTasks(data.tasks));
-    dispatch(initContacts(data.contacts));
+    data.contacts.forEach((contact) => {
+      dispatch(saveContact(contact.id, contact.name));
+    })
+    // dispatch(initContacts(data.contacts));
   }
 
   useEffect(() => {

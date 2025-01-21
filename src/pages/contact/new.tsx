@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-import Header from '../features/header';
+import Header from '../../features/header';
 import { useDispatch } from 'react-redux';
-import { addContact } from '../entities/actions/contacts.tsx';
+import { addContact } from '../../entities/actions/contacts.tsx';
 
 import { useState } from 'react';
 

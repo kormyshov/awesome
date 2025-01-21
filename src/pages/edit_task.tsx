@@ -31,6 +31,8 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
+import { Contact } from '../entities/types/contact/contact.tsx';
+
 
 export default function EditTask(props) {
 
@@ -91,10 +93,10 @@ export default function EditTask(props) {
 
   const contacts = useSelector((state) => state.contacts);
   const contactList = contacts
-    .filter(contact => contact.contactStatus !== "DELETED")
+    .filter(Contact.prototype.isActive)
     .map(contact => (
       <MenuItem key={contact.id} value={contact.id}>
-        {contact.contactName}
+        {contact.name}
       </MenuItem>
     ));
 

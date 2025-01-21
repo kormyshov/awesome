@@ -1,43 +1,25 @@
-import { v4 } from 'uuid';
+import { ContactActionType } from "../types/contact/contact_action_type.tsx";
+import { Contact } from "../types/contact/contact.tsx";
+import { ContactStatus } from "../types/contact/contact_status.tsx";
 
 
-export const initContacts = (contacts) => {
+export const addContact = (contactName: string) => {
     return {
-        type: "INIT_CONTACTS",
-        items: contacts,
+        type: ContactActionType.ADD_CONTACT,
+        item: new Contact(contactName),
     }
 }
 
-export const addContact = (contactName) => {
+export const deleteContact = (contactId: string) => {
     return {
-        type: "ADD_CONTACT",
-        item: {
-            id: v4(contactName),
-            contactName: contactName,
-            contactStatus: "ACTIVE",
-        },
+        type: ContactActionType.DELETE_CONTACT,
+        item: new Contact(contactId, ContactStatus.DELETED),
     }
 }
 
-export const deleteContact = (contactId, contactName) => {
+export const saveContact = (contactId: string, contactName: string) => {
     return {
-        type: "DELETE_CONTACT",
-        id: contactId,
-        item: {
-            id: contactId,
-            contactName: contactName,
-            contactStatus: "DELETED",
-        },
-    }
-}
-
-export const saveContact = (contactId, contactName) => {
-    return {
-        type: "SAVE_CONTACT",
-        item: {
-            id: contactId,
-            contactName: contactName,
-            contactStatus: "ACTIVE",
-        },
+        type: ContactActionType.SAVE_CONTACT,
+        item: new Contact(contactId, contactName, ContactStatus.ACTIVE),
     }
 }
