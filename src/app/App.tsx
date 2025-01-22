@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Route, Routes } from "react-router-dom";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import TaskList from "../pages/task_list.tsx";
@@ -21,9 +21,16 @@ import NewTask from '../pages/new_task.tsx';
 import { initProjects } from '../entities/actions/projects.tsx';
 import { initTasks } from '../entities/actions/tasks.tsx';
 import { saveContact } from '../entities/actions/contacts.tsx';
+import { Contacts } from '../entities/types/contact/contacts.tsx';
+import { Contact } from '../entities/types/contact/contact.tsx';
+import { ContactStatus } from '../entities/types/contact/contact_status.tsx';
 
+export const ContactsContext = React.createContext(new Contacts());
 
 export default function App() {
+
+  const [contacts, setContacts] = useState(new Contacts);
+  const contactsValue = useMemo(() => ({contacts, setContacts}), [contacts]);
 
   const dispatch = useDispatch();
 
@@ -38,57 +45,60 @@ export default function App() {
     dispatch(initProjects(data.projects));
     dispatch(initTasks(data.tasks));
     data.contacts.forEach((contact) => {
-      dispatch(saveContact(contact.id, contact.name));
+      contacts.add(new Contact(contact.id, contact.name, contact.status))
+      setContacts(contacts)
     })
-    // dispatch(initContacts(data.contacts));
   }
 
   useEffect(() => {
     dispatch(fetchData())
   }, [dispatch])
 
+
   return (
 
     <div id="App">
       <Sidebar />
 
-      <Routes>
-        <Route index element={<TaskList page_name="Inbox" />} />
-        <Route path="/">
+      <ContactsContext.Provider value={contactsValue}>
+        <Routes>
           <Route index element={<TaskList page_name="Inbox" />} />
-        </Route>
-        <Route path="inbox">
-          <Route index element={<TaskList page_name="Inbox" />} />
-        </Route>
-        <Route path="next" element={<TaskList page_name="Next" />} />
-        <Route path="waiting" element={<TaskList page_name="Waiting" />} />
-        <Route path="scheduled" element={<TaskList page_name="Scheduled" />} />
-        <Route path="someday" element={<TaskList page_name="Someday" />} />
-        <Route path="focus" element={<TaskList page_name="Focus" />} />
+          <Route path="/">
+            <Route index element={<TaskList page_name="Inbox" />} />
+          </Route>
+          <Route path="inbox">
+            <Route index element={<TaskList page_name="Inbox" />} />
+          </Route>
+          <Route path="next" element={<TaskList page_name="Next" />} />
+          <Route path="waiting" element={<TaskList page_name="Waiting" />} />
+          <Route path="scheduled" element={<TaskList page_name="Scheduled" />} />
+          <Route path="someday" element={<TaskList page_name="Someday" />} />
+          <Route path="focus" element={<TaskList page_name="Focus" />} />
 
-        <Route path="tasks">
-          <Route path=":from/new" element={<NewTask />} />
-          <Route path=":id/edit/projects/:project_id" element={<EditTask />} />
-          <Route path=":id/edit/:from" element={<EditTask />} />
-        </Route>
+          <Route path="tasks">
+            <Route path=":from/new" element={<NewTask />} />
+            <Route path=":id/edit/projects/:project_id" element={<EditTask />} />
+            <Route path=":id/edit/:from" element={<EditTask />} />
+          </Route>
 
-        <Route path="projects">
-          <Route index element={<ProjectList />} />
-          <Route path="new" element={<NewProject />} />
-          <Route path=":id" element={<Project />} />
-          <Route path=":id/edit" element={<EditProject />} />
-        </Route>
+          <Route path="projects">
+            <Route index element={<ProjectList />} />
+            <Route path="new" element={<NewProject />} />
+            <Route path=":id" element={<Project />} />
+            <Route path=":id/edit" element={<EditProject />} />
+          </Route>
 
-        <Route path="contacts">
-          <Route index element={<ContactList />} />
-          <Route path="new" element={<NewContact />} />
-          <Route path=":id" element={<EditContact />} />
-        </Route>
+          <Route path="contacts">
+            <Route index element={<ContactList />} />
+            <Route path="new" element={<NewContact />} />
+            <Route path=":id" element={<EditContact />} />
+          </Route>
 
-        <Route path="archive" element={<TaskList page_name="Archive" />} />
-        <Route path="trash" element={<TaskList page_name="Trash" />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          <Route path="archive" element={<TaskList page_name="Archive" />} />
+          <Route path="trash" element={<TaskList page_name="Trash" />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </ContactsContext.Provider>
 
     </div>
 

@@ -1,21 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from "react-router-dom";
 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
 import Header from '../../features/header';
-import { useDispatch } from 'react-redux';
-import { addContact } from '../../entities/actions/contacts.tsx';
 
 import { useState } from 'react';
+import { ContactsContext } from '../../app/App.tsx';
+import { Contact } from '../../entities/types/contact/contact.tsx';
+import { uploadContacts } from '../../entities/upload/contacts.tsx';
 
 
 export default function NewContact(props) {
 
-  const dispatch = useDispatch();
-
   const [contactName, setContactName] = useState('');
+
+  const { contacts, setContacts } = useContext(ContactsContext);
+
+  const addNewContact = (contactName: string) => {
+    contacts.add(new Contact(contactName));
+    uploadContacts(contacts);
+    setContacts(contacts);
+  };
 
   return (
     <>
@@ -36,7 +43,7 @@ export default function NewContact(props) {
             <Button variant="outlined" size="small" className="pageWrapperButton">Cancel</Button>
           </Link>
           <Link to="/contacts">
-            <Button variant="contained" size="small" className="pageWrapperButton" onClick={()=>dispatch(addContact(contactName))}>Create</Button>
+            <Button variant="contained" size="small" className="pageWrapperButton" onClick={()=>addNewContact(contactName)}>Create</Button>
           </Link>
         </div>
       </div>

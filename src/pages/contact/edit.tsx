@@ -2,17 +2,14 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
-
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
 import Header from '../../features/header';
-import { useDispatch } from 'react-redux';
 
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -20,18 +17,19 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 
-import { deleteContact, saveContact } from '../../entities/actions/contacts.tsx';
 import { Contact } from '../../entities/types/contact/contact.tsx';
+import { ContactsContext } from '../../app/App.tsx';
+import { uploadContacts } from '../../entities/upload/contacts.tsx';
 
 
 export default function EditContact(props) {
 
+  const { contacts, setContacts } = useContext(ContactsContext);
+
   const { id } = useParams();
 
-  const contact: Contact = useSelector((state) => state.contacts.items).get(id);
+  const contact: Contact = contacts.items.get(id);
   console.log('contact', contact);
-
-  const dispatch = useDispatch();
 
   const [contactName, setContactName] = useState(contact.name);
 
@@ -43,6 +41,18 @@ export default function EditContact(props) {
 
   const handleDialogDeleteClose = () => {
     setDialogDeleteOpen(false);
+  };
+
+  const saveContact = (contactName: string) => {
+    contact.name = contactName;
+    uploadContacts(contacts);
+    setContacts(contacts);
+  };
+
+  const deleteContact = () => {
+    contact.setDeleted();
+    uploadContacts(contacts);
+    setContacts(contacts);
   };
 
   return (
@@ -71,7 +81,7 @@ export default function EditContact(props) {
               variant="contained" 
               size="small" 
               className="pageWrapperButton" 
-              onClick={()=>dispatch(saveContact(id, contactName))}
+              onClick={()=>saveContact(contactName)}
             >
               Save
             </Button>
@@ -101,7 +111,7 @@ export default function EditContact(props) {
           <Button onClick={handleDialogDeleteClose}>Cancel</Button>
           <Link to={"/contacts"}>
             <Button 
-              onClick={()=>dispatch(deleteContact(id, contactName))} 
+              onClick={()=>deleteContact()} 
               autoFocus 
               color="error"
             >

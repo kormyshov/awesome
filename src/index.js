@@ -10,7 +10,6 @@ import App from './app/App.tsx';
 import { projectReducer } from './entities/reducers/projects.tsx';
 import { sidebarReducer } from './entities/reducers/sidebar.tsx';
 import { taskReducer } from './entities/reducers/tasks.tsx';
-import { contactReducer } from './entities/reducers/contacts.tsx';
 
 
 const store = configureStore({
@@ -18,7 +17,6 @@ const store = configureStore({
     projects: projectReducer,
     tasks: taskReducer,
     sidebar: sidebarReducer,
-    contacts: contactReducer,
   },
   middleware(getDefaultMiddleware) {
     return getDefaultMiddleware().concat(thunk)

@@ -9,8 +9,8 @@ export class Contacts {
         this.items = new Map<string, Contact>();
     }
 
-    public filter(predicate: () => boolean): Contact[] {
-        return Array.from(this.items.values()).filter(e => predicate.call(e));
+    public filterIsActive(): Contact[] {
+        return Array.from(this.items.values()).filter(e => e.isActive());
     }
 
     public set(contact: Contact): void {
@@ -23,5 +23,9 @@ export class Contacts {
 
     public toString(): string {
         return JSON.stringify(Array.from(this.items.values()));
+    }
+
+    public add(contact: Contact): void {
+        this.items.set(contact.id, contact);
     }
 }
