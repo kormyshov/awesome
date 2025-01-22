@@ -27,7 +27,7 @@ export const ContactsContext = React.createContext(new Contacts());
 
 export default function App() {
 
-  const [contacts, setContacts] = useState(new Contacts);
+  const [contacts, setContacts] = useState(new Contacts());
   const contactsValue = useMemo(() => ({contacts, setContacts}), [contacts]);
 
   const dispatch = useDispatch();
@@ -44,7 +44,7 @@ export default function App() {
     dispatch(initTasks(data.tasks));
     data.contacts.forEach((contact) => {
       contacts.add(new Contact(contact.id, contact.name, contact.status))
-      setContacts(contacts)
+      dispatch(setContacts(contacts))
     })
   }
 
