@@ -50,7 +50,7 @@ export default function App() {
     }
 
     dispatch(fetchData())
-  }, [dispatch])
+  }, [dispatch, contacts])
 
 
   return (
