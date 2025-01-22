@@ -20,10 +20,8 @@ import NewTask from '../pages/new_task.tsx';
 
 import { initProjects } from '../entities/actions/projects.tsx';
 import { initTasks } from '../entities/actions/tasks.tsx';
-import { saveContact } from '../entities/actions/contacts.tsx';
 import { Contacts } from '../entities/types/contact/contacts.tsx';
 import { Contact } from '../entities/types/contact/contact.tsx';
-import { ContactStatus } from '../entities/types/contact/contact_status.tsx';
 
 export const ContactsContext = React.createContext(new Contacts());
 
