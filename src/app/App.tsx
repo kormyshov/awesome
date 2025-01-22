@@ -50,7 +50,7 @@ export default function App() {
 
   useEffect(() => {
     dispatch(fetchData())
-  }, [dispatch, fetchData])
+  }, [dispatch])
 
 
   return (

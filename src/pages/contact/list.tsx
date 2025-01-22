@@ -11,7 +11,7 @@ import { ContactsContext } from '../../app/App.tsx';
 
 export default function ContactList(props) {
 
-  const { contacts, _ } = useContext(ContactsContext);
+  const { contacts } = useContext(ContactsContext);
 
   const items = contacts
     .filterIsActive()
