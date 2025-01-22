@@ -45,7 +45,7 @@ export default function App() {
       dispatch(initTasks(data.tasks));
       data.contacts.forEach((contact) => {
         contacts.add(new Contact(contact.id, contact.name, contact.status))
-        dispatch(setContacts(contacts))
+        setContacts(contacts)
       })
     }
 
