@@ -18,7 +18,7 @@ export default function NewContact(props) {
 
   const { contacts, setContacts } = useContext(ContactsContext);
 
-  const addNewContact = (contactName: string) => {
+  const addNewContact = () => {
     contacts.add(new Contact(contactName));
     uploadContacts(contacts);
     setContacts(contacts);
@@ -43,7 +43,7 @@ export default function NewContact(props) {
             <Button variant="outlined" size="small" className="pageWrapperButton">Cancel</Button>
           </Link>
           <Link to="/contacts">
-            <Button variant="contained" size="small" className="pageWrapperButton" onClick={()=>addNewContact(contactName)}>Create</Button>
+            <Button variant="contained" size="small" className="pageWrapperButton" onClick={()=>addNewContact()}>Create</Button>
           </Link>
         </div>
       </div>

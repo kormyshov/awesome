@@ -1,19 +1,22 @@
-import React from 'react';
-import Header from '../features/header';
+import React, { useContext } from 'react';
+import Header from '../../features/header';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
-import NamedList from '../widgets/named_list.tsx';
+import NamedList from '../../widgets/named_list.tsx';
+import { ProjectsContext } from '../../app/App.tsx';
 
 
 export default function ProjectList(props) {
 
-  const projectList = useSelector((state) => state.projects);
+  const { projects } = useContext(ProjectsContext);
 
-  const items = projectList.map(e => ({value: e.projectName, id: e.id, status: e.projectStatus}));
+  const items = projects
+    .filterIsNotDeleted()
+    .map(project => ({value: project.name, id: project.id, status: project.status}));
+
   const activeProjects = items.filter(e => e.status === "ACTIVE");
   const somedayProjects = items.filter(e => e.status === "SOMEDAY");
 

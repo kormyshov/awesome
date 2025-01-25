@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
@@ -15,21 +15,24 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { useDispatch } from 'react-redux';
-import { deleteProject } from '../entities/actions/projects.tsx'; 
 import { Link } from "react-router-dom";
 
-import Header from '../features/header';
+import Header from '../../features/header';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import CircleIcon from '@mui/icons-material/Circle';
-import NamedList from '../widgets/named_list.tsx';
+import NamedList from '../../widgets/named_list.tsx';
+
+import { ProjectsContext } from '../../app/App.tsx';
+import { Project as ObjProject } from '../../entities/types/project/project.tsx';
+import { uploadProjects } from '../../entities/upload/projects.tsx';
 
 
 export default function Project(props) {
 
   const { id } = useParams();
-  const project = useSelector((state) => state.projects.filter(project => project.id === id))[0];
+  const { projects, setProjects } = useContext(ProjectsContext);
+  const project: ObjProject = projects.items.get(id);
 
   const location = useLocation();
 
@@ -43,13 +46,14 @@ export default function Project(props) {
     setDialogDeleteOpen(false);
   };
 
-  const dispatch = useDispatch();
-
   const taskList = useSelector((state) => state.tasks);
 
   const items = taskList
-    .filter(e => e.taskProject === project.id && "taskProject" in e)
+    .filter(e => e.taskProject === id && "taskProject" in e)
     ;
+
+  console.log(taskList);
+  console.log(id, items);
 
   const actions_with_status = ["Next", "Someday"]
     .map(e => ({
@@ -60,6 +64,12 @@ export default function Project(props) {
     .map(e => (<NamedList list_name={e.status} is_checked={true} items={e.tasks} from={location.pathname.substring(1)} />))
     ;
 
+  const deleteProject = () => {
+    project.setDeleted();
+    uploadProjects(projects);
+    setProjects(projects);
+  };
+
   return (
     <>
       <Header page_name="Project" />
@@ -68,14 +78,14 @@ export default function Project(props) {
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
             {
-              project.projectStatus === "ACTIVE" ? 
+              project.isActive() ? 
               <CircleIcon sx={{ fontSize: 16, marginRight: 1 }} color="primary" /> : 
               <CircleIcon sx={{ fontSize: 16, marginRight: 1 }} color="disabled" />
             }
-            { project.projectName }
+            { project.name }
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            { project.projectDescription }
+            { project.description }
           </Typography>
         </CardContent>
         <CardActions>
@@ -105,7 +115,7 @@ export default function Project(props) {
         <DialogActions>
           <Button onClick={handleDialogDeleteClose}>Cancel</Button>
           <Link to="/projects">
-            <Button onClick={()=>dispatch(deleteProject(project.id, project.projectName, project.projectDescription))} autoFocus color="error">
+            <Button onClick={()=>deleteProject()} autoFocus color="error">
               Delete
             </Button>
           </Link>

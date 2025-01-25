@@ -43,7 +43,7 @@ export default function EditContact(props) {
     setDialogDeleteOpen(false);
   };
 
-  const saveContact = (contactName: string) => {
+  const saveContact = () => {
     contact.name = contactName;
     uploadContacts(contacts);
     setContacts(contacts);
@@ -81,7 +81,7 @@ export default function EditContact(props) {
               variant="contained" 
               size="small" 
               className="pageWrapperButton" 
-              onClick={()=>saveContact(contactName)}
+              onClick={()=>saveContact()}
             >
               Save
             </Button>

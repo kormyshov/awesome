@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import TaskList from "../pages/task_list.tsx";
-import ProjectList from "../pages/project_list.tsx";
+import ProjectList from "../pages/project/list.tsx";
 import NotFound from '../pages/not_found.tsx';
 import Sidebar from '../widgets/sidebar.tsx';
-import NewProject from '../pages/new_project.tsx';
-import Project from '../pages/project.tsx';
-import EditProject from '../pages/edit_project.tsx';
+import NewProject from '../pages/project/new.tsx';
+import Project from '../pages/project/project.tsx';
+import EditProject from '../pages/project/edit.tsx';
 import EditTask from '../pages/edit_task.tsx';
 
 import NewContact from '../pages/contact/new.tsx';
@@ -18,17 +18,32 @@ import ContactList from '../pages/contact/list.tsx';
 
 import NewTask from '../pages/new_task.tsx';
 
-import { initProjects } from '../entities/actions/projects.tsx';
 import { initTasks } from '../entities/actions/tasks.tsx';
 import { Contacts } from '../entities/types/contact/contacts.tsx';
 import { Contact } from '../entities/types/contact/contact.tsx';
+import { Projects } from '../entities/types/project/projects.tsx';
+import { Project as ObjProject } from '../entities/types/project/project.tsx';
 
-export const ContactsContext = React.createContext(new Contacts());
+export const ContactsContext = React.createContext(
+  {
+    contacts: new Contacts(),
+    setContacts: (contacts: Contacts) => {}
+  }
+);
+export const ProjectsContext = React.createContext(
+  {
+    projects: new Projects(),
+    setProjects: (projects: Projects) => {}
+  }
+);
 
 export default function App() {
 
   const [contacts, setContacts] = useState(new Contacts());
   const contactsValue = useMemo(() => ({contacts, setContacts}), [contacts]);
+
+  const [projects, setProjects] = useState(new Projects());
+  const projectsValue = useMemo(() => ({projects, setProjects}), [projects]);
 
   const dispatch = useDispatch();
 
@@ -41,16 +56,21 @@ export default function App() {
       const response = await fetch("https://functions.yandexcloud.net/d4e343ukvmnpbmhsmf0u?method=get_tasks&user=" + user_id + "&validate=" + validation)
       const data = await response.json()
       console.log(data)
-      dispatch(initProjects(data.projects));
+      // dispatch(initProjects(data.projects));
       dispatch(initTasks(data.tasks));
       data.contacts.forEach((contact) => {
         contacts.add(new Contact(contact.id, contact.name, contact.status))
         setContacts(contacts)
       })
+      data.projects.forEach((project) => {
+        projects.add(new ObjProject(project.id, project.name, project.description, project.status))
+        setProjects(projects)
+      })
+      // console.log(projects)
     }
 
     dispatch(fetchData())
-  }, [dispatch, contacts])
+  }, [dispatch, contacts, projects])
 
 
   return (
@@ -59,6 +79,7 @@ export default function App() {
       <Sidebar />
 
       <ContactsContext.Provider value={contactsValue}>
+      <ProjectsContext.Provider value={projectsValue}>
         <Routes>
           <Route index element={<TaskList page_name="Inbox" />} />
           <Route path="/">
@@ -96,6 +117,7 @@ export default function App() {
           <Route path="trash" element={<TaskList page_name="Trash" />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+      </ProjectsContext.Provider>
       </ContactsContext.Provider>
 
     </div>
