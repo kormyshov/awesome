@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
-
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -24,8 +22,10 @@ import CircleIcon from '@mui/icons-material/Circle';
 import NamedList from '../../widgets/named_list.tsx';
 
 import { ProjectsContext } from '../../app/App.tsx';
+import { TasksContext } from '../../app/App.tsx';
 import { Project as ObjProject } from '../../entities/types/project/project.tsx';
 import { uploadProjects } from '../../entities/upload/projects.tsx';
+import { TaskStatus } from '../../entities/types/task/task_status.tsx';
 
 
 export default function Project(props) {
@@ -46,19 +46,22 @@ export default function Project(props) {
     setDialogDeleteOpen(false);
   };
 
-  const taskList = useSelector((state) => state.tasks);
+  const { tasks } = useContext(TasksContext);
 
-  const items = taskList
-    .filter(e => e.taskProject === id && "taskProject" in e)
+  const items = tasks
+    .toList()
+    .filter(task => task.isProject(id))
     ;
 
-  console.log(taskList);
+  console.log(items);
   console.log(id, items);
 
-  const actions_with_status = ["Next", "Someday"]
-    .map(e => ({
-      status: e,
-      tasks: items.filter(t => t.taskStatus.toLowerCase() === e.toLowerCase()).map(t => ({value: t.taskName, id: t.id, is_checked: t.isChecked, status: t.taskStatus}))
+  const actions_with_status = ["Next", "Waiting", "Someday"]
+    .map(status => ({
+      status: status,
+      tasks: items
+        .filter(task => task.statusIs(status as TaskStatus))
+        .map(task => ({value: task.name, id: task.id, is_checked: task.isChecked, status: task.status}))
     }))
     .filter(e => e.tasks.length > 0)
     .map(e => (<NamedList list_name={e.status} is_checked={true} items={e.tasks} from={location.pathname.substring(1)} />))

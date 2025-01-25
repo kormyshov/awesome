@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from "react-router-dom";
 import { useParams } from 'react-router-dom';
-
-import { useSelector } from 'react-redux';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -10,10 +8,7 @@ import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-import Header from '../features/header';
-import { useDispatch } from 'react-redux';
-import { saveTask } from '../entities/actions/tasks.tsx'; 
-import { deleteTask } from '../entities/actions/tasks.tsx'; 
+import Header from '../../features/header';
 
 import { useState } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -31,22 +26,25 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-import { Contact } from '../entities/types/contact/contact.tsx';
+import { ContactsContext, TasksContext } from '../../app/App.tsx';
+import { ProjectsContext } from '../../app/App.tsx';
+import { Task } from '../../entities/types/task/task.tsx';
+import { TaskStatus } from '../../entities/types/task/task_status.tsx';
+import { uploadTasks } from '../../entities/upload/tasks.tsx';
 
 
 export default function EditTask(props) {
 
   const { id } = useParams();
+  const { tasks, setTasks } = useContext(TasksContext);
+  const task: Task = tasks.items.get(id);
+
   const { from } = useParams();
   const { project_id } = useParams();
   const ext_from = from !== null && from !== undefined ? from : "projects/" + project_id;
 
-  const task = useSelector((state) => state.tasks.filter(task => task.id === id))[0];
-
-  const dispatch = useDispatch();
-
-  const [taskName, setTaskName] = useState(task.taskName);
-  const [taskDescription, setTaskDescription] = useState(task.taskDescription);
+  const [taskName, setTaskName] = useState(task.name);
+  const [taskDescription, setTaskDescription] = useState(task.description);
 
   const [taskIsChecked, setTaskIsChecked] = React.useState(task.isChecked);
 
@@ -60,50 +58,72 @@ export default function EditTask(props) {
     setDialogDeleteOpen(false);
   };
 
-  const [taskStatus, setTaskStatus] = React.useState(task.taskStatus);
+  const [taskStatus, setTaskStatus] = React.useState(task.status);
 
-  let cantSelectContact = taskStatus !== "WAITING";
+  let cantSelectContact = taskStatus !== TaskStatus.WAITING;
 
   const taskStatusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTaskStatus((event.target as HTMLInputElement).value);
+    setTaskStatus((event.target as HTMLInputElement).value as TaskStatus);
     if ((event.target as HTMLInputElement).value === "") {
       setTaskProject("");
     }
-    cantSelectContact = taskStatus !== "WAITING";
-    if ((event.target as HTMLInputElement).value !== "WAITING") {
+    cantSelectContact = taskStatus !== TaskStatus.WAITING;
+    if ((event.target as HTMLInputElement).value !== TaskStatus.WAITING) {
       setWaitingContact("");
     }
   };
 
-  const project = useSelector((state) => state.projects);
-  const projectList = project.map(project => (
-    <MenuItem key={project.id} value={project.id}>
-      {project.projectName}
-    </MenuItem>
-  ));
+  const { projects } = useContext(ProjectsContext);
 
-  const [taskProject, setTaskProject] = React.useState(task.taskProject);
+  const projectList = projects
+    .toList()
+    .map(project => (
+      <MenuItem key={project.id} value={project.id}>
+        {project.name}
+      </MenuItem>
+    ))
+    ;
+
+  const [taskProject, setTaskProject] = React.useState(task.projectId);
 
   const taskProjectChange = (event: SelectChangeEvent) => {
     setTaskProject(event.target.value);
-    if (event.target.value !== "" && taskStatus === "") {
-      setTaskStatus("NEXT");
+    if (event.target.value !== "" && taskStatus === TaskStatus.INBOX) {
+      setTaskStatus(TaskStatus.NEXT);
     }
   };
 
-  const contacts = useSelector((state) => state.contacts);
+  const { contacts } = useContext(ContactsContext);
   const contactList = contacts
-    .filter(Contact.prototype.isActive)
+    .filterIsActive()
     .map(contact => (
       <MenuItem key={contact.id} value={contact.id}>
         {contact.name}
       </MenuItem>
     ));
 
-  const [waitingContact, setWaitingContact] = React.useState(task.waitingContact);
+  const [waitingContact, setWaitingContact] = React.useState(task.waitingContactId);
 
   const waitingContactChange = (event: SelectChangeEvent) => {
     setWaitingContact(event.target.value);
+  };
+
+  const saveTask = () => {
+    task.name = taskName;
+    task.description = taskDescription;
+    task.isChecked = taskIsChecked;
+    task.status = taskStatus;
+    task.projectId = taskProject;
+    task.waitingContactId = waitingContact;
+
+    uploadTasks(tasks);
+    setTasks(tasks);
+  };
+
+  const deleteTask = () => {
+    task.setDeleted();
+    uploadTasks(tasks);
+    setTasks(tasks);
   };
 
   return (
@@ -151,9 +171,9 @@ export default function EditTask(props) {
             value={taskStatus}
             onChange={taskStatusChange}
           >
-            <FormControlLabel value="" control={<Radio />} label="Inbox" />
-            <FormControlLabel value="NEXT" control={<Radio />} label="Next" />
-            <FormControlLabel value="WAITING" control={<Radio />} label="Waiting" />
+            <FormControlLabel value={TaskStatus.INBOX} control={<Radio />} label="Inbox" />
+            <FormControlLabel value={TaskStatus.NEXT} control={<Radio />} label="Next" />
+            <FormControlLabel value={TaskStatus.WAITING} control={<Radio />} label="Waiting" />
             <FormControl variant="standard" disabled={cantSelectContact}>
               <InputLabel id="task_waiting_contact">Contact</InputLabel>
               <Select
@@ -166,7 +186,7 @@ export default function EditTask(props) {
                 {contactList}
               </Select>
             </FormControl>
-            <FormControlLabel value="SOMEDAY" control={<Radio />} label="Someday" />
+            <FormControlLabel value={TaskStatus.SOMEDAY} control={<Radio />} label="Someday" />
           </RadioGroup>
         </FormControl>
         <br /><br />
@@ -196,7 +216,7 @@ export default function EditTask(props) {
               variant="contained" 
               size="small" 
               className="pageWrapperButton" 
-              onClick={()=>dispatch(saveTask(id, taskName, taskDescription, taskIsChecked, taskStatus, taskProject, waitingContact))}
+              onClick={()=>saveTask()}
             >
               Save
             </Button>
@@ -221,7 +241,7 @@ export default function EditTask(props) {
           <Button onClick={handleDialogDeleteClose}>Cancel</Button>
           <Link to={"/" + ext_from}>
             <Button 
-              onClick={()=>dispatch(deleteTask(id, taskName, taskDescription, taskIsChecked, taskProject, waitingContact))} 
+              onClick={()=>deleteTask()} 
               autoFocus 
               color="error"
             >

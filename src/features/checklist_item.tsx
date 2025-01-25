@@ -1,27 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from "react-router-dom";
-
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
 
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 
 import Checkbox from '@mui/material/Checkbox';
 
-import { switchTask } from '../entities/actions/tasks.tsx';
+import { TasksContext } from '../app/App.tsx';
+import { Task } from '../entities/types/task/task.tsx';
+import { uploadTasks } from '../entities/upload/tasks.tsx';
 
 
 export default function ChecklistItem(props) {
 
   const [isChecked, setIsChecked] = React.useState(props.item_is_checked);
 
-  const task = useSelector((state) => state.tasks.filter(task => task.id === props.item_id))[0];
-  const dispatch = useDispatch();
+  const { tasks, setTasks } = useContext(TasksContext);
+  const task: Task = tasks.items.get(props.item_id);
 
   const handleSwitchTask = (isChecked) => {
     setIsChecked(isChecked);
-    dispatch(switchTask(task.id, task.taskName, task.taskDescription, isChecked, task.taskStatus, task.taskProject, task.waitingContact));
+    task.isChecked = isChecked;
+    uploadTasks(tasks);
+    setTasks(tasks);
   };
 
   return (

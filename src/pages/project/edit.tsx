@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { ProjectsContext } from '../../app/App.tsx';
 import { Project } from '../../entities/types/project/project.tsx';
 import { uploadProjects } from '../../entities/upload/projects.tsx';
+import { ProjectStatus } from '../../entities/types/project/project_status.tsx';
 
 
 export default function EditProject(props) {
@@ -57,8 +58,8 @@ export default function EditProject(props) {
             value={projectStatus}
             onChange={projectStatusChange}
           >
-            <FormControlLabel value="ACTIVE" control={<Radio />} label="Active" />
-            <FormControlLabel value="SOMEDAY" control={<Radio />} label="Someday" />
+            <FormControlLabel value={ProjectStatus.ACTIVE} control={<Radio />} label="Active" />
+            <FormControlLabel value={ProjectStatus.SOMEDAY} control={<Radio />} label="Someday" />
           </RadioGroup>
         </FormControl>
 

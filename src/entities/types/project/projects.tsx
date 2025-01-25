@@ -16,6 +16,10 @@ export class Projects {
         return Array.from(this.items.values()).filter(e => !e.isDeleted());
     }
 
+    public toList(): Project[] {
+        return Array.from(this.items.values());
+    }
+
     public toString(): string {
         return JSON.stringify(Array.from(this.items.values()));
     }

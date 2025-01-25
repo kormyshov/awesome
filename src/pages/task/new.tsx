@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { Link } from "react-router-dom";
@@ -6,21 +6,28 @@ import { Link } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-import Header from '../features/header';
-import { useDispatch } from 'react-redux';
-import { addTask } from '../entities/actions/tasks.tsx'; 
+import Header from '../../features/header';
 
 import { useState } from 'react';
+import { TasksContext } from '../../app/App.tsx';
+import { Task } from '../../entities/types/task/task.tsx';
+import { uploadTasks } from '../../entities/upload/tasks.tsx';
 
 
 export default function NewTask(props) {
 
-  const { from } = useParams();
+  const { tasks, setTasks } = useContext(TasksContext);
 
-  const dispatch = useDispatch();
+  const { from } = useParams();
 
   const [taskName, setTaskName] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
+
+  const addNewTask = () => {
+    tasks.add(new Task(taskName, taskDescription));
+    uploadTasks(tasks);
+    setTasks(tasks);
+  };
 
   return (
     <>
@@ -55,7 +62,7 @@ export default function NewTask(props) {
               variant="contained" 
               size="small" 
               className="pageWrapperButton" 
-              onClick={()=>dispatch(addTask(taskName, taskDescription))}
+              onClick={()=>addNewTask()}
             >
               Create
             </Button>

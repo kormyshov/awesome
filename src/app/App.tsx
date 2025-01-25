@@ -3,26 +3,27 @@ import { Route, Routes } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import TaskList from "../pages/task_list.tsx";
+import TaskList from "../pages/task/list.tsx";
 import ProjectList from "../pages/project/list.tsx";
 import NotFound from '../pages/not_found.tsx';
 import Sidebar from '../widgets/sidebar.tsx';
 import NewProject from '../pages/project/new.tsx';
 import Project from '../pages/project/project.tsx';
 import EditProject from '../pages/project/edit.tsx';
-import EditTask from '../pages/edit_task.tsx';
+import EditTask from '../pages/task/edit.tsx';
 
 import NewContact from '../pages/contact/new.tsx';
 import EditContact from '../pages/contact/edit.tsx';
 import ContactList from '../pages/contact/list.tsx';
 
-import NewTask from '../pages/new_task.tsx';
+import NewTask from '../pages/task/new.tsx';
 
-import { initTasks } from '../entities/actions/tasks.tsx';
 import { Contacts } from '../entities/types/contact/contacts.tsx';
 import { Contact } from '../entities/types/contact/contact.tsx';
 import { Projects } from '../entities/types/project/projects.tsx';
 import { Project as ObjProject } from '../entities/types/project/project.tsx';
+import { Tasks } from '../entities/types/task/tasks.tsx';
+import { Task } from '../entities/types/task/task.tsx';
 
 export const ContactsContext = React.createContext(
   {
@@ -36,6 +37,12 @@ export const ProjectsContext = React.createContext(
     setProjects: (projects: Projects) => {}
   }
 );
+export const TasksContext = React.createContext(
+  {
+    tasks: new Tasks(),
+    setTasks: (tasks: Tasks) => {}
+  }
+);
 
 export default function App() {
 
@@ -44,6 +51,9 @@ export default function App() {
 
   const [projects, setProjects] = useState(new Projects());
   const projectsValue = useMemo(() => ({projects, setProjects}), [projects]);
+
+  const [tasks, setTasks] = useState(new Tasks());
+  const tasksValue = useMemo(() => ({tasks, setTasks}), [tasks]);
 
   const dispatch = useDispatch();
 
@@ -56,8 +66,11 @@ export default function App() {
       const response = await fetch("https://functions.yandexcloud.net/d4e343ukvmnpbmhsmf0u?method=get_tasks&user=" + user_id + "&validate=" + validation)
       const data = await response.json()
       console.log(data)
-      // dispatch(initProjects(data.projects));
-      dispatch(initTasks(data.tasks));
+      // dispatch(initTasks(data.tasks));
+      data.tasks.forEach((task) => {
+        tasks.add(new Task(task.id, task.name, task.description, task.isChecked, task.status, task.projectId, task.waitingContactId))
+        setTasks(tasks)
+      })
       data.contacts.forEach((contact) => {
         contacts.add(new Contact(contact.id, contact.name, contact.status))
         setContacts(contacts)
@@ -66,11 +79,11 @@ export default function App() {
         projects.add(new ObjProject(project.id, project.name, project.description, project.status))
         setProjects(projects)
       })
-      // console.log(projects)
+      console.log(tasks);
     }
 
     dispatch(fetchData())
-  }, [dispatch, contacts, projects])
+  }, [dispatch, contacts, projects, tasks])
 
 
   return (
@@ -80,6 +93,7 @@ export default function App() {
 
       <ContactsContext.Provider value={contactsValue}>
       <ProjectsContext.Provider value={projectsValue}>
+      <TasksContext.Provider value={tasksValue}>
         <Routes>
           <Route index element={<TaskList page_name="Inbox" />} />
           <Route path="/">
@@ -117,6 +131,7 @@ export default function App() {
           <Route path="trash" element={<TaskList page_name="Trash" />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+      </TasksContext.Provider>
       </ProjectsContext.Provider>
       </ContactsContext.Provider>
 
