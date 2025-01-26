@@ -18,18 +18,20 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 
 import { Contact } from '../../entities/types/contact/contact.tsx';
-import { ContactsContext } from '../../app/App.tsx';
+import { ContactsContext, TasksContext } from '../../app/App.tsx';
 import { uploadContacts } from '../../entities/upload/contacts.tsx';
+import { uploadTasks } from '../../entities/upload/tasks.tsx';
 
 
 export default function EditContact(props) {
 
   const { contacts, setContacts } = useContext(ContactsContext);
+  const { tasks, setTasks } = useContext(TasksContext);
 
   const { id } = useParams();
 
   const contact: Contact = contacts.items.get(id);
-  console.log('contact', contact);
+  const items = tasks.filterByWaitingContactId(id);
 
   const [contactName, setContactName] = useState(contact.name);
 
@@ -50,9 +52,14 @@ export default function EditContact(props) {
   };
 
   const deleteContact = () => {
+
     contact.setDeleted();
     uploadContacts(contacts);
     setContacts(contacts);
+
+    items.forEach(task => task.toNext());
+    uploadTasks(tasks);
+    setTasks(tasks);
   };
 
   return (

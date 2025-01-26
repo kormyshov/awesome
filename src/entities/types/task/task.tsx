@@ -57,4 +57,8 @@ export class Task {
     public setDeleted(): void {
         this.status = TaskStatus.DELETED;
     }
+
+    public toNext(): void {
+        this.status = TaskStatus.NEXT;
+    }
 }

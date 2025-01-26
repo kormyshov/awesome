@@ -21,6 +21,10 @@ export class Tasks {
         return Array.from(this.items.values()).filter(task => task.statusIs(status));
     }
 
+    public filterByWaitingContactId(contactId: string): Task[] {
+        return Array.from(this.items.values()).filter(task => task.waitingContactId === contactId);
+    }
+
     public toList(): Task[] {
         return Array.from(this.items.values());
     }
