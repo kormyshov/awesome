@@ -174,18 +174,20 @@ export default function EditTask(props) {
             <FormControlLabel value={TaskStatus.INBOX} control={<Radio />} label="Inbox" />
             <FormControlLabel value={TaskStatus.NEXT} control={<Radio />} label="Next" />
             <FormControlLabel value={TaskStatus.WAITING} control={<Radio />} label="Waiting" />
-            <FormControl variant="standard" disabled={cantSelectContact}>
-              <InputLabel id="task_waiting_contact">Contact</InputLabel>
-              <Select
-                labelId="simple-select-standard-label"
-                id="simple-select-standard"
-                value={waitingContact}
-                onChange={waitingContactChange}
-                label="Contact"
-              >
-                {contactList}
-              </Select>
-            </FormControl>
+            { cantSelectContact ? null :
+              <FormControl variant="standard" disabled={cantSelectContact}>
+                <InputLabel id="task_waiting_contact">Contact</InputLabel>
+                <Select
+                  labelId="simple-select-standard-label"
+                  id="simple-select-standard"
+                  value={waitingContact}
+                  onChange={waitingContactChange}
+                  label="Contact"
+                >
+                  {contactList}
+                </Select>
+              </FormControl>
+            }
             <FormControlLabel value={TaskStatus.SOMEDAY} control={<Radio />} label="Someday" />
           </RadioGroup>
         </FormControl>
