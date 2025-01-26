@@ -10,6 +10,7 @@ export class Task {
     status: TaskStatus;
     projectId: string;
     waitingContactId: string;
+    scheduledDate: string;
 
     constructor(name: string, description: string);
     constructor(name: string, description: string, isChecked: boolean, status: TaskStatus, projectId: string, waitingContactId: string);

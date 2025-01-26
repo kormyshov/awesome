@@ -8,6 +8,12 @@ import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
+import dayjs, { Dayjs } from 'dayjs';
+import 'dayjs/locale/de';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+
 import Header from '../../features/header';
 
 import { useState } from 'react';
@@ -108,6 +114,8 @@ export default function EditTask(props) {
     setWaitingContact(event.target.value);
   };
 
+  const [scheduledDate, setScheduledDate] = React.useState<Dayjs | null>(dayjs(task.scheduledDate));
+
   const saveTask = () => {
     task.name = taskName;
     task.description = taskDescription;
@@ -115,6 +123,7 @@ export default function EditTask(props) {
     task.status = taskStatus;
     task.projectId = taskProject;
     task.waitingContactId = waitingContact;
+    task.scheduledDate = scheduledDate ? scheduledDate.format('YYYY-MM-DD') : "";
 
     uploadTasks(tasks);
     setTasks(tasks);
@@ -187,6 +196,16 @@ export default function EditTask(props) {
                   {contactList}
                 </Select>
               </FormControl>
+            }
+            <FormControlLabel value={TaskStatus.SCHEDULED} control={<Radio />} label="Scheduled" />
+            { taskStatus !== TaskStatus.SCHEDULED ? null :
+              <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
+                <DatePicker 
+                  label="Scheduled date"
+                  value={scheduledDate}
+                  onChange={(newValue) => setScheduledDate(newValue)}
+                />
+              </LocalizationProvider>
             }
             <FormControlLabel value={TaskStatus.SOMEDAY} control={<Radio />} label="Someday" />
           </RadioGroup>

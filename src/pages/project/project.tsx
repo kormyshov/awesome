@@ -57,7 +57,7 @@ export default function Project(props) {
   console.log(items);
   console.log(id, items);
 
-  const actions_with_status = ["Next", "Waiting", "Someday"]
+  const actions_with_status = ["Next", "Waiting", "Scheduled", "Someday"]
     .map(status => ({
       status: status,
       tasks: items
