@@ -26,6 +26,7 @@ import { TasksContext } from '../../app/App.tsx';
 import { Project as ObjProject } from '../../entities/types/project/project.tsx';
 import { uploadProjects } from '../../entities/upload/projects.tsx';
 import { TaskStatus } from '../../entities/types/task/task_status.tsx';
+import { uploadTasks } from '../../entities/upload/tasks.tsx';
 
 
 export default function Project(props) {
@@ -46,7 +47,7 @@ export default function Project(props) {
     setDialogDeleteOpen(false);
   };
 
-  const { tasks } = useContext(TasksContext);
+  const { tasks, setTasks } = useContext(TasksContext);
 
   const items = tasks
     .toList()
@@ -68,9 +69,14 @@ export default function Project(props) {
     ;
 
   const deleteProject = () => {
+  
     project.setDeleted();
     uploadProjects(projects);
     setProjects(projects);
+  
+    items.forEach(task => task.setDeleted())
+    uploadTasks(tasks);
+    setTasks(tasks);
   };
 
   return (
