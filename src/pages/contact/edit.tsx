@@ -57,7 +57,7 @@ export default function EditContact(props) {
     uploadContacts(contacts);
     setContacts(contacts);
 
-    items.forEach(task => task.toNext());
+    items.forEach(task => task.toInbox());
     uploadTasks(tasks);
     setTasks(tasks);
   };

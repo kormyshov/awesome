@@ -58,7 +58,7 @@ export class Task {
         this.status = TaskStatus.DELETED;
     }
 
-    public toNext(): void {
-        this.status = TaskStatus.NEXT;
+    public toInbox(): void {
+        this.status = TaskStatus.INBOX;
     }
 }
