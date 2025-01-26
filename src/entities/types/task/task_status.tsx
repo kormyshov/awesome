@@ -1,7 +1,7 @@
 export enum TaskStatus {
     INBOX = "INBOX",
     NEXT = "NEXT",
-    WAITING = "WAITNG",
+    WAITING = "WAITING",
     SOMEDAY = "SOMEDAY",
     DELETED = "DELETED",
 }
