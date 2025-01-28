@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import Header from '../../features/header';
+import Header from '../../features/header.tsx';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from '../features/header';
+import Header from '../features/header.tsx';
 
 
 export default function NotFound() {

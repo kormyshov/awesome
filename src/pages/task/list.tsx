@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 
 import { Link, useLocation } from 'react-router-dom';
 
-import Header from '../../features/header.js';
+import Header from '../../features/header.tsx';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import NamedList from '../../widgets/named_list.tsx';

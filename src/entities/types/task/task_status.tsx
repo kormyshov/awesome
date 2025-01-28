@@ -4,5 +4,6 @@ export enum TaskStatus {
     WAITING = "WAITING",
     SCHEDULED = "SCHEDULED",
     SOMEDAY = "SOMEDAY",
+    REPEATED = "REPEATED",
     DELETED = "DELETED",
 }

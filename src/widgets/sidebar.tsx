@@ -1,7 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
 
 import Box from '@mui/material/Box';
 import SwipeableDrawer from '@mui/material/Drawer';
@@ -13,15 +11,21 @@ import ListItemText from '@mui/material/ListItemText';
 
 import Icon from '@mui/material/Icon';
 
-import { closeSidebar } from '../entities/actions/sidebar.tsx';
+import { SidebarContext } from "../app/App.tsx";
+import { SidebarState } from "../entities/types/sidebar/sidebar_state.tsx";
 
 export default function Sidebar(props) {
 
-  const sidebarIsOpen = useSelector((state) => state.sidebar);
-  const dispatch = useDispatch();
+  const { sidebar, setSidebar } = useContext(SidebarContext);
+
+  const closeSidebar = () => {
+    const new_sidebar = new SidebarState();
+    new_sidebar.close();
+    setSidebar(new_sidebar);
+  };
 
   const DrawerList = (
-    <Box sx={{ width: 250 }} role="presentation" onClick={()=>dispatch(closeSidebar())}>
+    <Box sx={{ width: 250 }} role="presentation" onClick={()=>closeSidebar()}>
       <List>
           <Link to="/" className="linkMenu">
             <ListItemButton>
@@ -136,7 +140,7 @@ export default function Sidebar(props) {
 
   return (
     <div>
-      <SwipeableDrawer open={sidebarIsOpen} onClose={()=>dispatch(closeSidebar())}>
+      <SwipeableDrawer open={sidebar.isOpen()} onClose={()=>closeSidebar()}>
         {DrawerList}
       </SwipeableDrawer>
     </div>

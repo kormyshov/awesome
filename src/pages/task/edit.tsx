@@ -14,7 +14,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-import Header from '../../features/header';
+import Header from '../../features/header.tsx';
 
 import { useState } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -123,7 +123,7 @@ export default function EditTask(props) {
     task.status = taskStatus;
     task.projectId = taskProject;
     task.waitingContactId = waitingContact;
-    task.scheduledDate = scheduledDate ? scheduledDate.format('YYYY-MM-DD') : "";
+    task.scheduledDate = scheduledDate ? scheduledDate.format("YYYY-MM-DD") : "";
 
     uploadTasks(tasks);
     setTasks(tasks);

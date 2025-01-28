@@ -11,7 +11,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
-import Header from '../../features/header';
+import Header from '../../features/header.tsx';
 
 import { useState } from 'react';
 import { ProjectsContext } from '../../app/App.tsx';

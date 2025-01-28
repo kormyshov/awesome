@@ -1,31 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { configureStore } from '@reduxjs/toolkit';
-import { thunk } from 'redux-thunk';
-import { Provider } from 'react-redux';
 
 import './app/style/index.css';
 import App from './app/App.tsx';
-import { sidebarReducer } from './entities/reducers/sidebar.tsx';
 
-
-const store = configureStore({
-  reducer: {
-    sidebar: sidebarReducer,
-  },
-  middleware(getDefaultMiddleware) {
-    return getDefaultMiddleware().concat(thunk)
-  },
-})
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Provider>
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
 );
 
 // export default store;

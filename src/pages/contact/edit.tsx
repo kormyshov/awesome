@@ -7,7 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
-import Header from '../../features/header';
+import Header from '../../features/header.tsx';
 
 import { useState, useContext } from 'react';
 

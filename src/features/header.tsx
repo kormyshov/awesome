@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Typography from '@mui/material/Typography';
-import { useDispatch } from 'react-redux';
-import { openSidebar } from '../entities/actions/sidebar.tsx';
 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
+import { SidebarContext } from '../app/App.tsx';
+import { SidebarStatus } from '../entities/types/sidebar/sidebar_status.tsx';
+import { SidebarState } from '../entities/types/sidebar/sidebar_state.tsx';
+
 function Header(props) {
 
-  const dispatch = useDispatch();
+  const { sidebar, setSidebar } = useContext(SidebarContext);
+
+  const openSidebar = () => {
+    const new_sidebar = new SidebarState();
+    new_sidebar.open();
+    setSidebar(new_sidebar);
+  };
 
   return (
     <>
@@ -22,7 +30,7 @@ function Header(props) {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
-            onClick={()=>dispatch(openSidebar())}
+            onClick={()=>openSidebar()}
           >
             <MenuIcon />
           </IconButton>

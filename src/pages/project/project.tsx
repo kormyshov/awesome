@@ -15,7 +15,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import { Link } from "react-router-dom";
 
-import Header from '../../features/header';
+import Header from '../../features/header.tsx';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import CircleIcon from '@mui/icons-material/Circle';
