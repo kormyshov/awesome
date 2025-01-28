@@ -7,12 +7,11 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import { SidebarContext } from '../app/App.tsx';
-import { SidebarStatus } from '../entities/types/sidebar/sidebar_status.tsx';
 import { SidebarState } from '../entities/types/sidebar/sidebar_state.tsx';
 
 function Header(props) {
 
-  const { sidebar, setSidebar } = useContext(SidebarContext);
+  const { setSidebar } = useContext(SidebarContext);
 
   const openSidebar = () => {
     const new_sidebar = new SidebarState();
