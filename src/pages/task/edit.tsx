@@ -119,7 +119,7 @@ export default function EditTask(props) {
   const saveTask = () => {
     task.name = taskName;
     task.description = taskDescription;
-    task.isChecked = taskIsChecked;
+    task.setIsChecked(taskIsChecked);
     task.status = taskStatus;
     task.projectId = taskProject;
     task.waitingContactId = waitingContact;

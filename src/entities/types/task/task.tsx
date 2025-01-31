@@ -7,39 +7,50 @@ export class Task {
     name: string;
     description: string;
     isChecked: boolean;
+    checkedDate: string;
     status: TaskStatus;
+    deletedDate: string;
     projectId: string;
     waitingContactId: string;
     scheduledDate: string;
 
     constructor(name: string, description: string);
-    constructor(name: string, description: string, isChecked: boolean, status: TaskStatus, projectId: string, waitingContactId: string);
-    constructor(id: string, name: string, description: string, isChecked: boolean, status: TaskStatus, projectId: string, waitingContactId: string);
+    // constructor(name: string, description: string, isChecked: boolean, status: TaskStatus, projectId: string, waitingContactId: string);
+    constructor(
+        id: string, 
+        name: string, 
+        description: string, 
+        isChecked: boolean, 
+        checkedDate: string,
+        status: TaskStatus, 
+        deletedDate: string,
+        projectId: string, 
+        waitingContactId: string,
+        scheduledDate: string
+    );
     constructor(...args: any[]) {
-        if (args.length === 7) {
+        if (args.length === 10) {
             this.id = args[0];
             this.name = args[1];
             this.description = args[2];
             this.isChecked = args[3];
-            this.status = args[4];
-            this.projectId = args[5];
-            this.waitingContactId = args[6];
-        } else if (args.length === 6) {
-            this.id = v4();
-            this.name = args[0];
-            this.description = args[1];
-            this.isChecked = args[2];
-            this.status = args[3];
-            this.projectId = args[4];
-            this.waitingContactId = args[5];
+            this.checkedDate = args[4];
+            this.status = args[5];
+            this.deletedDate = args[6];
+            this.projectId = args[7];
+            this.waitingContactId = args[8];
+            this.scheduledDate = args[9]
         } else if (args.length === 2) {
             this.id = v4();
             this.name = args[0];
             this.description = args[1];
             this.isChecked = false;
+            this.checkedDate = "";
             this.status = TaskStatus.INBOX;
+            this.deletedDate = "";
             this.projectId = "";
             this.waitingContactId = "";
+            this.scheduledDate = "";
         }
     }
 
@@ -57,9 +68,19 @@ export class Task {
 
     public setDeleted(): void {
         this.status = TaskStatus.DELETED;
+        this.deletedDate = new Date().toISOString();
     }
 
     public toInbox(): void {
         this.status = TaskStatus.INBOX;
+    }
+
+    public setIsChecked(isChecked: boolean): void {
+        this.isChecked = isChecked;
+        if (isChecked) {
+            this.checkedDate = new Date().toISOString();
+        } else {
+            this.checkedDate = "";
+        }
     }
 }

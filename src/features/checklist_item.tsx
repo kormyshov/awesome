@@ -20,7 +20,7 @@ export default function ChecklistItem(props) {
 
   const handleSwitchTask = (isChecked) => {
     setIsChecked(isChecked);
-    task.isChecked = isChecked;
+    task.setIsChecked(isChecked);
     uploadTasks(tasks);
     setTasks(tasks);
   };

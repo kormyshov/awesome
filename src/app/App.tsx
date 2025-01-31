@@ -75,7 +75,18 @@ export default function App() {
       console.log(data)
       // dispatch(initTasks(data.tasks));
       data.tasks.forEach((task) => {
-        tasks.add(new Task(task.id, task.name, task.description, task.isChecked, task.status, task.projectId, task.waitingContactId))
+        tasks.add(new Task(
+          task.id, 
+          task.name, 
+          task.description, 
+          task.isChecked, 
+          task.checkedDate, 
+          task.status, 
+          task.deletedDate, 
+          task.projectId, 
+          task.waitingContactId, 
+          task.scheduledDate
+        ))
         setTasks(tasks)
       })
       data.contacts.forEach((contact) => {
