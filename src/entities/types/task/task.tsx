@@ -40,6 +40,12 @@ export class Task {
             this.projectId = args[7];
             this.waitingContactId = args[8];
             this.scheduledDate = args[9]
+
+            console.log(this.scheduledDate, new Date().toISOString());
+            if (this.scheduledDate <= (new Date().toISOString())) {
+                this.scheduledDate = "";
+                this.status = TaskStatus.NEXT;
+            }
         } else if (args.length === 2) {
             this.id = v4();
             this.name = args[0];
