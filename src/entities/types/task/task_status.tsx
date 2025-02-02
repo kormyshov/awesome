@@ -6,4 +6,5 @@ export enum TaskStatus {
     SOMEDAY = "SOMEDAY",
     REPEATED = "REPEATED",
     DELETED = "DELETED",
+    ARCHIVED = "ARCHIVED",
 }

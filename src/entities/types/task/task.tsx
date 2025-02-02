@@ -46,6 +46,9 @@ export class Task {
                 this.scheduledDate = "";
                 this.status = TaskStatus.NEXT;
             }
+            if (this.checkedDate !== "" && this.checkedDate < (new Date().toISOString())) {
+                this.status = TaskStatus.ARCHIVED;
+            }
         } else if (args.length === 2) {
             this.id = v4();
             this.name = args[0];
