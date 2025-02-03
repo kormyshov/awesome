@@ -89,6 +89,10 @@ export default function App() {
         ))
         setTasks(tasks)
       })
+      const new_tasks = new Tasks();
+      new_tasks.items = tasks.items;
+      setTasks(new_tasks);
+
       data.contacts.forEach((contact) => {
         contacts.add(new Contact(contact.id, contact.name, contact.status))
         setContacts(contacts)
@@ -101,7 +105,7 @@ export default function App() {
     }
 
     fetchData();
-  }, [contacts, projects, tasks])
+  }, [contacts, projects])
 
 
   return (
