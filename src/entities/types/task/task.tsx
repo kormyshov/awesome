@@ -39,10 +39,9 @@ export class Task {
             this.deletedDate = args[6];
             this.projectId = args[7];
             this.waitingContactId = args[8];
-            this.scheduledDate = args[9]
+            this.scheduledDate = args[9];
 
-            console.log(this.scheduledDate, new Date().toISOString());
-            if (this.scheduledDate <= (new Date().toISOString())) {
+            if (this.scheduledDate !== "" && this.scheduledDate <= (new Date().toISOString())) {
                 this.scheduledDate = "";
                 this.status = TaskStatus.NEXT;
             }
