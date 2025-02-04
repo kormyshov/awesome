@@ -30,7 +30,7 @@ export default function TaskList(props) {
   const current_page = location.pathname === "/" ? "inbox" : location.pathname.substring(1);
 
   const actions_with_project = projects
-    .toList()
+    .filterIsNotDeleted()
     .map(project => ({
       projectName: project.name,
       tasks: items

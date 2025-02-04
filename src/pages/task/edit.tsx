@@ -82,7 +82,7 @@ export default function EditTask(props) {
   const { projects } = useContext(ProjectsContext);
 
   const projectList = projects
-    .toList()
+    .filterIsNotDeleted()
     .map(project => (
       <MenuItem key={project.id} value={project.id}>
         {project.name}
