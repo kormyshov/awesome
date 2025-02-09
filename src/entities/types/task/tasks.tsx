@@ -18,7 +18,7 @@ export class Tasks {
     }
 
     public filterByStatus(status: TaskStatus): Task[] {
-        return Array.from(this.items.values()).filter(task => task.statusIs(status));
+        return Array.from(this.items.values()).filter(task => task.isStatus(status));
     }
 
     public filterByWaitingContactId(contactId: string): Task[] {

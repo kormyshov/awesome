@@ -62,7 +62,7 @@ export class Task {
         }
     }
 
-    public statusIs(status: TaskStatus): boolean {
+    public isStatus(status: TaskStatus): boolean {
         return this.status.toLowerCase() === status.toLowerCase();
     }
 

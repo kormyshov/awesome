@@ -61,7 +61,7 @@ export default function Project(props) {
     .map(status => ({
       status: status,
       tasks: items
-        .filter(task => task.statusIs(status as TaskStatus))
+        .filter(task => task.isStatus(status as TaskStatus))
         .map(task => ({value: task.name, id: task.id, is_checked: task.isChecked, status: task.status}))
     }))
     .filter(e => e.tasks.length > 0)
