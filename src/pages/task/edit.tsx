@@ -28,6 +28,10 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Divider from '@mui/material/Divider';
+
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -135,6 +139,12 @@ export default function EditTask(props) {
     setTasks(tasks);
   };
 
+  const [tabValue, setTabValue] = React.useState(0);
+
+  const handleChangeTabValue = (event: React.SyntheticEvent, newTabValue: number) => {
+    setTabValue(newTabValue);
+  };
+
   return (
     <>
       <Header page_name="Edit task" />
@@ -206,6 +216,52 @@ export default function EditTask(props) {
                   onChange={(newValue) => setScheduledDate(newValue)}
                 />
               </LocalizationProvider>
+            }
+            <FormControlLabel value={TaskStatus.REPEATED} control={<Radio />} label="Repeated" />
+            { taskStatus !== TaskStatus.REPEATED ? null :
+              <>
+                <Tabs value={tabValue} onChange={handleChangeTabValue} aria-label="repeated tabs">
+                  <Tab label="Daily" id="tab-daily" />
+                  <Tab label="Weekly" id="tab-weekly" />
+                  <Tab label="Monthly" id="tab-monthly" />
+                  <Tab label="Yearly" id="tab-yearly" />
+                </Tabs>
+
+                <div
+                  role="tabpanel"
+                  hidden={tabValue !== 0}
+                  id="tabpanel-daily"
+                  aria-labelledby="tab-daily"
+                >
+                  daily
+                </div>
+                <div
+                  role="tabpanel"
+                  hidden={tabValue !== 1}
+                  id="tabpanel-weekly"
+                  aria-labelledby="tab-weekly"
+                >
+                  in progress
+                </div>
+                <div
+                  role="tabpanel"
+                  hidden={tabValue !== 2}
+                  id="tabpanel-monthly"
+                  aria-labelledby="tab-monthly"
+                >
+                  in progress
+                </div>
+                <div
+                  role="tabpanel"
+                  hidden={tabValue !== 3}
+                  id="tabpanel-yearly"
+                  aria-labelledby="tab-yearly"
+                >
+                  in progress
+                </div>
+                <br />
+                <Divider />
+              </>
             }
             <FormControlLabel value={TaskStatus.SOMEDAY} control={<Radio />} label="Someday" />
           </RadioGroup>

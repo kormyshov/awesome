@@ -1,5 +1,7 @@
 import { v4 } from "uuid";
 import { TaskStatus } from "./task_status.tsx";
+import { TaskRepeatRule } from "./task_repeat_rule.tsx";
+
 
 export class Task {
     
@@ -14,8 +16,11 @@ export class Task {
     waitingContactId: string;
     scheduledDate: string;
 
+    parentTaskId: string;
+    countOfChildren: number;
+    repeatRule: TaskRepeatRule;
+
     constructor(name: string, description: string);
-    // constructor(name: string, description: string, isChecked: boolean, status: TaskStatus, projectId: string, waitingContactId: string);
     constructor(
         id: string, 
         name: string, 
@@ -27,6 +32,21 @@ export class Task {
         projectId: string, 
         waitingContactId: string,
         scheduledDate: string
+    );
+    constructor(
+        id: string, 
+        name: string, 
+        description: string, 
+        isChecked: boolean, 
+        checkedDate: string,
+        status: TaskStatus, 
+        deletedDate: string,
+        projectId: string, 
+        waitingContactId: string,
+        scheduledDate: string,
+        parentTaskId: string,
+        countOfChildren: number,
+        repeatRule: TaskRepeatRule
     );
     constructor(...args: any[]) {
         if (args.length === 10) {
@@ -40,6 +60,10 @@ export class Task {
             this.projectId = args[7];
             this.waitingContactId = args[8];
             this.scheduledDate = args[9];
+
+            this.parentTaskId = "";
+            this.countOfChildren = 0;
+            this.repeatRule = new TaskRepeatRule();
 
             if (this.scheduledDate !== "" && this.scheduledDate <= (new Date().toISOString())) {
                 this.scheduledDate = "";
@@ -59,6 +83,10 @@ export class Task {
             this.projectId = "";
             this.waitingContactId = "";
             this.scheduledDate = "";
+
+            this.parentTaskId = "";
+            this.countOfChildren = 0;
+            this.repeatRule = new TaskRepeatRule();
         }
     }
 
