@@ -5,8 +5,14 @@ export class Tasks {
 
     items: Map<string, Task>;
 
-    constructor() {
-        this.items = new Map<string, Task>();
+    constructor();
+    constructor(items: Map<string, Task>);
+    constructor(...args: any[]) {
+        if (args.length === 1) {
+            this.items = args[0];
+        } else {
+            this.items = new Map<string, Task>();
+        }
     }
 
     public add(task: Task): void {

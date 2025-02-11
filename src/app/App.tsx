@@ -87,11 +87,8 @@ export default function App() {
           task.waitingContactId, 
           task.scheduledDate
         ))
-        setTasks(tasks)
       })
-      const new_tasks = new Tasks();
-      new_tasks.items = tasks.items;
-      setTasks(new_tasks);
+      setTasks(new Tasks(tasks.items));
 
       data.contacts.forEach((contact) => {
         contacts.add(new Contact(contact.id, contact.name, contact.status))
