@@ -19,8 +19,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 
 import { Contact } from '../../entities/types/contact/contact.tsx';
 import { ContactsContext, TasksContext } from '../../app/App.tsx';
-import { uploadContacts } from '../../entities/upload/contacts.tsx';
-import { uploadTasks } from '../../entities/upload/tasks.tsx';
+import { uploadContacts } from '../../entities/upload/contacts.ts';
+import { uploadTasks } from '../../entities/upload/tasks.ts';
 
 
 export default function EditContact(props) {

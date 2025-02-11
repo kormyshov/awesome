@@ -40,7 +40,7 @@ import { ContactsContext, TasksContext } from '../../app/App.tsx';
 import { ProjectsContext } from '../../app/App.tsx';
 import { Task } from '../../entities/types/task/task.tsx';
 import { TaskStatus } from '../../entities/types/task/task_status.tsx';
-import { uploadTasks } from '../../entities/upload/tasks.tsx';
+import { uploadTasks } from '../../entities/upload/tasks.ts';
 
 
 export default function EditTask(props) {

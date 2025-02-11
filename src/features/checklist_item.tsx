@@ -8,7 +8,7 @@ import Checkbox from '@mui/material/Checkbox';
 
 import { TasksContext } from '../app/App.tsx';
 import { Task } from '../entities/types/task/task.tsx';
-import { uploadTasks } from '../entities/upload/tasks.tsx';
+import { uploadTasks } from '../entities/upload/tasks.ts';
 
 
 export default function ChecklistItem(props) {

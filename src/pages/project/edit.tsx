@@ -16,7 +16,7 @@ import Header from '../../features/header.tsx';
 import { useState } from 'react';
 import { ProjectsContext } from '../../app/App.tsx';
 import { Project } from '../../entities/types/project/project.tsx';
-import { uploadProjects } from '../../entities/upload/projects.tsx';
+import { uploadProjects } from '../../entities/upload/projects.ts';
 import { ProjectStatus } from '../../entities/types/project/project_status.tsx';
 
 
