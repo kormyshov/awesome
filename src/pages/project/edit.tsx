@@ -15,9 +15,9 @@ import Header from '../../features/header.tsx';
 
 import { useState } from 'react';
 import { ProjectsContext } from '../../app/App.tsx';
-import { Project } from '../../entities/types/project/project.tsx';
+import { Project } from '../../entities/types/project/project.ts';
 import { uploadProjects } from '../../entities/upload/projects.ts';
-import { ProjectStatus } from '../../entities/types/project/project_status.tsx';
+import { ProjectStatus } from '../../entities/types/project/project_status.ts';
 
 
 export default function EditProject(props) {

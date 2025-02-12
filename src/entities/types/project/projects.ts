@@ -1,4 +1,4 @@
-import { Project } from "./project.tsx";
+import { Project } from "./project.ts";
 
 export class Projects {
 

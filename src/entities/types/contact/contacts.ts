@@ -1,4 +1,4 @@
-import { Contact } from "./contact.tsx";
+import { Contact } from "./contact.ts";
 
 
 export class Contacts {

@@ -7,7 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 
 import { TasksContext } from '../app/App.tsx';
-import { Task } from '../entities/types/task/task.tsx';
+import { Task } from '../entities/types/task/task.ts';
 import { uploadTasks } from '../entities/upload/tasks.ts';
 
 

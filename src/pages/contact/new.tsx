@@ -8,7 +8,7 @@ import Header from '../../features/header.tsx';
 
 import { useState } from 'react';
 import { ContactsContext } from '../../app/App.tsx';
-import { Contact } from '../../entities/types/contact/contact.tsx';
+import { Contact } from '../../entities/types/contact/contact.ts';
 import { uploadContacts } from '../../entities/upload/contacts.ts';
 
 

@@ -1,4 +1,4 @@
-import { Projects } from "../types/project/projects.tsx";
+import { Projects } from "../types/project/projects.ts";
 import { getCommand, getRequestOptions } from "./common.ts";
 
 

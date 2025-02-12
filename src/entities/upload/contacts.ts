@@ -1,4 +1,4 @@
-import { Contacts } from "../types/contact/contacts.tsx";
+import { Contacts } from "../types/contact/contacts.ts";
 import { getCommand, getRequestOptions } from "./common.ts";
 
 

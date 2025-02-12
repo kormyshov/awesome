@@ -1,5 +1,5 @@
 import { v4 } from "uuid";
-import { ContactStatus } from "./contact_status.tsx";
+import { ContactStatus } from "./contact_status.ts";
 
 
 export class Contact {

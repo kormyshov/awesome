@@ -12,7 +12,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Icon from '@mui/material/Icon';
 
 import { SidebarContext } from "../app/App.tsx";
-import { SidebarState } from "../entities/types/sidebar/sidebar_state.tsx";
+import { SidebarState } from "../entities/types/sidebar/sidebar_state.ts";
 
 export default function Sidebar(props) {
 

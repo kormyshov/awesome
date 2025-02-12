@@ -1,5 +1,5 @@
 import { v4 } from "uuid";
-import { ProjectStatus } from "./project_status.tsx";
+import { ProjectStatus } from "./project_status.ts";
 
 export class Project {
     

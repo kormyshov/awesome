@@ -41,6 +41,7 @@ export default function TaskList(props) {
     .map(e => (<NamedList list_name={e.projectName} is_checked={true} items={e.tasks} from={current_page} />))
     ;
 
+  console.log(projects);
 
   return (
     <>

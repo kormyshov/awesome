@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import { SidebarContext } from '../app/App.tsx';
-import { SidebarState } from '../entities/types/sidebar/sidebar_state.tsx';
+import { SidebarState } from '../entities/types/sidebar/sidebar_state.ts';
 
 function Header(props) {
 

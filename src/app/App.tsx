@@ -17,13 +17,13 @@ import ContactList from '../pages/contact/list.tsx';
 
 import NewTask from '../pages/task/new.tsx';
 
-import { Contacts } from '../entities/types/contact/contacts.tsx';
-import { Contact } from '../entities/types/contact/contact.tsx';
-import { Projects } from '../entities/types/project/projects.tsx';
-import { Project as ObjProject } from '../entities/types/project/project.tsx';
-import { Tasks } from '../entities/types/task/tasks.tsx';
-import { Task } from '../entities/types/task/task.tsx';
-import { SidebarState } from '../entities/types/sidebar/sidebar_state.tsx';
+import { Contacts } from '../entities/types/contact/contacts.ts';
+import { Contact } from '../entities/types/contact/contact.ts';
+import { Projects } from '../entities/types/project/projects.ts';
+import { Project as ObjProject } from '../entities/types/project/project.ts';
+import { Tasks } from '../entities/types/task/tasks.ts';
+import { Task } from '../entities/types/task/task.ts';
+import { SidebarState } from '../entities/types/sidebar/sidebar_state.ts';
 
 export const ContactsContext = React.createContext(
   {

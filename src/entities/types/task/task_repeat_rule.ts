@@ -1,5 +1,5 @@
-import { TaskRepeatType } from "./task_repeat_type.tsx";
-import { Weekdays } from "./weekdays.tsx";
+import { TaskRepeatType } from "./task_repeat_type.ts";
+import { Weekdays } from "./weekdays.ts";
 
 
 export class TaskRepeatRule {

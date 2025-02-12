@@ -23,9 +23,9 @@ import NamedList from '../../widgets/named_list.tsx';
 
 import { ProjectsContext } from '../../app/App.tsx';
 import { TasksContext } from '../../app/App.tsx';
-import { Project as ObjProject } from '../../entities/types/project/project.tsx';
+import { Project as ObjProject } from '../../entities/types/project/project.ts';
 import { uploadProjects } from '../../entities/upload/projects.ts';
-import { TaskStatus } from '../../entities/types/task/task_status.tsx';
+import { TaskStatus } from '../../entities/types/task/task_status.ts';
 import { uploadTasks } from '../../entities/upload/tasks.ts';
 
 

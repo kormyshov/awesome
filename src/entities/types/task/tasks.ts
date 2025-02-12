@@ -1,5 +1,5 @@
-import { Task } from "./task.tsx";
-import { TaskStatus } from "./task_status.tsx";
+import { Task } from "./task.ts";
+import { TaskStatus } from "./task_status.ts";
 
 export class Tasks {
 

@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
-import { TaskStatus } from "./task_status.tsx";
-import { TaskRepeatRule } from "./task_repeat_rule.tsx";
+import { TaskStatus } from "./task_status.ts";
+import { TaskRepeatRule } from "./task_repeat_rule.ts";
 
 
 export class Task {

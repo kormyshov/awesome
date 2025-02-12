@@ -17,7 +17,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 
-import { Contact } from '../../entities/types/contact/contact.tsx';
+import { Contact } from '../../entities/types/contact/contact.ts';
 import { ContactsContext, TasksContext } from '../../app/App.tsx';
 import { uploadContacts } from '../../entities/upload/contacts.ts';
 import { uploadTasks } from '../../entities/upload/tasks.ts';

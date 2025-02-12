@@ -1,4 +1,4 @@
-import { Tasks } from "../types/task/tasks.tsx";
+import { Tasks } from "../types/task/tasks.ts";
 import { getCommand, getRequestOptions } from "./common.ts";
 
 

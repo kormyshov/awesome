@@ -38,8 +38,8 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import { ContactsContext, TasksContext } from '../../app/App.tsx';
 import { ProjectsContext } from '../../app/App.tsx';
-import { Task } from '../../entities/types/task/task.tsx';
-import { TaskStatus } from '../../entities/types/task/task_status.tsx';
+import { Task } from '../../entities/types/task/task.ts';
+import { TaskStatus } from '../../entities/types/task/task_status.ts';
 import { uploadTasks } from '../../entities/upload/tasks.ts';
 
 

@@ -1,4 +1,4 @@
-import { SidebarStatus } from "./sidebar_status.tsx";
+import { SidebarStatus } from "./sidebar_status.ts";
 
 
 export class SidebarState {
