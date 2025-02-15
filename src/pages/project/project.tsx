@@ -51,18 +51,15 @@ export default function Project(props) {
 
   const items = tasks
     .toList()
-    .filter(task => task.isProject(id))
+    .filter(task => task.projectIdEqual(id))
     ;
-
-  console.log(items);
-  console.log(id, items);
 
   const actions_with_status = ["Next", "Waiting", "Scheduled", "Someday"]
     .map(status => ({
       status: status,
       tasks: items
-        .filter(task => task.isStatus(status as TaskStatus))
-        .map(task => ({value: task.name, id: task.id, is_checked: task.isChecked, status: task.status}))
+        .filter(task => task.statusEqual(status as TaskStatus))
+        .map(task => ({value: task.getName(), id: task.getId(), is_checked: task.getIsChecked(), status: task.getStatus()}))
     }))
     .filter(e => e.tasks.length > 0)
     .map(e => (<NamedList list_name={e.status} is_checked={true} items={e.tasks} from={location.pathname.substring(1)} />))

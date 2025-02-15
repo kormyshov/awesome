@@ -53,10 +53,10 @@ export default function EditTask(props) {
   const { project_id } = useParams();
   const ext_from = from !== null && from !== undefined ? from : "projects/" + project_id;
 
-  const [taskName, setTaskName] = useState(task.name);
-  const [taskDescription, setTaskDescription] = useState(task.description);
+  const [taskName, setTaskName] = useState(task.getName());
+  const [taskDescription, setTaskDescription] = useState(task.getDescription());
 
-  const [taskIsChecked, setTaskIsChecked] = React.useState(task.isChecked);
+  const [taskIsChecked, setTaskIsChecked] = React.useState(task.getIsChecked());
 
   const [dialogDelete, setDialogDeleteOpen] = React.useState(false);
 
@@ -68,7 +68,7 @@ export default function EditTask(props) {
     setDialogDeleteOpen(false);
   };
 
-  const [taskStatus, setTaskStatus] = React.useState(task.status);
+  const [taskStatus, setTaskStatus] = React.useState(task.getStatus());
 
   let cantSelectContact = taskStatus !== TaskStatus.WAITING;
 
@@ -94,7 +94,7 @@ export default function EditTask(props) {
     ))
     ;
 
-  const [taskProject, setTaskProject] = React.useState(task.projectId);
+  const [taskProject, setTaskProject] = React.useState(task.getProjectId());
 
   const taskProjectChange = (event: SelectChangeEvent) => {
     setTaskProject(event.target.value);
@@ -112,24 +112,25 @@ export default function EditTask(props) {
       </MenuItem>
     ));
 
-  const [waitingContact, setWaitingContact] = React.useState(task.waitingContactId);
+  const [waitingContact, setWaitingContact] = React.useState(task.getWaitingContactId());
 
   const waitingContactChange = (event: SelectChangeEvent) => {
     setWaitingContact(event.target.value);
   };
 
-  const [scheduledDate, setScheduledDate] = React.useState<Dayjs | null>(dayjs(task.scheduledDate));
+  const [scheduledDate, setScheduledDate] = React.useState<Dayjs | null>(dayjs(task.getScheduledDate()));
 
   const saveTask = () => {
-    task.name = taskName;
-    task.description = taskDescription;
-    task.setIsChecked(taskIsChecked);
-    task.status = taskStatus;
-    task.projectId = taskProject;
-    task.waitingContactId = waitingContact;
-    task.scheduledDate = scheduledDate ? scheduledDate.format("YYYY-MM-DD") : "";
-
-    uploadTasks(tasks);
+    tasks.buildCommonTask(
+      id,
+      taskName,
+      taskDescription,
+      taskIsChecked,
+      taskStatus,
+      taskProject,
+      waitingContact,
+      scheduledDate ? scheduledDate.format("YYYY-MM-DD") : "",
+    )
     setTasks(tasks);
   };
 

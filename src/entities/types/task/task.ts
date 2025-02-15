@@ -1,104 +1,56 @@
-import { v4 } from "uuid";
+import { Project } from "../project/project.ts";
+import { TaskBuilder } from "./task_builder.ts";
 import { TaskStatus } from "./task_status.ts";
 import { TaskRepeatRule } from "./task_repeat_rule.ts";
 
 
 export class Task {
     
-    id: string;
-    name: string;
-    description: string;
-    isChecked: boolean;
-    checkedDate: string;
-    status: TaskStatus;
-    deletedDate: string;
-    projectId: string;
-    waitingContactId: string;
-    scheduledDate: string;
+    private id: string;
+    private name: string;
+    private description: string;
+    private isChecked: boolean;
+    private checkedDate: string;
+    private status: TaskStatus;
+    private deletedDate: string;
+    private projectId: string;
+    private waitingContactId: string;
+    private scheduledDate: string;
 
-    parentTaskId: string;
-    countOfChildren: number;
-    repeatRule: TaskRepeatRule;
+    private parentTaskId: string;
+    private countOfChildren: number;
+    private repeatRule: TaskRepeatRule;
 
-    constructor(name: string, description: string);
-    constructor(
-        id: string, 
-        name: string, 
-        description: string, 
-        isChecked: boolean, 
-        checkedDate: string,
-        status: TaskStatus, 
-        deletedDate: string,
-        projectId: string, 
-        waitingContactId: string,
-        scheduledDate: string
-    );
-    constructor(
-        id: string, 
-        name: string, 
-        description: string, 
-        isChecked: boolean, 
-        checkedDate: string,
-        status: TaskStatus, 
-        deletedDate: string,
-        projectId: string, 
-        waitingContactId: string,
-        scheduledDate: string,
-        parentTaskId: string,
-        countOfChildren: number,
-        repeatRule: TaskRepeatRule
-    );
-    constructor(...args: any[]) {
-        if (args.length === 10) {
-            this.id = args[0];
-            this.name = args[1];
-            this.description = args[2];
-            this.isChecked = args[3];
-            this.checkedDate = args[4];
-            this.status = args[5];
-            this.deletedDate = args[6];
-            this.projectId = args[7];
-            this.waitingContactId = args[8];
-            this.scheduledDate = args[9];
-
-            this.parentTaskId = "";
-            this.countOfChildren = 0;
-            this.repeatRule = new TaskRepeatRule();
-
-            if (this.scheduledDate !== "" && this.scheduledDate <= (new Date().toISOString())) {
-                this.scheduledDate = "";
-                this.status = TaskStatus.NEXT;
-            }
-            if (this.checkedDate !== "" && this.checkedDate < (new Date().toISOString())) {
-                this.status = TaskStatus.ARCHIVED;
-            }
-        } else if (args.length === 2) {
-            this.id = v4();
-            this.name = args[0];
-            this.description = args[1];
-            this.isChecked = false;
-            this.checkedDate = "";
-            this.status = TaskStatus.INBOX;
-            this.deletedDate = "";
-            this.projectId = "";
-            this.waitingContactId = "";
-            this.scheduledDate = "";
-
-            this.parentTaskId = "";
-            this.countOfChildren = 0;
-            this.repeatRule = new TaskRepeatRule();
-        }
+    constructor(builder: TaskBuilder) {
+        this.id = builder.getId();
+        this.name = builder.getName();
+        this.description = builder.getDescription();
+        this.isChecked = builder.getIsChecked();
+        this.checkedDate = builder.getCheckedDate();
+        this.status = builder.getStatus();
+        this.deletedDate = builder.getDeletedDate();
+        this.projectId = builder.getProjectId();
+        this.waitingContactId = builder.getWaitingContactId();
+        this.scheduledDate = builder.getScheduledDate();
+        this.parentTaskId = builder.getParentTaskId();
+        this.countOfChildren = builder.getCountOfChildren();
+        this.repeatRule = builder.getRepeatRule();
     }
 
-    public isStatus(status: TaskStatus): boolean {
+    public statusEqual(status: TaskStatus): boolean {
         return this.status.toLowerCase() === status.toLowerCase();
     }
 
-    public hasntProject(): boolean {
-        return this.projectId === "" || this.projectId === undefined || this.projectId === null;
+    public waitingContactIdEqual(contactId: string): boolean {
+        return this.waitingContactId === contactId;
     }
 
-    public isProject(projectId: string): boolean {
+    public isProjectEmpty(notDeletedProjects: Project[]): boolean {
+        return this.projectId === "" || this.projectId === undefined || this.projectId === null || 
+               !(this.projectId in notDeletedProjects);
+    }
+
+    public projectIdEqual(projectId: string): boolean {
         return this.projectId === projectId;
     }
 
@@ -119,4 +71,57 @@ export class Task {
             this.checkedDate = "";
         }
     }
+
+    public getId(): string {
+        return this.id;
+    }
+
+    public getName(): string {
+        return this.name;
+    }
+
+    public getDescription(): string {
+        return this.description;
+    }
+
+    public getIsChecked(): boolean {
+        return this.isChecked;
+    }
+
+    public getCheckedDate(): string {
+        return this.checkedDate;
+    }
+
+    public getStatus(): TaskStatus {
+        return this.status;
+    }
+
+    public getDeletedDate(): string {
+        return this.deletedDate;
+    }
+
+    public getProjectId(): string {
+        return this.projectId;
+    }
+
+    public getWaitingContactId(): string {
+        return this.waitingContactId;
+    }
+
+    public getScheduledDate(): string {
+        return this.scheduledDate;
+    }
+
+    public getParentTaskId(): string {
+        return this.parentTaskId;
+    }
+
+    public getCountOfChildren(): number {
+        return this.countOfChildren;
+    }
+
+    public getRepeatRule(): TaskRepeatRule {
+        return this.repeatRule;
+    }
+
 }

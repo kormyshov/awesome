@@ -22,8 +22,8 @@ import { Contact } from '../entities/types/contact/contact.ts';
 import { Projects } from '../entities/types/project/projects.ts';
 import { Project as ObjProject } from '../entities/types/project/project.ts';
 import { Tasks } from '../entities/types/task/tasks.ts';
-import { Task } from '../entities/types/task/task.ts';
 import { SidebarState } from '../entities/types/sidebar/sidebar_state.ts';
+import { getCommand } from '../entities/upload/common.ts';
 
 export const ContactsContext = React.createContext(
   {
@@ -67,15 +67,12 @@ export default function App() {
   useEffect(() => {
     const fetchData = async () => {
       window.Telegram.WebApp.expand();
-      let user_id = window.Telegram.WebApp.initDataUnsafe.user?.id;
-      const validation = encodeURIComponent(window.Telegram.WebApp.initData);
-      if (typeof user_id === "undefined") user_id = "test"
-      const response = await fetch("https://functions.yandexcloud.net/d4e343ukvmnpbmhsmf0u?method=get_tasks&user=" + user_id + "&validate=" + validation)
+      const response = await fetch(getCommand("get_tasks"))
+
       const data = await response.json()
       console.log(data)
-      // dispatch(initTasks(data.tasks));
       data.tasks.forEach((task) => {
-        tasks.add(new Task(
+        tasks.buildFullTask(
           task.id, 
           task.name, 
           task.description, 
@@ -86,9 +83,10 @@ export default function App() {
           task.projectId, 
           task.waitingContactId, 
           task.scheduledDate
-        ))
+        )
       })
       setTasks(new Tasks(tasks.items));
+      console.log(tasks);
 
       data.contacts.forEach((contact) => {
         contacts.add(new Contact(contact.id, contact.name, contact.status))
@@ -98,7 +96,6 @@ export default function App() {
         projects.add(new ObjProject(project.id, project.name, project.description, project.status))
         setProjects(projects)
       })
-      console.log(tasks);
     }
 
     fetchData();

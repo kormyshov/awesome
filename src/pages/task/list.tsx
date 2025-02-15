@@ -21,27 +21,26 @@ export default function TaskList(props) {
   const items = tasks
     .filterByStatus(props.page_name)
     ;
+  
+  const notDeletedProjects = projects.filterIsNotDeleted();
 
   const actions = items
-    .filter(task => task.hasntProject())
-    .map(e => ({value: e.name, id: e.id, is_checked: e.isChecked, status: e.status}))
+    .filter(task => task.isProjectEmpty(notDeletedProjects))
+    .map(e => ({value: e.getName(), id: e.getId(), is_checked: e.getIsChecked(), status: e.getStatus()}))
     ;
 
   const current_page = location.pathname === "/" ? "inbox" : location.pathname.substring(1);
 
-  const actions_with_project = projects
-    .filterIsNotDeleted()
+  const actions_with_project = notDeletedProjects
     .map(project => ({
       projectName: project.name,
       tasks: items
-              .filter(task => task.isProject(project.id))
-              .map(task => ({value: task.name, id: task.id, is_checked: task.isChecked, status: task.status}))
+              .filter(task => task.projectIdEqual(project.id))
+              .map(task => ({value: task.getName(), id: task.getId(), is_checked: task.getIsChecked(), status: task.getStatus()}))
     }))
     .filter(e => e.tasks.length > 0)
     .map(e => (<NamedList list_name={e.projectName} is_checked={true} items={e.tasks} from={current_page} />))
     ;
-
-  console.log(projects);
 
   return (
     <>

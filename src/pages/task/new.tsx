@@ -10,8 +10,6 @@ import Header from '../../features/header.tsx';
 
 import { useState } from 'react';
 import { TasksContext } from '../../app/App.tsx';
-import { Task } from '../../entities/types/task/task.ts';
-import { uploadTasks } from '../../entities/upload/tasks.ts';
 
 
 export default function NewTask(props) {
@@ -24,8 +22,7 @@ export default function NewTask(props) {
   const [taskDescription, setTaskDescription] = useState('');
 
   const addNewTask = () => {
-    tasks.add(new Task(taskName, taskDescription));
-    uploadTasks(tasks);
+    tasks.buildMinimalTask(taskName, taskDescription);
     setTasks(tasks);
   };
 
