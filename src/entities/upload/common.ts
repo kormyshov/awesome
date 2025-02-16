@@ -7,7 +7,7 @@ export const getRequestOptions = (body: Object) : RequestInit => {
 }
 
 export const getCommand = (method: String) => {
-    let user_id = window.Telegram.WebApp.initDataUnsafe.user?.id;
+    let user_id = window.Telegram.WebApp.initDataUnsafe.user?.id.toString();
     const validation = encodeURIComponent(window.Telegram.WebApp.initData);
     if (typeof user_id === "undefined") user_id = "test";
 

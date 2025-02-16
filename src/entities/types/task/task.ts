@@ -41,7 +41,10 @@ export class Task {
         return this.status.toLowerCase() === status.toLowerCase();
     }
 
-    public waitingContactIdEqual(contactId: string): boolean {
+    public waitingContactIdEqual(contactId: string | undefined): boolean {
+        if (contactId === undefined) {
+            return false;
+        }
         return this.waitingContactId === contactId;
     }
 
@@ -50,7 +53,10 @@ export class Task {
                !(notDeletedProjects.map(p => p.getId()).includes(this.projectId));
     }
 
-    public projectIdEqual(projectId: string): boolean {
+    public projectIdEqual(projectId: string | undefined): boolean {
+        if (projectId === undefined) {
+            return false;
+        }
         return this.projectId === projectId;
     }
 

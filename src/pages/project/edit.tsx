@@ -32,7 +32,7 @@ export default function EditProject(props) {
   const [projectStatus, setProjectStatus] = React.useState(project.getStatus());
 
   const projectStatusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setProjectStatus((event.target as HTMLInputElement).value);
+    setProjectStatus((event.target as HTMLInputElement).value as ProjectStatus);
   };
 
   const saveProject = () => {

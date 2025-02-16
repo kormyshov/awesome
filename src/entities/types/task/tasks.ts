@@ -48,7 +48,7 @@ export class Tasks {
         return Array.from(this.items.values()).filter(task => task.statusEqual(status));
     }
 
-    public filterByWaitingContactId(contactId: string): Task[] {
+    public filterByWaitingContactId(contactId: string | undefined): Task[] {
         return Array.from(this.items.values()).filter(task => task.waitingContactIdEqual(contactId));
     }
 
