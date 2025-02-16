@@ -30,10 +30,10 @@ export default function EditContact(props) {
 
   const { id } = useParams();
 
-  const contact: Contact = contacts.items.get(id);
+  const contact: Contact = contacts.get(id);
   const items = tasks.filterByWaitingContactId(id);
 
-  const [contactName, setContactName] = useState(contact.name);
+  const [contactName, setContactName] = useState(contact.getName());
 
   const [dialogDelete, setDialogDeleteOpen] = React.useState(false);
 
@@ -46,7 +46,7 @@ export default function EditContact(props) {
   };
 
   const saveContact = () => {
-    contact.name = contactName;
+    contact.setName(contactName);
     uploadContacts(contacts);
     setContacts(contacts);
   };

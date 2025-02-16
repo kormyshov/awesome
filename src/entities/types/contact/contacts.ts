@@ -3,7 +3,7 @@ import { Contact } from "./contact.ts";
 
 export class Contacts {
 
-    items: Map<string, Contact>;
+    private items: Map<string, Contact>;
 
     constructor() {
         this.items = new Map<string, Contact>();
@@ -14,11 +14,23 @@ export class Contacts {
     }
 
     public set(contact: Contact): void {
-        this.items.set(contact.id, contact);
+        this.items.set(contact.getId(), contact);
+    }
+
+    public get(id: string | undefined): Contact {
+        if (!id) {
+            return new Contact("Unknown contact");
+        }
+        const contact = this.items.get(id);
+        if (contact) {
+            return contact;
+        } else {
+            return new Contact("Unknown contact");
+        }
     }
 
     public setDeleted(contact: Contact): void {
-        this.items.get(contact.id)?.setDeleted();
+        this.items.get(contact.getId())?.setDeleted();
     }
 
     public toString(): string {
@@ -26,6 +38,6 @@ export class Contacts {
     }
 
     public add(contact: Contact): void {
-        this.items.set(contact.id, contact);
+        this.items.set(contact.getId(), contact);
     }
 }

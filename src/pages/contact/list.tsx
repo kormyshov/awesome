@@ -15,7 +15,7 @@ export default function ContactList(props) {
 
   const items = contacts
     .filterIsActive()
-    .map(contact => ({value: contact.name, id: contact.id, status: contact.status}));
+    .map(contact => ({value: contact.getName(), id: contact.getId(), status: contact.getStatus()}));
 
   return (
     <>

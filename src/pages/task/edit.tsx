@@ -107,8 +107,8 @@ export default function EditTask(props) {
   const contactList = contacts
     .filterIsActive()
     .map(contact => (
-      <MenuItem key={contact.id} value={contact.id}>
-        {contact.name}
+      <MenuItem key={contact.getId()} value={contact.getId()}>
+        {contact.getName()}
       </MenuItem>
     ));
 

@@ -3,7 +3,7 @@ import { SidebarStatus } from "./sidebar_status.ts";
 
 export class SidebarState {
 
-    state: SidebarStatus;
+    private state: SidebarStatus;
 
     constructor() {
         this.state = SidebarStatus.CLOSE;

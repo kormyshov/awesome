@@ -4,9 +4,9 @@ import { ContactStatus } from "./contact_status.ts";
 
 export class Contact {
     
-    id: string;
-    name: string;
-    status: ContactStatus;
+    private id: string;
+    private name: string;
+    private status: ContactStatus;
 
     constructor(name: string);                                      // definition 1
     constructor(id: string, status: ContactStatus);                 // definition 2
@@ -25,6 +25,22 @@ export class Contact {
             this.name = args[1];
             this.status = args[2];
         }
+    }
+
+    public getId(): string {
+        return this.id;
+    }
+
+    public getName(): string {
+        return this.name;
+    }
+
+    public getStatus(): ContactStatus {
+        return this.status;
+    }
+
+    public setName(name: string): void {
+        this.name = name;
     }
 
     public isActive(): boolean {
