@@ -15,7 +15,7 @@ export default function ProjectList(props) {
 
   const items = projects
     .filterIsNotDeleted()
-    .map(project => ({value: project.name, id: project.id, status: project.status}));
+    .map(project => ({value: project.getName(), id: project.getId(), status: project.getStatus()}));
 
   const activeProjects = items.filter(e => e.status === "ACTIVE");
   const somedayProjects = items.filter(e => e.status === "SOMEDAY");

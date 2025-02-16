@@ -24,21 +24,21 @@ export default function EditProject(props) {
 
   const { id } = useParams();
   const { projects, setProjects } = useContext(ProjectsContext);
-  const project: Project = projects.items.get(id);
+  const project: Project = projects.get(id);
 
-  const [projectName, setProjectName] = useState(project.name);
-  const [projectDescription, setProjectDescription] = useState(project.description);
+  const [projectName, setProjectName] = useState(project.getName());
+  const [projectDescription, setProjectDescription] = useState(project.getDescription());
 
-  const [projectStatus, setProjectStatus] = React.useState(project.status);
+  const [projectStatus, setProjectStatus] = React.useState(project.getStatus());
 
   const projectStatusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setProjectStatus((event.target as HTMLInputElement).value);
   };
 
   const saveProject = () => {
-    project.name = projectName;
-    project.description = projectDescription;
-    project.status = projectStatus;
+    project.setName(projectName);
+    project.setDescription(projectDescription);
+    project.setStatus(projectStatus);
     uploadProjects(projects);
     setProjects(projects);
   };

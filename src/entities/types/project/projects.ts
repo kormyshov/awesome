@@ -2,14 +2,26 @@ import { Project } from "./project.ts";
 
 export class Projects {
 
-    items: Map<string, Project>;
+    private items: Map<string, Project>;
 
     constructor() {
         this.items = new Map<string, Project>();
     }
 
+    public get(id: string | undefined): Project {
+        if (!id) {
+            return new Project("Unknown project");
+        }
+        const project = this.items.get(id);
+        if (project) {
+            return project;
+        } else {
+            return new Project("Unknown contact");
+        }
+    }
+
     public add(project: Project): void {
-        this.items.set(project.id, project);
+        this.items.set(project.getId(), project);
     }
 
     public filterIsNotDeleted(): Project[] {

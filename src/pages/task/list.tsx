@@ -33,9 +33,9 @@ export default function TaskList(props) {
 
   const actions_with_project = notDeletedProjects
     .map(project => ({
-      projectName: project.name,
+      projectName: project.getName(),
       tasks: items
-              .filter(task => task.projectIdEqual(project.id))
+              .filter(task => task.projectIdEqual(project.getId()))
               .map(task => ({value: task.getName(), id: task.getId(), is_checked: task.getIsChecked(), status: task.getStatus()}))
     }))
     .filter(e => e.tasks.length > 0)

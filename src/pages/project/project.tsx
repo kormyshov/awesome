@@ -33,7 +33,7 @@ export default function Project(props) {
 
   const { id } = useParams();
   const { projects, setProjects } = useContext(ProjectsContext);
-  const project: ObjProject = projects.items.get(id);
+  const project: ObjProject = projects.get(id);
 
   const location = useLocation();
 
@@ -88,10 +88,10 @@ export default function Project(props) {
               <CircleIcon sx={{ fontSize: 16, marginRight: 1 }} color="primary" /> : 
               <CircleIcon sx={{ fontSize: 16, marginRight: 1 }} color="disabled" />
             }
-            { project.name }
+            { project.getName() }
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            { project.description }
+            { project.getDescription() }
           </Typography>
         </CardContent>
         <CardActions>

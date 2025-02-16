@@ -88,8 +88,8 @@ export default function EditTask(props) {
   const projectList = projects
     .filterIsNotDeleted()
     .map(project => (
-      <MenuItem key={project.id} value={project.id}>
-        {project.name}
+      <MenuItem key={project.getId()} value={project.getId()}>
+        {project.getName()}
       </MenuItem>
     ))
     ;
