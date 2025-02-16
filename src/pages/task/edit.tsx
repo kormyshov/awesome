@@ -1,12 +1,8 @@
 import React, { useContext } from 'react';
-import { Link } from "react-router-dom";
 import { useParams } from 'react-router-dom';
-
-import DeleteIcon from '@mui/icons-material/Delete';
 
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 
 import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/de';
@@ -19,28 +15,22 @@ import Header from '../../features/header.tsx';
 import { useState } from 'react';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogTitle from '@mui/material/DialogTitle';
-
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Divider from '@mui/material/Divider';
+import { SelectChangeEvent } from '@mui/material/Select';
 
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-
-import { ContactsContext, TasksContext } from '../../app/App.tsx';
-import { ProjectsContext } from '../../app/App.tsx';
+import { TasksContext } from '../../app/App.tsx';
 import { Task } from '../../entities/types/task/task.ts';
 import { TaskStatus } from '../../entities/types/task/task_status.ts';
 import { uploadTasks } from '../../entities/upload/tasks.ts';
+import DialogDeleteTask from '../../widgets/dialogs/delete_task.tsx';
+import ButtonGroupEditTask from '../../widgets/buttons/edit_task.tsx';
+import SelectProjectList from '../../widgets/selects/project_list.tsx';
+import TabsRepeated from '../../widgets/tabs/repeated.tsx';
+import SelectContactList from '../../widgets/selects/contact_list.tsx';
 
 
 export default function EditTask(props) {
@@ -83,17 +73,6 @@ export default function EditTask(props) {
     }
   };
 
-  const { projects } = useContext(ProjectsContext);
-
-  const projectList = projects
-    .filterIsNotDeleted()
-    .map(project => (
-      <MenuItem key={project.getId()} value={project.getId()}>
-        {project.getName()}
-      </MenuItem>
-    ))
-    ;
-
   const [taskProject, setTaskProject] = React.useState(task.getProjectId());
 
   const taskProjectChange = (event: SelectChangeEvent) => {
@@ -102,15 +81,6 @@ export default function EditTask(props) {
       setTaskStatus(TaskStatus.NEXT);
     }
   };
-
-  const { contacts } = useContext(ContactsContext);
-  const contactList = contacts
-    .filterIsActive()
-    .map(contact => (
-      <MenuItem key={contact.getId()} value={contact.getId()}>
-        {contact.getName()}
-      </MenuItem>
-    ));
 
   const [waitingContact, setWaitingContact] = React.useState(task.getWaitingContactId());
 
@@ -195,18 +165,11 @@ export default function EditTask(props) {
             <FormControlLabel value={TaskStatus.NEXT} control={<Radio />} label="Next" />
             <FormControlLabel value={TaskStatus.WAITING} control={<Radio />} label="Waiting" />
             { cantSelectContact ? null :
-              <FormControl variant="standard" disabled={cantSelectContact}>
-                <InputLabel id="task_waiting_contact">Contact</InputLabel>
-                <Select
-                  labelId="simple-select-standard-label"
-                  id="simple-select-standard"
-                  value={waitingContact}
-                  onChange={waitingContactChange}
-                  label="Contact"
-                >
-                  {contactList}
-                </Select>
-              </FormControl>
+              <SelectContactList
+                cantSelectContact={cantSelectContact}
+                waitingContact={waitingContact}
+                waitingContactChange={waitingContactChange}
+              />
             }
             <FormControlLabel value={TaskStatus.SCHEDULED} control={<Radio />} label="Scheduled" />
             { taskStatus !== TaskStatus.SCHEDULED ? null :
@@ -219,115 +182,35 @@ export default function EditTask(props) {
               </LocalizationProvider>
             }
             <FormControlLabel value={TaskStatus.REPEATED} control={<Radio />} label="Repeated" />
-            { taskStatus !== TaskStatus.REPEATED ? null :
-              <>
-                <Tabs value={tabValue} onChange={handleChangeTabValue} aria-label="repeated tabs">
-                  <Tab label="Daily" id="tab-daily" />
-                  <Tab label="Weekly" id="tab-weekly" />
-                  <Tab label="Monthly" id="tab-monthly" />
-                  <Tab label="Yearly" id="tab-yearly" />
-                </Tabs>
-
-                <div
-                  role="tabpanel"
-                  hidden={tabValue !== 0}
-                  id="tabpanel-daily"
-                  aria-labelledby="tab-daily"
-                >
-                  daily
-                </div>
-                <div
-                  role="tabpanel"
-                  hidden={tabValue !== 1}
-                  id="tabpanel-weekly"
-                  aria-labelledby="tab-weekly"
-                >
-                  in progress
-                </div>
-                <div
-                  role="tabpanel"
-                  hidden={tabValue !== 2}
-                  id="tabpanel-monthly"
-                  aria-labelledby="tab-monthly"
-                >
-                  in progress
-                </div>
-                <div
-                  role="tabpanel"
-                  hidden={tabValue !== 3}
-                  id="tabpanel-yearly"
-                  aria-labelledby="tab-yearly"
-                >
-                  in progress
-                </div>
-                <br />
-                <Divider />
-              </>
+            { taskStatus !== TaskStatus.REPEATED ? null : 
+              <TabsRepeated 
+                tabValue={tabValue} 
+                handleChangeTabValue={handleChangeTabValue} 
+              /> 
             }
             <FormControlLabel value={TaskStatus.SOMEDAY} control={<Radio />} label="Someday" />
           </RadioGroup>
         </FormControl>
         <br /><br />
 
-        <FormControl variant="standard" sx={{ m: 1, width: "100%" }}>
-          <InputLabel id="task_project">Project</InputLabel>
-          <Select
-            labelId="demo-simple-select-standard-label"
-            id="demo-simple-select-standard"
-            value={taskProject}
-            onChange={taskProjectChange}
-            label="Project"
-          >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            {projectList}
-          </Select>
-        </FormControl>
+        <SelectProjectList 
+          taskProject={taskProject}
+          taskProjectChange={taskProjectChange}
+        />
 
-        <div className="pageWrapperButtonGroup">
-          <Link to={"/" + ext_from}>
-            <Button variant="outlined" size="small" className="pageWrapperButton">Cancel</Button>
-          </Link>
-          <Link to={"/" + ext_from}>
-            <Button
-              variant="contained" 
-              size="small" 
-              className="pageWrapperButton" 
-              onClick={()=>saveTask()}
-            >
-              Save
-            </Button>
-          </Link>
-          <br /><br />
-          <Button size="small" color="error" variant="outlined" style={{ width: "100%" }} onClick={handleDialogDeleteOpen}>
-            <DeleteIcon />
-          </Button>
-        </div>
+        <ButtonGroupEditTask 
+          handleDialogDeleteOpen={handleDialogDeleteOpen}
+          from={"/" + ext_from}
+          saveTask={saveTask}
+        />
       </div>
 
-      <Dialog
-        open={dialogDelete}
-        onClose={handleDialogDeleteClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-delete-title">
-          {"Would you like to delete task?"}
-        </DialogTitle>
-        <DialogActions>
-          <Button onClick={handleDialogDeleteClose}>Cancel</Button>
-          <Link to={"/" + ext_from}>
-            <Button 
-              onClick={()=>deleteTask()} 
-              autoFocus 
-              color="error"
-            >
-              Delete
-            </Button>
-          </Link>
-        </DialogActions>
-      </Dialog>
+      <DialogDeleteTask 
+        dialogDelete={dialogDelete}
+        handleDialogDeleteClose={handleDialogDeleteClose}
+        from={"/" + ext_from}
+        deleteTask={deleteTask}
+      />
       
     </>
   );

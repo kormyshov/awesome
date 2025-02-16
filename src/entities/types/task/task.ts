@@ -1,7 +1,8 @@
+import { RRule } from "rrule";
+
 import { Project } from "../project/project.ts";
 import { TaskBuilder } from "./task_builder.ts";
 import { TaskStatus } from "./task_status.ts";
-import { TaskRepeatRule } from "./task_repeat_rule.ts";
 
 
 export class Task {
@@ -19,7 +20,7 @@ export class Task {
 
     private parentTaskId: string;
     private countOfChildren: number;
-    private repeatRule: TaskRepeatRule;
+    private repeatRule: RRule;
 
     constructor(builder: TaskBuilder) {
         this.id = builder.getId();
@@ -126,7 +127,7 @@ export class Task {
         return this.countOfChildren;
     }
 
-    public getRepeatRule(): TaskRepeatRule {
+    public getRepeatRule(): RRule {
         return this.repeatRule;
     }
 

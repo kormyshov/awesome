@@ -1,7 +1,8 @@
+import { RRule } from "rrule";
+
 import { v4 } from "uuid";
 import { Task  } from "./task.ts";
 import { TaskStatus } from "./task_status.ts";
-import { TaskRepeatRule } from "./task_repeat_rule.ts";
 
 
 export class TaskBuilder {
@@ -19,7 +20,7 @@ export class TaskBuilder {
 
     private parentTaskId: string;
     private countOfChildren: number;
-    private repeatRule: TaskRepeatRule;
+    private repeatRule: RRule;
 
     constructor(name: string, description: string) {
         this.id = v4();
@@ -35,7 +36,7 @@ export class TaskBuilder {
 
         this.parentTaskId = "";
         this.countOfChildren = 0;
-        this.repeatRule = new TaskRepeatRule();
+        this.repeatRule = new RRule();
     }
 
     public getId(): string {
@@ -86,7 +87,7 @@ export class TaskBuilder {
         return this.countOfChildren;
     }
 
-    public getRepeatRule(): TaskRepeatRule {
+    public getRepeatRule(): RRule {
         return this.repeatRule;
     }
 
@@ -158,7 +159,7 @@ export class TaskBuilder {
         return this;
     }
 
-    public setRepeatRule(repeatRule: TaskRepeatRule): TaskBuilder {
+    public setRepeatRule(repeatRule: RRule): TaskBuilder {
         this.repeatRule = repeatRule;
         return this;
     }
