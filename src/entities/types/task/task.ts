@@ -47,7 +47,7 @@ export class Task {
 
     public isProjectEmpty(notDeletedProjects: Project[]): boolean {
         return this.projectId === "" || this.projectId === undefined || this.projectId === null || 
-               !(this.projectId in notDeletedProjects);
+               !(notDeletedProjects.map(p => p.id).includes(this.projectId));
     }
 
     public projectIdEqual(projectId: string): boolean {
