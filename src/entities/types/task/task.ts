@@ -131,4 +131,7 @@ export class Task {
         return this.repeatRule;
     }
 
+    public getRRuleDtStart(): Date {
+        return this.repeatRule.options.dtstart;
+    }
 }

@@ -104,6 +104,8 @@ export default function EditTask(props) {
     setTasks(tasks);
   };
 
+  const [rrule_dtstart, setRRuleDtStart] = React.useState<Dayjs | null>(dayjs(task.getRRuleDtStart()));
+
   const deleteTask = () => {
     task.setDeleted();
     uploadTasks(tasks);
@@ -152,6 +154,11 @@ export default function EditTask(props) {
           value={taskDescription} 
           onChange={(e)=>setTaskDescription(e.target.value)} 
         />
+        
+        <SelectProjectList 
+          taskProject={taskProject}
+          taskProjectChange={taskProjectChange}
+        />
         <br /><br />
         <FormControl sx={{ width: "100%" }}>
           <FormLabel id="task_status">Status</FormLabel>
@@ -163,6 +170,7 @@ export default function EditTask(props) {
           >
             <FormControlLabel value={TaskStatus.INBOX} control={<Radio />} label="Inbox" />
             <FormControlLabel value={TaskStatus.NEXT} control={<Radio />} label="Next" />
+            <FormControlLabel value={TaskStatus.SOMEDAY} control={<Radio />} label="Someday" />
             <FormControlLabel value={TaskStatus.WAITING} control={<Radio />} label="Waiting" />
             { cantSelectContact ? null :
               <SelectContactList
@@ -185,18 +193,14 @@ export default function EditTask(props) {
             { taskStatus !== TaskStatus.REPEATED ? null : 
               <TabsRepeated 
                 tabValue={tabValue} 
-                handleChangeTabValue={handleChangeTabValue} 
+                handleChangeTabValue={handleChangeTabValue}
+                rrule_dtstart={rrule_dtstart}
+                setRRuleDtStart={setRRuleDtStart}
               /> 
             }
-            <FormControlLabel value={TaskStatus.SOMEDAY} control={<Radio />} label="Someday" />
           </RadioGroup>
         </FormControl>
         <br /><br />
-
-        <SelectProjectList 
-          taskProject={taskProject}
-          taskProjectChange={taskProjectChange}
-        />
 
         <ButtonGroupEditTask 
           handleDialogDeleteOpen={handleDialogDeleteOpen}

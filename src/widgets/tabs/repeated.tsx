@@ -1,7 +1,13 @@
 import React from 'react';
 
+import { Divider } from '@mui/material';
+
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import TabDaily from './tab_daily.tsx';
+import TabWeekly from './tab_weekly.tsx';
+import TabMonthly from './tab_monthly.tsx';
+import TabYearly from './tab_yearly.tsx';
 
 
 export default function TabsRepeated(props) {
@@ -14,39 +20,25 @@ export default function TabsRepeated(props) {
                 <Tab label="Monthly" id="tab-monthly" />
                 <Tab label="Yearly" id="tab-yearly" />
             </Tabs>
+            <br />
 
-            <div
-                role="tabpanel"
-                hidden={props.tabValue !== 0}
-                id="tabpanel-daily"
-                aria-labelledby="tab-daily"
-            >
-                daily
-            </div>
-            <div
-                role="tabpanel"
-                hidden={props.tabValue !== 1}
-                id="tabpanel-weekly"
-                aria-labelledby="tab-weekly"
-            >
-                in progress
-            </div>
-            <div
-                role="tabpanel"
-                hidden={props.tabValue !== 2}
-                id="tabpanel-monthly"
-                aria-labelledby="tab-monthly"
-            >
-                in progress
-            </div>
-            <div
-                role="tabpanel"
-                hidden={props.tabValue !== 3}
-                id="tabpanel-yearly"
-                aria-labelledby="tab-yearly"
-            >
-                in progress
-            </div>
+            <TabDaily 
+                tabValue={props.tabValue}
+                rrule_dtstart={props.rrule_dtstart}
+                setRRuleDtStart={props.setRRuleDtStart}
+            />
+            <TabWeekly 
+                tabValue={props.tabValue}
+            />
+            <TabMonthly 
+                tabValue={props.tabValue}
+            />
+            <TabYearly 
+                tabValue={props.tabValue}
+            />
+
+            <br />
+            <Divider />
         </>
     );
 }
