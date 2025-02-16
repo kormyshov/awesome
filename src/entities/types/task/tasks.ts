@@ -5,7 +5,7 @@ import { uploadTasks } from "../../upload/tasks.ts";
 
 export class Tasks {
 
-    items: Map<string, Task>;
+    private items: Map<string, Task>;
 
     constructor();
     constructor(items: Map<string, Task>);
@@ -22,6 +22,22 @@ export class Tasks {
         if (needUpload) {
             uploadTasks(this);
         }
+    }
+
+    public get(id: string | undefined): Task {
+        if (!id) {
+            return (new TaskBuilder("Unknown task", "")).build();
+        }
+        const task = this.items.get(id);
+        if (task) {
+            return task;
+        } else {
+            return (new TaskBuilder("Unknown task", "")).build();
+        }
+    }
+
+    public getItems(): Map<string, Task> {
+        return this.items;
     }
 
     public toString(): string {
@@ -46,7 +62,7 @@ export class Tasks {
     }
 
     public buildCommonTask(
-        id: string,
+        id: string | undefined,
         name: string,
         description: string,
         isChecked: boolean,
@@ -55,6 +71,9 @@ export class Tasks {
         waitingContactId: string,
         scheduledDate: string,
     ): void {
+        if (!id) {
+            return ;
+        }
         const builder = new TaskBuilder(name, description);
         this.set(builder
             .setId(id)

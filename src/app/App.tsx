@@ -85,7 +85,7 @@ export default function App() {
           task.scheduledDate
         )
       })
-      setTasks(new Tasks(tasks.items));
+      setTasks(new Tasks(tasks.getItems()));
       console.log(tasks);
 
       data.contacts.forEach((contact) => {

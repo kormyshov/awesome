@@ -47,7 +47,7 @@ export default function EditTask(props) {
 
   const { id } = useParams();
   const { tasks, setTasks } = useContext(TasksContext);
-  const task: Task = tasks.items.get(id);
+  const task: Task = tasks.get(id);
 
   const { from } = useParams();
   const { project_id } = useParams();

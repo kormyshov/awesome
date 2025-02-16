@@ -16,7 +16,7 @@ export default function ChecklistItem(props) {
   const [isChecked, setIsChecked] = React.useState(props.item_is_checked);
 
   const { tasks, setTasks } = useContext(TasksContext);
-  const task: Task = tasks.items.get(props.item_id);
+  const task: Task = tasks.get(props.item_id);
 
   const handleSwitchTask = (isChecked) => {
     setIsChecked(isChecked);
