@@ -1,4 +1,4 @@
-import { RRule } from "rrule";
+import { Frequency, RRule } from "rrule";
 
 import { Project } from "../project/project.ts";
 import { TaskBuilder } from "./task_builder.ts";
@@ -131,7 +131,15 @@ export class Task {
         return this.repeatRule;
     }
 
+    public getRRuleFreq(): Frequency {
+        return this.repeatRule.options.freq;
+    }
+
     public getRRuleDtStart(): Date {
         return this.repeatRule.options.dtstart;
+    }
+
+    public getRRuleInterval(): number {
+        return this.repeatRule.options.interval;
     }
 }

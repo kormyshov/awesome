@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
+import { Frequency, RRule } from 'rrule';
 
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
@@ -71,6 +72,9 @@ export default function EditTask(props) {
     if ((event.target as HTMLInputElement).value !== TaskStatus.WAITING) {
       setWaitingContact("");
     }
+    if ((event.target as HTMLInputElement).value !== TaskStatus.REPEATED) {
+      setRRuleFreq(undefined);
+    }
   };
 
   const [taskProject, setTaskProject] = React.useState(task.getProjectId());
@@ -100,11 +104,18 @@ export default function EditTask(props) {
       taskProject,
       waitingContact,
       scheduledDate ? scheduledDate.format("YYYY-MM-DD") : "",
+      new RRule({
+        freq: rrule_freq, 
+        dtstart: rrule_dtstart ? rrule_dtstart.toDate() : new Date(), 
+        interval: rrule_interval
+      })
     )
     setTasks(tasks);
   };
 
+  const [rrule_freq, setRRuleFreq] = React.useState<Frequency | undefined>(task.getRRuleFreq());
   const [rrule_dtstart, setRRuleDtStart] = React.useState<Dayjs | null>(dayjs(task.getRRuleDtStart()));
+  const [rrule_interval, setRRuleInterval] = React.useState(task.getRRuleInterval());
 
   const deleteTask = () => {
     task.setDeleted();
@@ -112,10 +123,8 @@ export default function EditTask(props) {
     setTasks(tasks);
   };
 
-  const [tabValue, setTabValue] = React.useState(0);
-
   const handleChangeTabValue = (event: React.SyntheticEvent, newTabValue: number) => {
-    setTabValue(newTabValue);
+    setRRuleFreq(newTabValue);
   };
 
   return (
@@ -154,7 +163,7 @@ export default function EditTask(props) {
           value={taskDescription} 
           onChange={(e)=>setTaskDescription(e.target.value)} 
         />
-        
+
         <SelectProjectList 
           taskProject={taskProject}
           taskProjectChange={taskProjectChange}
@@ -192,10 +201,12 @@ export default function EditTask(props) {
             <FormControlLabel value={TaskStatus.REPEATED} control={<Radio />} label="Repeated" />
             { taskStatus !== TaskStatus.REPEATED ? null : 
               <TabsRepeated 
-                tabValue={tabValue} 
+                tabValue={rrule_freq}
                 handleChangeTabValue={handleChangeTabValue}
                 rrule_dtstart={rrule_dtstart}
                 setRRuleDtStart={setRRuleDtStart}
+                rrule_interval={rrule_interval}
+                setRRuleInterval={setRRuleInterval}
               /> 
             }
           </RadioGroup>

@@ -54,7 +54,7 @@ export default function Project(props) {
     .filter(task => task.projectIdEqual(id))
     ;
 
-  const actions_with_status = ["Next", "Waiting", "Scheduled", "Someday"]
+  const actions_with_status = ["Next", "Waiting", "Scheduled", "Someday", "Repeated"]
     .map(status => ({
       status: status,
       tasks: items

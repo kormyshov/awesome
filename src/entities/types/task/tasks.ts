@@ -1,7 +1,10 @@
+import { RRule } from "rrule";
+
 import { Task } from "./task.ts";
 import { TaskBuilder } from "./task_builder.ts";
 import { TaskStatus } from "./task_status.ts";
 import { uploadTasks } from "../../upload/tasks.ts";
+
 
 export class Tasks {
 
@@ -70,6 +73,7 @@ export class Tasks {
         projectId: string,
         waitingContactId: string,
         scheduledDate: string,
+        repeatRule: RRule,
     ): void {
         if (!id) {
             return ;
@@ -82,6 +86,7 @@ export class Tasks {
             .setProjectId(projectId)
             .setWaitingContactId(waitingContactId)
             .setScheduledDate(scheduledDate)
+            .setRepeatRule(repeatRule)
             .build()
         );
     }
