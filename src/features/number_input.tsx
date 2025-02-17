@@ -33,14 +33,20 @@ const NumberInput = React.forwardRef(function CustomNumberInput(
 });
 
 export default function NumberInputBasic(props) {
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.setValue(event.target.value);
+  };
+
     return (
       <NumberInput
         aria-label="number_input"
         placeholder={props.placeholder}
-        value={props.value}
+        value={Number(props.value)}
         min={props.min}
         max={props.max}
         onChange={(event, val) => props.setValue(val)}
+        onInputChange={handleInputChange}
       />
     );
 }

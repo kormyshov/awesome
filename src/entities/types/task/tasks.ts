@@ -73,22 +73,71 @@ export class Tasks {
         projectId: string,
         waitingContactId: string,
         scheduledDate: string,
-        repeatRule: RRule,
+        repeatRule: RRule | undefined,
     ): void {
         if (!id) {
             return ;
         }
-        const builder = new TaskBuilder(name, description);
-        this.set(builder
-            .setId(id)
-            .setIsChecked(isChecked)
-            .setStatus(status)
-            .setProjectId(projectId)
-            .setWaitingContactId(waitingContactId)
-            .setScheduledDate(scheduledDate)
-            .setRepeatRule(repeatRule)
-            .build()
+        this.buildFullTask(
+            id, name, description, isChecked, "", status, "", 
+            projectId, waitingContactId, scheduledDate, repeatRule
         );
+    }
+
+    private next_by_repeated_task(builder: TaskBuilder) {
+        const repeatRule = builder.getRepeatRule();
+        if (builder.getStatus() === TaskStatus.REPEATED && repeatRule !== undefined) {
+            const next_date = repeatRule.after(repeatRule.options.dtstart, true);
+            if (next_date !== null) {
+                builder.setStatus(TaskStatus.SCHEDULED);
+                builder.setScheduledDate(next_date.toISOString());
+            } else {
+                builder.setStatus(TaskStatus.NEXT);
+            }
+        }
+    }
+
+    private build_child_task(builder: TaskBuilder) {
+        const child_builder = new TaskBuilder(builder.getName(), builder.getDescription());
+        child_builder
+            .setIsChecked(builder.getIsChecked())
+            .setCheckedDate(builder.getCheckedDate())
+            .setStatus(TaskStatus.NEXT)
+            .setProjectId(builder.getProjectId())
+        ;
+
+        this.set(child_builder.build());
+    }
+
+    private check_for_scheduled_task(builder: TaskBuilder) {
+        const scheduledDate = builder.getScheduledDate();
+        const repeatRule = builder.getRepeatRule();
+
+        if (scheduledDate !== "" && scheduledDate <= (new Date().toISOString())) {
+            if (repeatRule !== undefined) {
+                const next_date = repeatRule.after(new Date(scheduledDate), false);
+                if (next_date !== null) {
+                    builder.setScheduledDate(next_date.toISOString());
+                    builder.setIsChecked(false);
+                    builder.setRepeatRule(
+                        new RRule({
+                            ...repeatRule.options,
+                            dtstart: next_date
+                        })
+                    );
+
+                    this.build_child_task(builder);
+
+                } else {
+                    builder.setScheduledDate("");
+                    builder.setStatus(TaskStatus.NEXT);
+                    builder.setRepeatRule(undefined);
+                }
+            } else {
+                builder.setScheduledDate("");
+                builder.setStatus(TaskStatus.NEXT);
+            }
+        }
     }
 
     public buildFullTask(
@@ -102,9 +151,12 @@ export class Tasks {
         projectId: string,
         waitingContactId: string,
         scheduledDate: string,
+        repeatRule: RRule | undefined,
+        needUpload: boolean = true,
     ): void {
+
         const builder = new TaskBuilder(name, description);
-        this.set(builder
+        builder
             .setId(id)
             .setIsChecked(isChecked)
             .setCheckedDate(checkedDate)
@@ -113,9 +165,22 @@ export class Tasks {
             .setProjectId(projectId)
             .setWaitingContactId(waitingContactId)
             .setScheduledDate(scheduledDate)
-            .build(),
-            false
-        );
+            .setRepeatRule(repeatRule)
+        ;
+
+        console.log("Builder start", builder);
+
+        this.next_by_repeated_task(builder);
+        this.check_for_scheduled_task(builder);
+
+        if (builder.getCheckedDate() !== "" && 
+            builder.getCheckedDate() < (new Date().toISOString()) && 
+            builder.getRepeatRule() === undefined
+        ) {
+            builder.setStatus(TaskStatus.ARCHIVED);
+        }
+
+        this.set(builder.build(), needUpload);
     }
 
 }

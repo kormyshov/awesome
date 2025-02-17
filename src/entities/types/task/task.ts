@@ -18,9 +18,7 @@ export class Task {
     private waitingContactId: string;
     private scheduledDate: string;
 
-    private parentTaskId: string;
-    private countOfChildren: number;
-    private repeatRule: RRule;
+    private repeatRule: RRule | undefined;
 
     constructor(builder: TaskBuilder) {
         this.id = builder.getId();
@@ -33,8 +31,6 @@ export class Task {
         this.projectId = builder.getProjectId();
         this.waitingContactId = builder.getWaitingContactId();
         this.scheduledDate = builder.getScheduledDate();
-        this.parentTaskId = builder.getParentTaskId();
-        this.countOfChildren = builder.getCountOfChildren();
         this.repeatRule = builder.getRepeatRule();
     }
 
@@ -99,7 +95,10 @@ export class Task {
         return this.checkedDate;
     }
 
-    public getStatus(): TaskStatus {
+    public getStatus(ignoreRepeated: boolean = true): TaskStatus {
+        if (!ignoreRepeated && this.repeatRule !== undefined) {
+            return TaskStatus.REPEATED;
+        }
         return this.status;
     }
 
@@ -119,27 +118,28 @@ export class Task {
         return this.scheduledDate;
     }
 
-    public getParentTaskId(): string {
-        return this.parentTaskId;
-    }
-
-    public getCountOfChildren(): number {
-        return this.countOfChildren;
-    }
-
-    public getRepeatRule(): RRule {
+    public getRepeatRule(): RRule | undefined {
         return this.repeatRule;
     }
 
-    public getRRuleFreq(): Frequency {
+    public getRRuleFreq(): Frequency | undefined {
+        if (this.repeatRule === undefined) {
+            return undefined;
+        }
         return this.repeatRule.options.freq;
     }
 
-    public getRRuleDtStart(): Date {
+    public getRRuleDtStart(): Date | undefined {
+        if (this.repeatRule === undefined) {
+            return undefined;
+        }
         return this.repeatRule.options.dtstart;
     }
 
-    public getRRuleInterval(): number {
+    public getRRuleInterval(): number | undefined {
+        if (this.repeatRule === undefined) {
+            return undefined;
+        }
         return this.repeatRule.options.interval;
     }
 }

@@ -18,9 +18,7 @@ export class TaskBuilder {
     private waitingContactId: string;
     private scheduledDate: string;
 
-    private parentTaskId: string;
-    private countOfChildren: number;
-    private repeatRule: RRule;
+    private repeatRule: RRule | undefined;
 
     constructor(name: string, description: string) {
         this.id = v4();
@@ -34,9 +32,7 @@ export class TaskBuilder {
         this.waitingContactId = "";
         this.scheduledDate = "";
 
-        this.parentTaskId = "";
-        this.countOfChildren = 0;
-        this.repeatRule = new RRule();
+        this.repeatRule = undefined;
     }
 
     public getId(): string {
@@ -79,15 +75,7 @@ export class TaskBuilder {
         return this.scheduledDate;
     }
 
-    public getParentTaskId(): string {
-        return this.parentTaskId;
-    }
-
-    public getCountOfChildren(): number {
-        return this.countOfChildren;
-    }
-
-    public getRepeatRule(): RRule {
+    public getRepeatRule(): RRule | undefined {
         return this.repeatRule;
     }
 
@@ -149,32 +137,12 @@ export class TaskBuilder {
         return this;
     }
 
-    public setParentTaskId(parentTaskId: string): TaskBuilder {
-        this.parentTaskId = parentTaskId;
-        return this;
-    }
-
-    public setCountOfChildren(countOfChildren: number): TaskBuilder {
-        this.countOfChildren = countOfChildren;
-        return this;
-    }
-
-    public setRepeatRule(repeatRule: RRule): TaskBuilder {
+    public setRepeatRule(repeatRule: RRule | undefined): TaskBuilder {
         this.repeatRule = repeatRule;
         return this;
     }
 
     public build(): Task {
-
-        if (this.scheduledDate !== "" && this.scheduledDate <= (new Date().toISOString())) {
-            this.scheduledDate = "";
-            this.status = TaskStatus.NEXT;
-        }
-
-        if (this.checkedDate !== "" && this.checkedDate < (new Date().toISOString())) {
-            this.status = TaskStatus.ARCHIVED;
-        }
-
         return new Task(this);
     }
 }

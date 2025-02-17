@@ -82,7 +82,9 @@ export default function App() {
           task.deletedDate, 
           task.projectId, 
           task.waitingContactId, 
-          task.scheduledDate
+          task.scheduledDate,
+          task.repeatRule,
+          false
         )
       })
       setTasks(new Tasks(tasks.getItems()));

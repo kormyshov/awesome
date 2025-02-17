@@ -59,7 +59,7 @@ export default function EditTask(props) {
     setDialogDeleteOpen(false);
   };
 
-  const [taskStatus, setTaskStatus] = React.useState(task.getStatus());
+  const [taskStatus, setTaskStatus] = React.useState(task.getStatus(false));
 
   let cantSelectContact = taskStatus !== TaskStatus.WAITING;
 
@@ -74,6 +74,8 @@ export default function EditTask(props) {
     }
     if ((event.target as HTMLInputElement).value !== TaskStatus.REPEATED) {
       setRRuleFreq(undefined);
+    } else {
+      setRRuleFreq(0);
     }
   };
 
@@ -104,18 +106,20 @@ export default function EditTask(props) {
       taskProject,
       waitingContact,
       scheduledDate ? scheduledDate.format("YYYY-MM-DD") : "",
-      new RRule({
-        freq: rrule_freq, 
-        dtstart: rrule_dtstart ? rrule_dtstart.toDate() : new Date(), 
-        interval: rrule_interval
-      })
+      rrule_freq !== undefined ? new RRule(
+        {
+          freq: rrule_freq, 
+          dtstart: rrule_dtstart ? rrule_dtstart.toDate() : new Date(), 
+          interval: rrule_interval
+        }
+      ) : undefined
     )
     setTasks(tasks);
   };
 
   const [rrule_freq, setRRuleFreq] = React.useState<Frequency | undefined>(task.getRRuleFreq());
   const [rrule_dtstart, setRRuleDtStart] = React.useState<Dayjs | null>(dayjs(task.getRRuleDtStart()));
-  const [rrule_interval, setRRuleInterval] = React.useState(task.getRRuleInterval());
+  const [rrule_interval, setRRuleInterval] = React.useState<number | undefined>(task.getRRuleInterval());
 
   const deleteTask = () => {
     task.setDeleted();
