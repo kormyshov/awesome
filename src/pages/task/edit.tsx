@@ -110,7 +110,7 @@ export default function EditTask(props) {
         {
           freq: rrule_freq, 
           dtstart: rrule_dtstart ? rrule_dtstart.toDate() : new Date(), 
-          interval: rrule_interval
+          interval: rrule_interval ? rrule_interval : 1
         }
       ) : undefined
     )
@@ -128,7 +128,7 @@ export default function EditTask(props) {
   };
 
   const handleChangeTabValue = (event: React.SyntheticEvent, newTabValue: number) => {
-    setRRuleFreq(newTabValue);
+    setRRuleFreq(3 - newTabValue);
   };
 
   return (
@@ -205,11 +205,11 @@ export default function EditTask(props) {
             <FormControlLabel value={TaskStatus.REPEATED} control={<Radio />} label="Repeated" />
             { taskStatus !== TaskStatus.REPEATED ? null : 
               <TabsRepeated 
-                tabValue={rrule_freq}
+                tabValue={rrule_freq !== undefined ? 3 - rrule_freq : 0}
                 handleChangeTabValue={handleChangeTabValue}
                 rrule_dtstart={rrule_dtstart}
                 setRRuleDtStart={setRRuleDtStart}
-                rrule_interval={rrule_interval}
+                rrule_interval={rrule_interval !== undefined ? rrule_interval : 1}
                 setRRuleInterval={setRRuleInterval}
               /> 
             }

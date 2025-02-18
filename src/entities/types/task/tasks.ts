@@ -1,4 +1,4 @@
-import { RRule } from "rrule";
+import { RRule, datetime } from "rrule";
 
 import { Task } from "./task.ts";
 import { TaskBuilder } from "./task_builder.ts";
@@ -90,7 +90,7 @@ export class Tasks {
             const next_date = repeatRule.after(repeatRule.options.dtstart, true);
             if (next_date !== null) {
                 builder.setStatus(TaskStatus.SCHEDULED);
-                builder.setScheduledDate(next_date.toISOString());
+                builder.setScheduledDate(next_date.toISOString().substring(0, 10));
             } else {
                 builder.setStatus(TaskStatus.NEXT);
             }
@@ -112,12 +112,19 @@ export class Tasks {
     private check_for_scheduled_task(builder: TaskBuilder) {
         const scheduledDate = builder.getScheduledDate();
         const repeatRule = builder.getRepeatRule();
+        console.log("repeatRule...", repeatRule);
 
         if (scheduledDate !== "" && scheduledDate <= (new Date().toISOString())) {
             if (repeatRule !== undefined) {
-                const next_date = repeatRule.after(new Date(scheduledDate), false);
+                console.log("scheduledDate...", scheduledDate);
+                const tomorrow = new Date(scheduledDate);
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                console.log("tomorrow...", tomorrow);
+                // return;
+                const next_date = repeatRule.after(tomorrow, true);
+                console.log("next date", next_date);
                 if (next_date !== null) {
-                    builder.setScheduledDate(next_date.toISOString());
+                    builder.setScheduledDate(next_date.toISOString().substring(0, 10));
                     builder.setIsChecked(false);
                     builder.setRepeatRule(
                         new RRule({
@@ -155,6 +162,15 @@ export class Tasks {
         needUpload: boolean = true,
     ): void {
 
+        if (repeatRule !== undefined) {
+            console.log("repeatRule", repeatRule);
+            repeatRule = new RRule({
+                freq: repeatRule.options.freq,
+                dtstart: new Date(repeatRule.options.dtstart),
+                interval: repeatRule.options.interval,
+            })
+        }
+
         const builder = new TaskBuilder(name, description);
         builder
             .setId(id)
@@ -171,6 +187,7 @@ export class Tasks {
         console.log("Builder start", builder);
 
         this.next_by_repeated_task(builder);
+        console.log("Builder after next_by_repeated_task", builder);
         this.check_for_scheduled_task(builder);
 
         if (builder.getCheckedDate() !== "" && 
@@ -179,6 +196,8 @@ export class Tasks {
         ) {
             builder.setStatus(TaskStatus.ARCHIVED);
         }
+
+        console.log("Builder end", builder);
 
         this.set(builder.build(), needUpload);
     }
