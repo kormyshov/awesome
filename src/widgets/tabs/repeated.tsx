@@ -31,6 +31,12 @@ export default function TabsRepeated(props) {
             />
             <TabWeekly 
                 tabValue={props.tabValue}
+                rrule_dtstart={props.rrule_dtstart}
+                setRRuleDtStart={props.setRRuleDtStart}
+                rrule_interval={props.rrule_interval}
+                setRRuleInterval={props.setRRuleInterval}
+                rrule_byweekday={props.rrule_byweekday}
+                setRRuleByWeekday={props.setRRuleByWeekday}
             />
             <TabMonthly 
                 tabValue={props.tabValue}

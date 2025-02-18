@@ -104,3 +104,8 @@ a {
 .pageWrapperButton {
   width: 50%;
 }
+
+label.MuiFormControlLabel-root {
+  margin-left: 0px;
+  margin-right: 0px;
+}

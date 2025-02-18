@@ -110,7 +110,8 @@ export default function EditTask(props) {
         {
           freq: rrule_freq, 
           dtstart: rrule_dtstart ? rrule_dtstart.toDate() : new Date(), 
-          interval: rrule_interval ? rrule_interval : 1
+          interval: rrule_interval ? rrule_interval : 1,
+          byweekday: rrule_byweekday ? rrule_byweekday : [],
         }
       ) : undefined
     )
@@ -120,6 +121,7 @@ export default function EditTask(props) {
   const [rrule_freq, setRRuleFreq] = React.useState<Frequency | undefined>(task.getRRuleFreq());
   const [rrule_dtstart, setRRuleDtStart] = React.useState<Dayjs | null>(dayjs(task.getRRuleDtStart()));
   const [rrule_interval, setRRuleInterval] = React.useState<number | undefined>(task.getRRuleInterval());
+  const [rrule_byweekday, setRRuleByWeekday] = React.useState<number[] | undefined>(task.getRRuleByWeekday());
 
   const deleteTask = () => {
     task.setDeleted();
@@ -211,6 +213,8 @@ export default function EditTask(props) {
                 setRRuleDtStart={setRRuleDtStart}
                 rrule_interval={rrule_interval !== undefined ? rrule_interval : 1}
                 setRRuleInterval={setRRuleInterval}
+                rrule_byweekday={rrule_byweekday !== undefined ? rrule_byweekday : []}
+                setRRuleByWeekday={setRRuleByWeekday}
               /> 
             }
           </RadioGroup>

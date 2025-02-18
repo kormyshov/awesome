@@ -142,4 +142,12 @@ export class Task {
         }
         return this.repeatRule.options.interval;
     }
+
+    public getRRuleByWeekday(): number[] | undefined {
+        if (this.repeatRule === undefined || this.repeatRule.options.byweekday === null) {
+            return undefined;
+        }
+
+        return this.repeatRule.options.byweekday;
+    }
 }

@@ -162,6 +162,7 @@ export class Tasks {
                 freq: repeatRule.options.freq,
                 dtstart: new Date(repeatRule.options.dtstart),
                 interval: repeatRule.options.interval,
+                byweekday: repeatRule.options.byweekday,
             })
         }
 
