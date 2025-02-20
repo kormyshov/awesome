@@ -88,7 +88,7 @@ export default function TabWeekly(props) {
             <br />
 
             <Typography id="input-slider" gutterBottom>
-                Interval
+                Every
             </Typography>
             <NumberInputBasic 
                 placeholder="Interval"
@@ -97,6 +97,9 @@ export default function TabWeekly(props) {
                 max={999}
                 setValue={props.setRRuleInterval}
             />
+            <Typography id="input-days" gutterBottom sx={{"padding-top": "10px", "padding-left": "120px"}}>
+                week(s)
+            </Typography>
         </div>
     );
 }

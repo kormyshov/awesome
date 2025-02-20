@@ -27,8 +27,8 @@ export default function TabDaily(props) {
             </LocalizationProvider>
             <br /><br />
 
-            <Typography id="input-slider" gutterBottom>
-                Interval
+            <Typography id="input-every" gutterBottom>
+                Every
             </Typography>
             <NumberInputBasic 
                 placeholder="Interval"
@@ -37,6 +37,9 @@ export default function TabDaily(props) {
                 max={999}
                 setValue={props.setRRuleInterval}
             />
+            <Typography id="input-days" gutterBottom sx={{"padding-top": "10px", "padding-left": "120px"}}>
+                day(s)
+            </Typography>
         </div>
     );
 }
