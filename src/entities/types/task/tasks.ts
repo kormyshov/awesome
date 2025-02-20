@@ -91,6 +91,12 @@ export class Tasks {
             if (next_date !== null) {
                 builder.setStatus(TaskStatus.SCHEDULED);
                 builder.setScheduledDate(next_date.toISOString().substring(0, 10));
+                builder.setRepeatRule(
+                    new RRule({
+                        ...repeatRule.options,
+                        dtstart: next_date
+                    })
+                );
             } else {
                 builder.setStatus(TaskStatus.NEXT);
             }
@@ -119,6 +125,8 @@ export class Tasks {
                 tomorrow.setDate(tomorrow.getDate() + 1);
                 const next_date = repeatRule.after(tomorrow, true);
                 if (next_date !== null) {
+                    this.build_child_task(builder);
+
                     builder.setScheduledDate(next_date.toISOString().substring(0, 10));
                     builder.setIsChecked(false);
                     builder.setRepeatRule(
@@ -127,9 +135,6 @@ export class Tasks {
                             dtstart: next_date
                         })
                     );
-
-                    this.build_child_task(builder);
-
                 } else {
                     builder.setScheduledDate("");
                     builder.setStatus(TaskStatus.NEXT);
