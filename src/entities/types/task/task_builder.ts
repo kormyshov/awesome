@@ -1,8 +1,7 @@
-import { RRule } from "rrule";
-
 import { v4 } from "uuid";
 import { Task  } from "./task.ts";
 import { TaskStatus } from "./task_status.ts";
+import { RepeatedRule } from "./repeated_rule.ts";
 
 
 export class TaskBuilder {
@@ -18,7 +17,7 @@ export class TaskBuilder {
     private waitingContactId: string;
     private scheduledDate: string;
 
-    private repeatRule: RRule | undefined;
+    private repeatedRule: RepeatedRule | undefined;
 
     constructor(name: string, description: string) {
         this.id = v4();
@@ -32,7 +31,7 @@ export class TaskBuilder {
         this.waitingContactId = "";
         this.scheduledDate = "";
 
-        this.repeatRule = undefined;
+        this.repeatedRule = undefined;
     }
 
     public getId(): string {
@@ -75,8 +74,8 @@ export class TaskBuilder {
         return this.scheduledDate;
     }
 
-    public getRepeatRule(): RRule | undefined {
-        return this.repeatRule;
+    public getRepeatedRule(): RepeatedRule | undefined {
+        return this.repeatedRule;
     }
 
     public setId(id: string): TaskBuilder {
@@ -137,8 +136,8 @@ export class TaskBuilder {
         return this;
     }
 
-    public setRepeatRule(repeatRule: RRule | undefined): TaskBuilder {
-        this.repeatRule = repeatRule;
+    public setRepeatedRule(repeatedRule: RepeatedRule | undefined): TaskBuilder {
+        this.repeatedRule = repeatedRule;
         return this;
     }
 

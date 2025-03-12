@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { Route, Routes } from "react-router-dom";
 import { useEffect, useState } from 'react';
+import dayjs, { Dayjs } from 'dayjs';
 
 import TaskList from "../pages/task/list.tsx";
 import ProjectList from "../pages/project/list.tsx";
@@ -24,6 +25,8 @@ import { Project as ObjProject } from '../entities/types/project/project.ts';
 import { Tasks } from '../entities/types/task/tasks.ts';
 import { SidebarState } from '../entities/types/sidebar/sidebar_state.ts';
 import { getCommand } from '../entities/upload/common.ts';
+import { RepeatedRule } from '../entities/types/task/repeated_rule.ts';
+import { Weekday } from 'rrule';
 
 export const ContactsContext = React.createContext(
   {
@@ -83,7 +86,16 @@ export default function App() {
           task.projectId, 
           task.waitingContactId, 
           task.scheduledDate,
-          task.repeatRule,
+          task.repeatedRule !== undefined ? 
+            new RepeatedRule(
+              task.repeatedRule.freq, 
+              dayjs(task.repeatedRule.dtstart), 
+              task.repeatedRule.interval, 
+              task.repeatedRule.byweekday.map(d => new Weekday(d.weekday, d.n)),
+              task.repeatedRule.bymonthday,
+              task.repeatedRule.bymonth,
+            ) : 
+            undefined,
           false
         )
       })

@@ -10,11 +10,21 @@ import TabMonthly from './tab_monthly.tsx';
 import TabYearly from './tab_yearly.tsx';
 
 
-export default function TabsRepeated(props) {
+export function TabsRepeated(props) {
+
+    // const repeatedRule = new RepeatedRule(props.repeatedRule, props.setRepeatedRule);
+    console.log("Page repeated:", props.repeatedRule);
+
+    const [tabValue, setTabValue] = React.useState(props.repeatedRule.getTabValue());
+
+    const handleChangeTabValue = (event: React.SyntheticEvent, newTabValue: number) => {
+        setTabValue(newTabValue);
+        props.repeatedRule.setFreq(3 - newTabValue);
+    };
 
     return (
         <>
-            <Tabs value={props.tabValue} onChange={props.handleChangeTabValue} aria-label="repeated tabs">
+            <Tabs value={tabValue} onChange={handleChangeTabValue} aria-label="repeated tabs">
                 <Tab label="Daily" id="tab-daily" />
                 <Tab label="Weekly" id="tab-weekly" />
                 <Tab label="Monthly" id="tab-monthly" />
@@ -23,26 +33,20 @@ export default function TabsRepeated(props) {
             <br />
 
             <TabDaily 
-                tabValue={props.tabValue}
-                rrule_dtstart={props.rrule_dtstart}
-                setRRuleDtStart={props.setRRuleDtStart}
-                rrule_interval={props.rrule_interval}
-                setRRuleInterval={props.setRRuleInterval}
+                tabValue={tabValue}
+                repeatedRule={props.repeatedRule}
             />
             <TabWeekly 
-                tabValue={props.tabValue}
-                rrule_dtstart={props.rrule_dtstart}
-                setRRuleDtStart={props.setRRuleDtStart}
-                rrule_interval={props.rrule_interval}
-                setRRuleInterval={props.setRRuleInterval}
-                rrule_byweekday={props.rrule_byweekday}
-                setRRuleByWeekday={props.setRRuleByWeekday}
+                tabValue={tabValue}
+                repeatedRule={props.repeatedRule}
             />
             <TabMonthly 
-                tabValue={props.tabValue}
+                tabValue={tabValue}
+                repeatedRule={props.repeatedRule}
             />
             <TabYearly 
-                tabValue={props.tabValue}
+                tabValue={tabValue}
+                repeatedRule={props.repeatedRule}
             />
 
             <br />

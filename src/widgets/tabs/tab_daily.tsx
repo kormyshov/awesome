@@ -1,6 +1,5 @@
 import React from 'react';
 
-import 'dayjs/locale/de';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -18,11 +17,11 @@ export default function TabDaily(props) {
             id="tabpanel-daily"
             aria-labelledby="tab-daily"
         >
-            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
+            <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en">
                 <DatePicker 
                     label="Start date"
-                    value={props.rrule_dtstart}
-                    onChange={(newValue) => props.setRRuleDtStart(newValue)}
+                    value={props.repeatedRule.getDtstart()}
+                    onChange={(newValue) => props.repeatedRule.setDtstart(newValue)}
                 />
             </LocalizationProvider>
             <br /><br />
@@ -32,12 +31,12 @@ export default function TabDaily(props) {
             </Typography>
             <NumberInputBasic 
                 placeholder="Interval"
-                value={props.rrule_interval}
+                value={props.repeatedRule.getInterval()}
                 min={1}
                 max={999}
-                setValue={props.setRRuleInterval}
+                setValue={(newValue) => props.repeatedRule.setInterval(newValue)}
             />
-            <Typography id="input-days" gutterBottom sx={{"padding-top": "10px", "padding-left": "120px"}}>
+            <Typography id="input-days" gutterBottom sx={{"padding-top": "10px", "padding-left": "200px"}}>
                 day(s)
             </Typography>
         </div>

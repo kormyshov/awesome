@@ -1,8 +1,7 @@
-import { Frequency, RRule } from "rrule";
-
 import { Project } from "../project/project.ts";
 import { TaskBuilder } from "./task_builder.ts";
 import { TaskStatus } from "./task_status.ts";
+import { RepeatedRule } from "./repeated_rule.ts";
 
 
 export class Task {
@@ -18,7 +17,7 @@ export class Task {
     private waitingContactId: string;
     private scheduledDate: string;
 
-    private repeatRule: RRule | undefined;
+    private repeatedRule: RepeatedRule | undefined;
 
     constructor(builder: TaskBuilder) {
         this.id = builder.getId();
@@ -31,7 +30,7 @@ export class Task {
         this.projectId = builder.getProjectId();
         this.waitingContactId = builder.getWaitingContactId();
         this.scheduledDate = builder.getScheduledDate();
-        this.repeatRule = builder.getRepeatRule();
+        this.repeatedRule = builder.getRepeatedRule();
     }
 
     public statusEqual(status: TaskStatus): boolean {
@@ -96,7 +95,7 @@ export class Task {
     }
 
     public getStatus(ignoreRepeated: boolean = true): TaskStatus {
-        if (!ignoreRepeated && this.repeatRule !== undefined) {
+        if (!ignoreRepeated && this.repeatedRule !== undefined) {
             return TaskStatus.REPEATED;
         }
         return this.status;
@@ -118,36 +117,14 @@ export class Task {
         return this.scheduledDate;
     }
 
-    public getRepeatRule(): RRule | undefined {
-        return this.repeatRule;
+    public getRepeatedRule(): RepeatedRule | undefined {
+        return this.repeatedRule;
     }
 
-    public getRRuleFreq(): Frequency | undefined {
-        if (this.repeatRule === undefined) {
+    public getRepeatedRuleFreq(): number | undefined {
+        if (this.repeatedRule === undefined) {
             return undefined;
         }
-        return this.repeatRule.options.freq;
-    }
-
-    public getRRuleDtStart(): Date | undefined {
-        if (this.repeatRule === undefined) {
-            return undefined;
-        }
-        return this.repeatRule.options.dtstart;
-    }
-
-    public getRRuleInterval(): number | undefined {
-        if (this.repeatRule === undefined) {
-            return undefined;
-        }
-        return this.repeatRule.options.interval;
-    }
-
-    public getRRuleByWeekday(): number[] | undefined {
-        if (this.repeatRule === undefined || this.repeatRule.options.byweekday === null) {
-            return undefined;
-        }
-
-        return this.repeatRule.options.byweekday;
+        return this.repeatedRule.getFreq();
     }
 }

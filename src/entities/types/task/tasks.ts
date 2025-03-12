@@ -1,9 +1,11 @@
 import { RRule } from "rrule";
+import dayjs from 'dayjs';
 
 import { Task } from "./task.ts";
 import { TaskBuilder } from "./task_builder.ts";
 import { TaskStatus } from "./task_status.ts";
 import { uploadTasks } from "../../upload/tasks.ts";
+import { RepeatedRule } from "./repeated_rule.ts";
 
 
 export class Tasks {
@@ -73,30 +75,34 @@ export class Tasks {
         projectId: string,
         waitingContactId: string,
         scheduledDate: string,
-        repeatRule: RRule | undefined,
+        repeatedRule: RepeatedRule | undefined,
     ): void {
         if (!id) {
             return ;
         }
         this.buildFullTask(
             id, name, description, isChecked, "", status, "", 
-            projectId, waitingContactId, scheduledDate, repeatRule
+            projectId, waitingContactId, scheduledDate, repeatedRule
         );
     }
 
     private next_by_repeated_task(builder: TaskBuilder) {
-        const repeatRule = builder.getRepeatRule();
-        if (builder.getStatus() === TaskStatus.REPEATED && repeatRule !== undefined) {
-            const next_date = repeatRule.after(repeatRule.options.dtstart, true);
+        const repeatedRule = builder.getRepeatedRule();
+        if (builder.getStatus() === TaskStatus.REPEATED && repeatedRule !== undefined) {
+            const rrule = new RRule({
+                freq: repeatedRule.getFreq(),
+                dtstart: repeatedRule.getDtstart().toDate(),
+                interval: repeatedRule.getInterval(),
+                byweekday: repeatedRule.getByweekday(),
+                bymonthday: repeatedRule.getBymonthday(),
+                bymonth: repeatedRule.getBymonth(),
+            });
+            const next_date = rrule.after(repeatedRule.getDtstart().toDate(), true);
             if (next_date !== null) {
                 builder.setStatus(TaskStatus.SCHEDULED);
                 builder.setScheduledDate(next_date.toISOString().substring(0, 10));
-                builder.setRepeatRule(
-                    new RRule({
-                        ...repeatRule.options,
-                        dtstart: next_date
-                    })
-                );
+                repeatedRule.setDtstart(dayjs(next_date));
+                builder.setRepeatedRule(repeatedRule);
             } else {
                 builder.setStatus(TaskStatus.NEXT);
             }
@@ -117,28 +123,32 @@ export class Tasks {
 
     private check_for_scheduled_task(builder: TaskBuilder) {
         const scheduledDate = builder.getScheduledDate();
-        const repeatRule = builder.getRepeatRule();
+        const repeatedRule = builder.getRepeatedRule();
 
         if (scheduledDate !== "" && scheduledDate <= (new Date().toISOString())) {
-            if (repeatRule !== undefined) {
+            if (repeatedRule !== undefined) {
                 const tomorrow = new Date(scheduledDate);
                 tomorrow.setDate(tomorrow.getDate() + 1);
-                const next_date = repeatRule.after(tomorrow, true);
+                const rrule = new RRule({
+                    freq: repeatedRule.getFreq(),
+                    dtstart: repeatedRule.getDtstart().toDate(),
+                    interval: repeatedRule.getInterval(),
+                    byweekday: repeatedRule.getByweekday(),
+                    bymonthday: repeatedRule.getBymonthday(),
+                    bymonth: repeatedRule.getBymonth(),
+                });
+                const next_date = rrule.after(tomorrow, true);
                 if (next_date !== null) {
                     this.build_child_task(builder);
 
                     builder.setScheduledDate(next_date.toISOString().substring(0, 10));
                     builder.setIsChecked(false);
-                    builder.setRepeatRule(
-                        new RRule({
-                            ...repeatRule.options,
-                            dtstart: next_date
-                        })
-                    );
+                    repeatedRule.setDtstart(dayjs(next_date));
+                    builder.setRepeatedRule(repeatedRule);
                 } else {
                     builder.setScheduledDate("");
                     builder.setStatus(TaskStatus.NEXT);
-                    builder.setRepeatRule(undefined);
+                    builder.setRepeatedRule(undefined);
                 }
             } else {
                 builder.setScheduledDate("");
@@ -158,18 +168,11 @@ export class Tasks {
         projectId: string,
         waitingContactId: string,
         scheduledDate: string,
-        repeatRule: RRule | undefined,
+        repeatedRule: RepeatedRule | undefined,
         needUpload: boolean = true,
     ): void {
 
-        if (repeatRule !== undefined) {
-            repeatRule = new RRule({
-                freq: repeatRule.options.freq,
-                dtstart: new Date(repeatRule.options.dtstart),
-                interval: repeatRule.options.interval,
-                byweekday: repeatRule.options.byweekday,
-            })
-        }
+        console.log("RepeatedRule start", repeatedRule);
 
         const builder = new TaskBuilder(name, description);
         builder
@@ -181,7 +184,7 @@ export class Tasks {
             .setProjectId(projectId)
             .setWaitingContactId(waitingContactId)
             .setScheduledDate(scheduledDate)
-            .setRepeatRule(repeatRule)
+            .setRepeatedRule(repeatedRule)
         ;
 
         this.next_by_repeated_task(builder);
@@ -189,7 +192,7 @@ export class Tasks {
 
         if (builder.getCheckedDate() !== "" && 
             builder.getCheckedDate() < (new Date().toISOString()) && 
-            builder.getRepeatRule() === undefined
+            builder.getRepeatedRule() === undefined
         ) {
             builder.setStatus(TaskStatus.ARCHIVED);
         }

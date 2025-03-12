@@ -75,7 +75,7 @@ const blue = {
   const StyledInputRoot = styled('div')(
     ({ theme }) => `
     font-family: 'IBM Plex Sans', sans-serif;
-    width: 100px;
+    width: 180px;
     float: left;
     font-weight: 400;
     border-radius: 8px;
@@ -118,7 +118,7 @@ const blue = {
     background: inherit;
     border: none;
     border-radius: inherit;
-    padding: 8px 12px;
+    padding: 8px 1px;
     outline: 0;
   `,
   );

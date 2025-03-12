@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { Frequency, RRule } from 'rrule';
 
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
@@ -30,8 +29,9 @@ import { uploadTasks } from '../../entities/upload/tasks.ts';
 import DialogDeleteTask from '../../widgets/dialogs/delete_task.tsx';
 import ButtonGroupEditTask from '../../widgets/buttons/edit_task.tsx';
 import SelectProjectList from '../../widgets/selects/project_list.tsx';
-import TabsRepeated from '../../widgets/tabs/repeated.tsx';
+import { TabsRepeated } from '../../widgets/tabs/repeated.tsx';
 import SelectContactList from '../../widgets/selects/contact_list.tsx';
+import { RepeatedRule } from '../../entities/types/task/repeated_rule.ts';
 
 
 export default function EditTask(props) {
@@ -73,9 +73,9 @@ export default function EditTask(props) {
       setWaitingContact("");
     }
     if ((event.target as HTMLInputElement).value !== TaskStatus.REPEATED) {
-      setRRuleFreq(undefined);
+      setRepeatedRuleFreq(undefined);
     } else {
-      setRRuleFreq(0);
+      setRepeatedRuleFreq(3);
     }
   };
 
@@ -97,6 +97,7 @@ export default function EditTask(props) {
   const [scheduledDate, setScheduledDate] = React.useState<Dayjs | null>(dayjs(task.getScheduledDate()));
 
   const saveTask = () => {
+    console.log("Save task", repeatedRule);
     tasks.buildCommonTask(
       id,
       taskName,
@@ -106,22 +107,13 @@ export default function EditTask(props) {
       taskProject,
       waitingContact,
       scheduledDate ? scheduledDate.format("YYYY-MM-DD") : "",
-      rrule_freq !== undefined ? new RRule(
-        {
-          freq: rrule_freq, 
-          dtstart: rrule_dtstart ? rrule_dtstart.toDate() : new Date(), 
-          interval: rrule_interval ? rrule_interval : 1,
-          byweekday: rrule_byweekday ? rrule_byweekday : [],
-        }
-      ) : undefined
+      repeatedRule_freq ? repeatedRule : undefined,
     )
     setTasks(tasks);
   };
 
-  const [rrule_freq, setRRuleFreq] = React.useState<Frequency | undefined>(task.getRRuleFreq());
-  const [rrule_dtstart, setRRuleDtStart] = React.useState<Dayjs | null>(dayjs(task.getRRuleDtStart()));
-  const [rrule_interval, setRRuleInterval] = React.useState<number | undefined>(task.getRRuleInterval());
-  const [rrule_byweekday, setRRuleByWeekday] = React.useState<number[] | undefined>(task.getRRuleByWeekday());
+  const [repeatedRule, setRepeatedRule] = React.useState<RepeatedRule>(task.getRepeatedRule() || new RepeatedRule(3, dayjs(new Date()), 1));
+  const [repeatedRule_freq, setRepeatedRuleFreq] = React.useState<number | undefined>(repeatedRule?.getFreq());
 
   const deleteTask = () => {
     task.setDeleted();
@@ -130,7 +122,7 @@ export default function EditTask(props) {
   };
 
   const handleChangeTabValue = (event: React.SyntheticEvent, newTabValue: number) => {
-    setRRuleFreq(3 - newTabValue);
+    setRepeatedRuleFreq(3 - newTabValue);
   };
 
   return (
@@ -207,14 +199,10 @@ export default function EditTask(props) {
             <FormControlLabel value={TaskStatus.REPEATED} control={<Radio />} label="Repeated" />
             { taskStatus !== TaskStatus.REPEATED ? null : 
               <TabsRepeated 
-                tabValue={rrule_freq !== undefined ? 3 - rrule_freq : 0}
+                tabValue={repeatedRule_freq !== undefined ? 3 - repeatedRule_freq : 0}
                 handleChangeTabValue={handleChangeTabValue}
-                rrule_dtstart={rrule_dtstart}
-                setRRuleDtStart={setRRuleDtStart}
-                rrule_interval={rrule_interval !== undefined ? rrule_interval : 1}
-                setRRuleInterval={setRRuleInterval}
-                rrule_byweekday={rrule_byweekday !== undefined ? rrule_byweekday : []}
-                setRRuleByWeekday={setRRuleByWeekday}
+                repeatedRule={repeatedRule}
+                // setRepeatedRule={setRepeatedRule}
               /> 
             }
           </RadioGroup>
