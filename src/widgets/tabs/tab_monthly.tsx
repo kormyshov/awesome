@@ -98,7 +98,7 @@ export default function TabMonthly(props) {
                 setValue={handleChangeNth}
             />
             <Typography id="input-th" gutterBottom sx={{"padding-top": "10px", "padding-left": "180px"}}>
-                { nth == 1 ? "st" : nth == 2 ? "nd" : nth == 3 ? "rd" : "th"}
+                { nth === 1 ? "st" : nth === 2 ? "nd" : nth === 3 ? "rd" : "th"}
 
                 <FormControl variant="standard" sx={{ m: 1, width: "120px", marginTop: "0px"}}>
                     <Select

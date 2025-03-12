@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Route, Routes } from "react-router-dom";
 import { useEffect, useState } from 'react';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
 import TaskList from "../pages/task/list.tsx";
 import ProjectList from "../pages/project/list.tsx";

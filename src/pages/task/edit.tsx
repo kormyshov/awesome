@@ -112,7 +112,7 @@ export default function EditTask(props) {
     setTasks(tasks);
   };
 
-  const [repeatedRule, setRepeatedRule] = React.useState<RepeatedRule>(task.getRepeatedRule() || new RepeatedRule(3, dayjs(new Date()), 1));
+  const [repeatedRule] = React.useState<RepeatedRule>(task.getRepeatedRule() || new RepeatedRule(3, dayjs(new Date()), 1));
   const [repeatedRule_freq, setRepeatedRuleFreq] = React.useState<number | undefined>(repeatedRule?.getFreq());
 
   const deleteTask = () => {
