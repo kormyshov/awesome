@@ -160,6 +160,7 @@ export default function EditTask(props) {
           className="pageWrapperInput" 
           value={taskDescription} 
           onChange={(e)=>setTaskDescription(e.target.value)} 
+          sx={{ marginLeft: "10px" }}
         />
 
         <SelectProjectList 
@@ -214,6 +215,7 @@ export default function EditTask(props) {
           from={"/" + ext_from}
           saveTask={saveTask}
         />
+        <br /><br />
       </div>
 
       <DialogDeleteTask 
