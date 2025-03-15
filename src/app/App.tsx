@@ -16,10 +16,16 @@ import NewContact from '../pages/contact/new.tsx';
 import EditContact from '../pages/contact/edit.tsx';
 import ContactList from '../pages/contact/list.tsx';
 
+import NewArea from '../pages/area/new.tsx';
+import EditArea from '../pages/area/edit.tsx';
+import AreaList from '../pages/area/list.tsx';
+
 import NewTask from '../pages/task/new.tsx';
 
 import { Contacts } from '../entities/types/contact/contacts.ts';
 import { Contact } from '../entities/types/contact/contact.ts';
+import { Areas } from '../entities/types/area/areas.ts';
+import { Area } from '../entities/types/area/area.ts';
 import { Projects } from '../entities/types/project/projects.ts';
 import { Project as ObjProject } from '../entities/types/project/project.ts';
 import { Tasks } from '../entities/types/task/tasks.ts';
@@ -32,6 +38,12 @@ export const ContactsContext = React.createContext(
   {
     contacts: new Contacts(),
     setContacts: (contacts: Contacts) => {}
+  }
+);
+export const AreasContext = React.createContext(
+  {
+    areas: new Areas(),
+    setAreas: (areas: Areas) => {}
   }
 );
 export const ProjectsContext = React.createContext(
@@ -58,6 +70,9 @@ export default function App() {
   const [contacts, setContacts] = useState(new Contacts());
   const contactsValue = useMemo(() => ({contacts, setContacts}), [contacts]);
 
+  const [areas, setAreas] = useState(new Areas());
+  const areasValue = useMemo(() => ({areas, setAreas}), [areas]);
+
   const [projects, setProjects] = useState(new Projects());
   const projectsValue = useMemo(() => ({projects, setProjects}), [projects]);
 
@@ -83,6 +98,7 @@ export default function App() {
           task.checkedDate, 
           task.status, 
           task.deletedDate, 
+          task.areaId, 
           task.projectId, 
           task.waitingContactId, 
           task.scheduledDate,
@@ -106,15 +122,19 @@ export default function App() {
         contacts.add(new Contact(contact.id, contact.name, contact.status))
         setContacts(contacts)
       })
+      data.areas.forEach((area) => {
+        areas.add(new Area(area.id, area.name, area.status))
+        setAreas(areas)
+      })
       data.projects.forEach((project) => {
-        projects.add(new ObjProject(project.id, project.name, project.description, project.status))
+        projects.add(new ObjProject(project.id, project.name, project.description, project.areaId, project.status))
         setProjects(projects)
       })
     }
 
     fetchData();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contacts, projects])
+  }, [contacts, areas, projects])
 
 
   return (
@@ -124,6 +144,7 @@ export default function App() {
         <Sidebar />
 
         <ContactsContext.Provider value={contactsValue}>
+        <AreasContext.Provider value={areasValue}>
         <ProjectsContext.Provider value={projectsValue}>
         <TasksContext.Provider value={tasksValue}>
           <Routes>
@@ -146,6 +167,12 @@ export default function App() {
               <Route path=":id/edit/:from" element={<EditTask />} />
             </Route>
 
+            <Route path="areas">
+              <Route index element={<AreaList />} />
+              <Route path="new" element={<NewArea />} />
+              <Route path=":id" element={<EditArea />} />
+            </Route>
+
             <Route path="projects">
               <Route index element={<ProjectList />} />
               <Route path="new" element={<NewProject />} />
@@ -165,6 +192,7 @@ export default function App() {
           </Routes>
         </TasksContext.Provider>
         </ProjectsContext.Provider>
+        </AreasContext.Provider>
         </ContactsContext.Provider>
   
       </SidebarContext.Provider>

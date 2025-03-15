@@ -57,6 +57,10 @@ export class Tasks {
         return Array.from(this.items.values()).filter(task => task.waitingContactIdEqual(contactId));
     }
 
+    public filterByAreaId(areaId: string | undefined): Task[] {
+        return Array.from(this.items.values()).filter(task => task.areaIdEqual(areaId));
+    }
+
     public toList(): Task[] {
         return Array.from(this.items.values());
     }
@@ -72,6 +76,7 @@ export class Tasks {
         description: string,
         isChecked: boolean,
         status: TaskStatus,
+        areaId: string,
         projectId: string,
         waitingContactId: string,
         scheduledDate: string,
@@ -81,7 +86,7 @@ export class Tasks {
             return ;
         }
         this.buildFullTask(
-            id, name, description, isChecked, "", status, "", 
+            id, name, description, isChecked, "", status, "", areaId,
             projectId, waitingContactId, scheduledDate, repeatedRule
         );
     }
@@ -165,14 +170,13 @@ export class Tasks {
         checkedDate: string,
         status: TaskStatus,
         deletedDate: string,
+        areaId: string,
         projectId: string,
         waitingContactId: string,
         scheduledDate: string,
         repeatedRule: RepeatedRule | undefined,
         needUpload: boolean = true,
     ): void {
-
-        console.log("RepeatedRule start", repeatedRule);
 
         const builder = new TaskBuilder(name, description);
         builder
@@ -181,6 +185,7 @@ export class Tasks {
             .setCheckedDate(checkedDate)
             .setStatus(status)
             .setDeletedDate(deletedDate)
+            .setAreaId(areaId)
             .setProjectId(projectId)
             .setWaitingContactId(waitingContactId)
             .setScheduledDate(scheduledDate)
@@ -196,8 +201,6 @@ export class Tasks {
         ) {
             builder.setStatus(TaskStatus.ARCHIVED);
         }
-
-        console.log("Builder end", builder);
 
         this.set(builder.build(), needUpload);
     }

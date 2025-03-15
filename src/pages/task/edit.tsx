@@ -28,6 +28,7 @@ import { TaskStatus } from '../../entities/types/task/task_status.ts';
 import { uploadTasks } from '../../entities/upload/tasks.ts';
 import DialogDeleteTask from '../../widgets/dialogs/delete_task.tsx';
 import ButtonGroupEditTask from '../../widgets/buttons/edit_task.tsx';
+import SelectAreaList from '../../widgets/selects/area_list.tsx';
 import SelectProjectList from '../../widgets/selects/project_list.tsx';
 import { TabsRepeated } from '../../widgets/tabs/repeated.tsx';
 import SelectContactList from '../../widgets/selects/contact_list.tsx';
@@ -79,6 +80,12 @@ export default function EditTask(props) {
     }
   };
 
+  const [taskArea, setTaskArea] = React.useState(task.getAreaId());
+
+  const taskAreaChange = (event: SelectChangeEvent) => {
+    setTaskArea(event.target.value);
+  };
+
   const [taskProject, setTaskProject] = React.useState(task.getProjectId());
 
   const taskProjectChange = (event: SelectChangeEvent) => {
@@ -104,10 +111,11 @@ export default function EditTask(props) {
       taskDescription,
       taskIsChecked,
       taskStatus,
+      taskArea,
       taskProject,
       waitingContact,
-      scheduledDate ? scheduledDate.format("YYYY-MM-DD") : "",
-      repeatedRule_freq ? repeatedRule : undefined,
+      taskStatus === TaskStatus.SCHEDULED && scheduledDate !== null ? scheduledDate.format("YYYY-MM-DD") : "",
+      taskStatus === TaskStatus.REPEATED ? repeatedRule : undefined,
     )
     setTasks(tasks);
   };
@@ -150,7 +158,7 @@ export default function EditTask(props) {
           }
           style={{ width: '100%' }}
         />
-        <br /><br />
+        <br />
 
         <TextField 
           id="task_description" 
@@ -160,9 +168,14 @@ export default function EditTask(props) {
           className="pageWrapperInput" 
           value={taskDescription} 
           onChange={(e)=>setTaskDescription(e.target.value)} 
-          sx={{ marginLeft: "10px" }}
+          // sx={{ marginLeft: "10px" }}
         />
 
+        <br /><br />
+        <SelectAreaList
+          area={taskArea}
+          areaChange={taskAreaChange}
+        />
         <SelectProjectList 
           taskProject={taskProject}
           taskProjectChange={taskProjectChange}

@@ -80,6 +80,14 @@ export default function Sidebar(props) {
       <Divider />
       
       <List>
+          <Link to="/areas" className="linkMenu">
+            <ListItemButton>
+              <ListItemIcon>
+                <Icon>label_important</Icon>
+              </ListItemIcon>
+              <ListItemText primary="Areas" />
+            </ListItemButton>
+          </Link>
           <Link to="/projects" className="linkMenu">
             <ListItemButton>
               <ListItemIcon>

@@ -13,7 +13,10 @@ export class TaskBuilder {
     private checkedDate: string;
     private status: TaskStatus;
     private deletedDate: string;
+    private isFocus: boolean;
+    private areaId: string;
     private projectId: string;
+    private contextIds: string[];
     private waitingContactId: string;
     private scheduledDate: string;
 
@@ -27,7 +30,10 @@ export class TaskBuilder {
         this.checkedDate = "";
         this.status = TaskStatus.INBOX;
         this.deletedDate = "";
+        this.isFocus = false;
+        this.areaId = "";
         this.projectId = "";
+        this.contextIds = [];
         this.waitingContactId = "";
         this.scheduledDate = "";
 
@@ -62,8 +68,20 @@ export class TaskBuilder {
         return this.deletedDate;
     }
 
+    public getIsFocus(): boolean {
+        return this.isFocus;
+    }
+
+    public getAreaId(): string {
+        return this.areaId;
+    }
+
     public getProjectId(): string {
         return this.projectId;
+    }
+
+    public getContextIds(): string[] {
+        return this.contextIds;
     }
 
     public getWaitingContactId(): string {
@@ -121,8 +139,23 @@ export class TaskBuilder {
         return this;
     }
 
+    public setIsFocus(isFocus: boolean): TaskBuilder {
+        this.isFocus = isFocus;
+        return this;
+    }
+
+    public setAreaId(areaId: string): TaskBuilder {
+        this.areaId = areaId;
+        return this;
+    }
+
     public setProjectId(projectId: string): TaskBuilder {
         this.projectId = projectId;
+        return this;
+    }
+
+    public setContextIds(contextIds: string[]): TaskBuilder {
+        this.contextIds = contextIds;
         return this;
     }
 

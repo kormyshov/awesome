@@ -28,6 +28,10 @@ export class Projects {
         return Array.from(this.items.values()).filter(e => !e.isDeleted());
     }
 
+    public filterByAreaId(areaId: string | undefined): Project[] {
+        return Array.from(this.items.values()).filter(project => project.areaIdEqual(areaId));
+    }
+
     public toString(): string {
         return JSON.stringify(Array.from(this.items.values()));
     }

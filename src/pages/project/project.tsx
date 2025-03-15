@@ -6,6 +6,8 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
 
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -22,8 +24,10 @@ import CircleIcon from '@mui/icons-material/Circle';
 import NamedList from '../../widgets/named_list.tsx';
 
 import { ProjectsContext } from '../../app/App.tsx';
+import { AreasContext } from '../../app/App.tsx';
 import { TasksContext } from '../../app/App.tsx';
 import { Project as ObjProject } from '../../entities/types/project/project.ts';
+import { Area } from '../../entities/types/area/area.ts';
 import { uploadProjects } from '../../entities/upload/projects.ts';
 import { TaskStatus } from '../../entities/types/task/task_status.ts';
 import { uploadTasks } from '../../entities/upload/tasks.ts';
@@ -34,6 +38,9 @@ export default function Project(props) {
   const { id } = useParams();
   const { projects, setProjects } = useContext(ProjectsContext);
   const project: ObjProject = projects.get(id);
+
+  const { areas, setAreas } = useContext(AreasContext);
+  const area: Area = areas.get(project.getAreaId());
 
   const location = useLocation();
 
@@ -93,6 +100,10 @@ export default function Project(props) {
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             { project.getDescription() }
           </Typography>
+          <br />
+          <Stack direction="row" spacing={1}>
+            { area.getName() !== "Unknown area" ? <Chip label={area.getName()} /> : "" }
+          </Stack>
         </CardContent>
         <CardActions>
           <Link to="./edit">

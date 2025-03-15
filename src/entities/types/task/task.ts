@@ -13,7 +13,10 @@ export class Task {
     private checkedDate: string;
     private status: TaskStatus;
     private deletedDate: string;
+    private isFocus: boolean;
+    private areaId: string;
     private projectId: string;
+    private contextIds: string[];
     private waitingContactId: string;
     private scheduledDate: string;
 
@@ -27,7 +30,10 @@ export class Task {
         this.checkedDate = builder.getCheckedDate();
         this.status = builder.getStatus();
         this.deletedDate = builder.getDeletedDate();
+        this.isFocus = builder.getIsFocus();
+        this.areaId = builder.getAreaId();
         this.projectId = builder.getProjectId();
+        this.contextIds = builder.getContextIds();
         this.waitingContactId = builder.getWaitingContactId();
         this.scheduledDate = builder.getScheduledDate();
         this.repeatedRule = builder.getRepeatedRule();
@@ -42,6 +48,16 @@ export class Task {
             return false;
         }
         return this.waitingContactId === contactId;
+    }
+
+    public areaIdEqual(areaId: string | undefined): boolean {
+        if (areaId === undefined) {
+            return false;
+        }
+        if (areaId === "") {
+            return true;
+        }
+        return this.areaId === areaId;
     }
 
     public isProjectEmpty(notDeletedProjects: Project[]): boolean {
@@ -63,6 +79,10 @@ export class Task {
 
     public toInbox(): void {
         this.status = TaskStatus.INBOX;
+    }
+
+    public clearArea(): void {
+        this.areaId = "";
     }
 
     public setIsChecked(isChecked: boolean): void {
@@ -105,8 +125,24 @@ export class Task {
         return this.deletedDate;
     }
 
+    public getIsFocus(): boolean {
+        return this.isFocus;
+    }
+
+    public getAreaId(): string {
+        return this.areaId;
+    }
+
+    public setAreaId(areaId: string): void {
+        this.areaId = areaId;
+    }
+
     public getProjectId(): string {
         return this.projectId;
+    }
+
+    public getContextIds(): string[] {
+        return this.contextIds;
     }
 
     public getWaitingContactId(): string {

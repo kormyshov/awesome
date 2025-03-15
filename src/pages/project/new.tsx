@@ -10,6 +10,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
+import { SelectChangeEvent } from '@mui/material/Select';
+
 import Header from '../../features/header.tsx';
 
 import { useState } from 'react';
@@ -17,6 +19,7 @@ import { ProjectsContext } from '../../app/App.tsx';
 import { Project } from '../../entities/types/project/project.ts';
 import { ProjectStatus } from '../../entities/types/project/project_status.ts';
 import { uploadProjects } from '../../entities/upload/projects.ts';
+import SelectAreaList from '../../widgets/selects/area_list.tsx';
 
 
 export default function NewProject(props) {
@@ -26,6 +29,12 @@ export default function NewProject(props) {
   const [projectName, setProjectName] = useState('');
   const [projectDescription, setProjectDescription] = useState('');
 
+  const [projectArea, setProjectArea] = useState('');
+
+  const projectAreaChange = (event: SelectChangeEvent) => {
+    setProjectArea(event.target.value);
+  };
+
   const [projectStatus, setProjectStatus] = React.useState('ACTIVE');
 
   const projectStatusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +42,7 @@ export default function NewProject(props) {
   };
 
   const addNewProject = () => {
-    projects.add(new Project(projectName, projectDescription, ProjectStatus[projectStatus]));
+    projects.add(new Project(projectName, projectDescription, projectArea, ProjectStatus[projectStatus]));
     uploadProjects(projects);
     setProjects(projects);
   };
@@ -44,6 +53,10 @@ export default function NewProject(props) {
       <div className="pageWrapper">
         <TextField id="project_name" label="Project name" variant="standard" size="small" className="pageWrapperInput" value={projectName} onChange={(e)=>setProjectName(e.target.value)} />
         <TextField id="project_description" label="Description" variant="standard" size="small" className="pageWrapperInput" value={projectDescription} onChange={(e)=>setProjectDescription(e.target.value)} />
+        <SelectAreaList 
+          area={projectArea}
+          areaChange={projectAreaChange}
+        />
         <br /><br />
         <FormControl>
           <FormLabel id="project_status">Status</FormLabel>

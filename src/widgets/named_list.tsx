@@ -28,11 +28,11 @@ export default function NamedList(props) {
   return (
     <>
       <List>
-        <ListItemButton onClick={handleClick}>
+        <ListItemButton onClick={handleClick} key="title">
           <ListItemText primary={props.list_name} />
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItemButton>
-        <Collapse in={open} timeout="auto" unmountOnExit>
+        <Collapse in={open} timeout="auto" unmountOnExit key="list">
           <List component="div" disablePadding>
             {lst}
           </List>

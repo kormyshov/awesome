@@ -22,7 +22,7 @@ export default function SelectProjectList(props) {
     ;
 
     return (
-        <FormControl variant="standard" sx={{ m: 1, width: "100%" }}>
+        <FormControl variant="standard" sx={{ m: 1, width: "100%", marginLeft: "0px" }}>
           <InputLabel id="task_project">Project</InputLabel>
           <Select
             labelId="demo-simple-select-standard-label"
