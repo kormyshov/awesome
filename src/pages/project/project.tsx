@@ -39,7 +39,7 @@ export default function Project(props) {
   const { projects, setProjects } = useContext(ProjectsContext);
   const project: ObjProject = projects.get(id);
 
-  const { areas, setAreas } = useContext(AreasContext);
+  const { areas } = useContext(AreasContext);
   const area: Area = areas.get(project.getAreaId());
 
   const location = useLocation();
