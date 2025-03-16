@@ -33,7 +33,7 @@ export default function Sidebar(props) {
   };
 
   const { currentArea, setCurrentArea } = useContext(CurrentAreaContext);
-  const { areas, setAreas } = useContext(AreasContext);
+  const { areas } = useContext(AreasContext);
 
   const currentAreaChange = (event: SelectChangeEvent) => {
 
