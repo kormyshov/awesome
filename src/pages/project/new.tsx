@@ -56,6 +56,7 @@ export default function NewProject(props) {
         <SelectAreaList 
           area={projectArea}
           areaChange={projectAreaChange}
+          noneValue="None"
         />
         <br /><br />
         <FormControl>

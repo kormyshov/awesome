@@ -74,6 +74,7 @@ export default function EditProject(props) {
         <SelectAreaList sx={{ marginLeft: "-10px" }}
           area={projectArea}
           areaChange={projectAreaChange}
+          noneValue="None"
         />
         <br /><br />
         <FormControl>

@@ -33,6 +33,7 @@ import { SidebarState } from '../entities/types/sidebar/sidebar_state.ts';
 import { getCommand } from '../entities/upload/common.ts';
 import { RepeatedRule } from '../entities/types/task/repeated_rule.ts';
 import { Weekday } from 'rrule';
+import { AreaStatus } from '../entities/types/area/area_status.ts';
 
 export const ContactsContext = React.createContext(
   {
@@ -64,6 +65,12 @@ export const SidebarContext = React.createContext(
     setSidebar: (sidebarState: SidebarState) => {}
   }
 );
+export const CurrentAreaContext = React.createContext(
+  {
+    currentArea: new Area("all_areas", "All areas", AreaStatus.ACTIVE),
+    setCurrentArea: (currentArea: Area) => {}
+  }
+);
 
 export default function App() {
 
@@ -81,6 +88,9 @@ export default function App() {
 
   const [sidebar, setSidebar] = useState(new SidebarState());
   const sidebarValue = useMemo(() => ({sidebar, setSidebar}), [sidebar]);
+
+  const [currentArea, setCurrentArea] = useState(new Area("all_areas", "All areas", AreaStatus.ACTIVE));
+  const currentAreaValue = useMemo(() => ({currentArea, setCurrentArea}), [currentArea]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -141,10 +151,11 @@ export default function App() {
 
     <div id="App">
       <SidebarContext.Provider value={sidebarValue}>
+      <CurrentAreaContext.Provider value={currentAreaValue}>
+      <AreasContext.Provider value={areasValue}>
         <Sidebar />
 
         <ContactsContext.Provider value={contactsValue}>
-        <AreasContext.Provider value={areasValue}>
         <ProjectsContext.Provider value={projectsValue}>
         <TasksContext.Provider value={tasksValue}>
           <Routes>
@@ -192,9 +203,10 @@ export default function App() {
           </Routes>
         </TasksContext.Provider>
         </ProjectsContext.Provider>
-        </AreasContext.Provider>
         </ContactsContext.Provider>
-  
+
+      </AreasContext.Provider>
+      </CurrentAreaContext.Provider>
       </SidebarContext.Provider>
 
     </div>

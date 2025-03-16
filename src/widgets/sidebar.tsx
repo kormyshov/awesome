@@ -9,10 +9,18 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 
+import { SelectChangeEvent } from '@mui/material/Select';
+import SelectAreaList from '../widgets/selects/area_list.tsx';
+
 import Icon from '@mui/material/Icon';
 
 import { SidebarContext } from "../app/App.tsx";
 import { SidebarState } from "../entities/types/sidebar/sidebar_state.ts";
+import { CurrentAreaContext } from "../app/App.tsx";
+import { AreasContext } from "../app/App.tsx";
+import { Area } from "../entities/types/area/area.ts";
+import { AreaStatus } from "../entities/types/area/area_status.ts";
+
 
 export default function Sidebar(props) {
 
@@ -22,6 +30,18 @@ export default function Sidebar(props) {
     const new_sidebar = new SidebarState();
     new_sidebar.close();
     setSidebar(new_sidebar);
+  };
+
+  const { currentArea, setCurrentArea } = useContext(CurrentAreaContext);
+  const { areas, setAreas } = useContext(AreasContext);
+
+  const currentAreaChange = (event: SelectChangeEvent) => {
+
+    if (event.target.value !== "all_areas") {
+      setCurrentArea(areas.get(event.target.value));
+    } else {
+      setCurrentArea(new Area("all_areas", "All areas", AreaStatus.ACTIVE));
+    }
   };
 
   const DrawerList = (
@@ -67,14 +87,14 @@ export default function Sidebar(props) {
               <ListItemText primary="Someday" />
             </ListItemButton>
           </Link>
-          <Link to="/focus" className="linkMenu">
+          {/* <Link to="/focus" className="linkMenu">
             <ListItemButton>
               <ListItemIcon>
                 <Icon>star</Icon>
               </ListItemIcon>
               <ListItemText primary="Focus" />
             </ListItemButton>
-          </Link>
+          </Link> */}
       </List>
 
       <Divider />
@@ -123,7 +143,7 @@ export default function Sidebar(props) {
           </Link> */}
       </List>
 
-      <Divider />
+      {/* <Divider />
       
       <List>
           <Link to="/archive" className="linkMenu">
@@ -142,13 +162,18 @@ export default function Sidebar(props) {
               <ListItemText primary="Trash" />
             </ListItemButton>
           </Link>
-      </List>
+      </List> */}
     </Box>
   );
 
   return (
     <div>
       <SwipeableDrawer open={sidebar.isOpen()} onClose={()=>closeSidebar()}>
+        <SelectAreaList sx={{ marginLeft: "-10px" }}
+          area={currentArea.getId()}
+          areaChange={currentAreaChange}
+          noneValue="All areas"
+        />
         {DrawerList}
       </SwipeableDrawer>
     </div>

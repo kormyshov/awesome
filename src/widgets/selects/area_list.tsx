@@ -31,9 +31,15 @@ export default function SelectAreaList(props) {
             onChange={props.areaChange}
             label="Area"
           >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
+            { props.noneValue === "None" ?
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              :
+              <MenuItem value="all_areas">
+                <em>All areas</em>
+              </MenuItem>
+            }
             {areaList}
           </Select>
         </FormControl>

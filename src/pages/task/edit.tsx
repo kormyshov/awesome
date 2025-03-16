@@ -175,6 +175,7 @@ export default function EditTask(props) {
         <SelectAreaList
           area={taskArea}
           areaChange={taskAreaChange}
+          noneValue="None"
         />
         <SelectProjectList 
           taskProject={taskProject}
