@@ -7,52 +7,38 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import NamedList from '../../widgets/named_list.tsx';
 
-import { TasksContext } from '../../app/App.tsx';
-import { ProjectsContext } from '../../app/App.tsx';
+import { AreasContext, ContactsContext, CurrentAreaContext, TasksContext, ProjectsContext } from '../../app/App.tsx';
 
 
 export default function TaskList(props) {
 
   const { tasks } = useContext(TasksContext);
   const { projects } = useContext(ProjectsContext);
-
-  const location = useLocation();
-
-  const items = tasks
-    .filterByStatus(props.page_name)
-    ;
+  const { contacts } = useContext(ContactsContext);
+  const { areas } = useContext(AreasContext);
+  const { currentArea } = useContext(CurrentAreaContext);
   
-  const notDeletedProjects = projects.filterIsNotDeleted();
-
-  const actions = items
-    .filter(task => task.isProjectEmpty(notDeletedProjects))
-    .map(e => ({value: e.getName(), id: e.getId(), is_checked: e.getIsChecked(), status: e.getStatus()}))
-    ;
-
+  const location = useLocation();
   const current_page = location.pathname === "/" ? "inbox" : location.pathname.substring(1);
 
-  const actions_with_project = notDeletedProjects
-    .map(project => ({
-      projectName: project.getName(),
-      tasks: items
-              .filter(task => task.projectIdEqual(project.getId()))
-              .map(task => ({value: task.getName(), id: task.getId(), is_checked: task.getIsChecked(), status: task.getStatus()}))
-    }))
-    .filter(e => e.tasks.length > 0)
-    .map(e => (<NamedList list_name={e.projectName} is_checked={true} items={e.tasks} from={current_page} />))
+  const task_list_strategy = props.task_list_strategy;
+  const task_list = task_list_strategy
+    .prepare_list(tasks, projects, contacts, areas, currentArea, '')
+    .map(e => (
+      <NamedList 
+        list_name={e.getListName()} 
+        is_checked={true} 
+        items={task_list_strategy.decorate_list(e)}
+        from={current_page} 
+      />))
     ;
 
   return (
     <>
       <Header page_name={props.page_name} />
 
+      {task_list}
       
-      {actions.length > 0 ?
-        <NamedList list_name="Actions" is_checked={true} items={actions} from={current_page} /> : <></>
-      }
-      {actions_with_project}
-      
-
       <div className="fabAdd">
         <Link to={"/tasks/" + props.page_name + "/new"}>
           <Fab color="secondary" aria-label="add">

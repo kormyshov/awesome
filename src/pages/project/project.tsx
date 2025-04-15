@@ -23,13 +23,12 @@ import AddIcon from '@mui/icons-material/Add';
 import CircleIcon from '@mui/icons-material/Circle';
 import NamedList from '../../widgets/named_list.tsx';
 
-import { ProjectsContext } from '../../app/App.tsx';
+import { ContactsContext, ProjectsContext } from '../../app/App.tsx';
 import { AreasContext } from '../../app/App.tsx';
 import { TasksContext } from '../../app/App.tsx';
 import { Project as ObjProject } from '../../entities/types/project/project.ts';
 import { Area } from '../../entities/types/area/area.ts';
 import { uploadProjects } from '../../entities/upload/projects.ts';
-import { TaskStatus } from '../../entities/types/task/task_status.ts';
 import { uploadTasks } from '../../entities/upload/tasks.ts';
 
 
@@ -56,20 +55,18 @@ export default function Project(props) {
 
   const { tasks, setTasks } = useContext(TasksContext);
 
-  const items = tasks
-    .toList()
-    .filter(task => task.projectIdEqual(id))
-    ;
+  const { contacts } = useContext(ContactsContext);
 
-  const actions_with_status = ["Next", "Waiting", "Scheduled", "Someday", "Repeated"]
-    .map(status => ({
-      status: status,
-      tasks: items
-        .filter(task => task.statusEqual(status as TaskStatus))
-        .map(task => ({value: task.getName(), id: task.getId(), is_checked: task.getIsChecked(), status: task.getStatus()}))
-    }))
-    .filter(e => e.tasks.length > 0)
-    .map(e => (<NamedList list_name={e.status} is_checked={true} items={e.tasks} from={location.pathname.substring(1)} />))
+  const task_list_strategy = props.task_list_strategy;
+  const task_lists = task_list_strategy.prepare_list(tasks, projects, contacts, areas, area, id);
+  const task_list = task_lists
+    .map(e => (
+      <NamedList 
+        list_name={e.getListName()} 
+        is_checked={true} 
+        items={task_list_strategy.decorate_list(e)} 
+        from={location.pathname.substring(1)} 
+      />))
     ;
 
   const deleteProject = () => {
@@ -78,7 +75,7 @@ export default function Project(props) {
     uploadProjects(projects);
     setProjects(projects);
   
-    items.forEach(task => task.setDeleted())
+    task_lists.forEach(e => e.getItems().forEach(task => task.setDeleted()));
     uploadTasks(tasks);
     setTasks(tasks);
   };
@@ -113,7 +110,7 @@ export default function Project(props) {
         </CardActions>
       </Card>
 
-      {actions_with_status}
+      {task_list}
 
       <Dialog
         open={dialogDelete}

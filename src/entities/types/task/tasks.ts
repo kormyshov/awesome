@@ -196,7 +196,7 @@ export class Tasks {
         this.check_for_scheduled_task(builder);
 
         if (builder.getCheckedDate() !== "" && 
-            builder.getCheckedDate() < (new Date().toISOString()) && 
+            builder.getCheckedDate().substring(0, 10) < (new Date().toISOString()).substring(0, 10) && 
             builder.getRepeatedRule() === undefined
         ) {
             builder.setStatus(TaskStatus.ARCHIVED);

@@ -54,7 +54,7 @@ export class Task {
         if (areaId === undefined) {
             return false;
         }
-        if (areaId === "") {
+        if (areaId === "" || areaId === "all_areas") {
             return true;
         }
         return this.areaId === areaId;

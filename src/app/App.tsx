@@ -35,6 +35,13 @@ import { RepeatedRule } from '../entities/types/task/repeated_rule.ts';
 import { Weekday } from 'rrule';
 import { AreaStatus } from '../entities/types/area/area_status.ts';
 
+import { InboxTaskListStrategy } from '../entities/strategies/task_list/inbox_task_list_strategy.ts';
+import { NextTaskListStrategy } from '../entities/strategies/task_list/next_task_list_strategy.ts';
+import { WaitingTaskListStrategy } from '../entities/strategies/task_list/waiting_task_list_strategy.ts';
+import { SomedayTaskListStrategy } from '../entities/strategies/task_list/someday_task_list_strategy.ts';
+import { ScheduledTaskListStrategy } from '../entities/strategies/task_list/scheduled_task_list_strategy.ts';
+import { ProjectTaskListStrategy } from '../entities/strategies/task_list/project_task_list_strategy.ts';
+
 export const ContactsContext = React.createContext(
   {
     contacts: new Contacts(),
@@ -159,18 +166,18 @@ export default function App() {
         <ProjectsContext.Provider value={projectsValue}>
         <TasksContext.Provider value={tasksValue}>
           <Routes>
-            <Route index element={<TaskList page_name="Inbox" />} />
+            <Route index element={<TaskList page_name="Inbox" task_list_strategy={new InboxTaskListStrategy()} />} />
             <Route path="/">
-              <Route index element={<TaskList page_name="Inbox" />} />
+              <Route index element={<TaskList page_name="Inbox" task_list_strategy={new InboxTaskListStrategy()} />} />
             </Route>
             <Route path="inbox">
-              <Route index element={<TaskList page_name="Inbox" />} />
+              <Route index element={<TaskList page_name="Inbox" task_list_strategy={new InboxTaskListStrategy()} />} />
             </Route>
-            <Route path="next" element={<TaskList page_name="Next" />} />
-            <Route path="waiting" element={<TaskList page_name="Waiting" />} />
-            <Route path="scheduled" element={<TaskList page_name="Scheduled" />} />
-            <Route path="someday" element={<TaskList page_name="Someday" />} />
-            <Route path="focus" element={<TaskList page_name="Focus" />} />
+            <Route path="next" element={<TaskList page_name="Next" task_list_strategy={new NextTaskListStrategy()} />} />
+            <Route path="waiting" element={<TaskList page_name="Waiting" task_list_strategy={new WaitingTaskListStrategy()} />} />
+            <Route path="scheduled" element={<TaskList page_name="Scheduled" task_list_strategy={new ScheduledTaskListStrategy()} />} />
+            <Route path="someday" element={<TaskList page_name="Someday" task_list_strategy={new SomedayTaskListStrategy()} />} />
+            {/* <Route path="focus" element={<TaskList page_name="Focus" />} /> */}
 
             <Route path="tasks">
               <Route path=":from/new" element={<NewTask />} />
@@ -187,7 +194,7 @@ export default function App() {
             <Route path="projects">
               <Route index element={<ProjectList />} />
               <Route path="new" element={<NewProject />} />
-              <Route path=":id" element={<Project />} />
+              <Route path=":id" element={<Project task_list_strategy={new ProjectTaskListStrategy()} />} />
               <Route path=":id/edit" element={<EditProject />} />
             </Route>
 
@@ -197,8 +204,8 @@ export default function App() {
               <Route path=":id" element={<EditContact />} />
             </Route>
 
-            <Route path="archive" element={<TaskList page_name="Archive" />} />
-            <Route path="trash" element={<TaskList page_name="Trash" />} />
+            {/* <Route path="archive" element={<TaskList page_name="Archive" />} /> */}
+            {/* <Route path="trash" element={<TaskList page_name="Trash" />} /> */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </TasksContext.Provider>
