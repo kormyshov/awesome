@@ -2,7 +2,6 @@ import { TaskListStrategy, TaskList, DecoratedListItem } from "./task_list_strat
 import { Tasks } from "../../types/task/tasks.ts";
 import { Projects } from "../../types/project/projects.ts";
 import { Contacts } from "../../types/contact/contacts.ts";
-import { Areas } from "../../types/area/areas.ts";
 import { Area } from "../../types/area/area.ts";
 import { TaskStatus } from "../../types/task/task_status.ts";
 

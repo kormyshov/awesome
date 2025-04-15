@@ -2,7 +2,6 @@ import { Task } from "../../types/task/task.ts";
 import { Tasks } from "../../types/task/tasks.ts";
 import { Projects } from "../../types/project/projects.ts";
 import { Contacts } from "../../types/contact/contacts.ts";
-import { Areas } from "../../types/area/areas.ts";
 import { Area } from "../../types/area/area.ts";
 
 
