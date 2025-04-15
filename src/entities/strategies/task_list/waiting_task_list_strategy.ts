@@ -8,7 +8,7 @@ import { TaskStatus } from "../../types/task/task_status.ts";
 
 
 export class WaitingTaskListStrategy implements TaskListStrategy {
-    public prepare_list(tasks: Tasks, projects: Projects, contacts: Contacts, areas: Areas, currentArea: Area, currentProjectId: string): TaskList[] {
+    public prepare_list(tasks: Tasks, projects: Projects, contacts: Contacts, currentArea: Area, currentProjectId: string): TaskList[] {
         const items = tasks
             .filterByStatus(TaskStatus.WAITING)
             .filter(task => task.areaIdEqual(currentArea.getId()))

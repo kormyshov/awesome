@@ -58,7 +58,7 @@ export default function Project(props) {
   const { contacts } = useContext(ContactsContext);
 
   const task_list_strategy = props.task_list_strategy;
-  const task_lists = task_list_strategy.prepare_list(tasks, projects, contacts, areas, area, id);
+  const task_lists = task_list_strategy.prepare_list(tasks, projects, contacts, area, id);
   const task_list = task_lists
     .map(e => (
       <NamedList 

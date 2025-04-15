@@ -7,7 +7,7 @@ import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import NamedList from '../../widgets/named_list.tsx';
 
-import { AreasContext, ContactsContext, CurrentAreaContext, TasksContext, ProjectsContext } from '../../app/App.tsx';
+import { ContactsContext, CurrentAreaContext, TasksContext, ProjectsContext } from '../../app/App.tsx';
 
 
 export default function TaskList(props) {
@@ -15,7 +15,6 @@ export default function TaskList(props) {
   const { tasks } = useContext(TasksContext);
   const { projects } = useContext(ProjectsContext);
   const { contacts } = useContext(ContactsContext);
-  const { areas } = useContext(AreasContext);
   const { currentArea } = useContext(CurrentAreaContext);
   
   const location = useLocation();
@@ -23,7 +22,7 @@ export default function TaskList(props) {
 
   const task_list_strategy = props.task_list_strategy;
   const task_list = task_list_strategy
-    .prepare_list(tasks, projects, contacts, areas, currentArea, '')
+    .prepare_list(tasks, projects, contacts, currentArea, '')
     .map(e => (
       <NamedList 
         list_name={e.getListName()} 

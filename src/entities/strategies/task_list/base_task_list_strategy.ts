@@ -15,7 +15,7 @@ export class BaseTaskListStrategy implements TaskListStrategy {
         this.status = status;
     }
 
-    public prepare_list(tasks: Tasks, projects: Projects, contacts: Contacts, areas: Areas, currentArea: Area, currentProjectId: string): TaskList[] {
+    public prepare_list(tasks: Tasks, projects: Projects, contacts: Contacts, currentArea: Area, currentProjectId: string): TaskList[] {
         const items = tasks
             .filterByStatus(this.status)
             .filter(task => task.areaIdEqual(currentArea.getId()))
