@@ -41,6 +41,7 @@ import { WaitingTaskListStrategy } from '../entities/strategies/task_list/waitin
 import { SomedayTaskListStrategy } from '../entities/strategies/task_list/someday_task_list_strategy.ts';
 import { ScheduledTaskListStrategy } from '../entities/strategies/task_list/scheduled_task_list_strategy.ts';
 import { ProjectTaskListStrategy } from '../entities/strategies/task_list/project_task_list_strategy.ts';
+import { uploadTasks } from '../entities/upload/tasks.ts';
 
 export const ContactsContext = React.createContext(
   {
@@ -133,6 +134,7 @@ export default function App() {
         )
       })
       setTasks(new Tasks(tasks.getItems()));
+      uploadTasks(tasks);
       console.log(tasks);
 
       data.contacts.forEach((contact) => {

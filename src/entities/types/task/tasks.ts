@@ -123,7 +123,7 @@ export class Tasks {
             .setProjectId(builder.getProjectId())
         ;
 
-        this.set(child_builder.build());
+        this.set(child_builder.build(), false);
     }
 
     private check_for_scheduled_task(builder: TaskBuilder) {
