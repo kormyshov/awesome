@@ -39,8 +39,8 @@ export default function TaskList(props) {
       {task_list}
       
       <div className="fabAdd">
-        <Link to={"/tasks/" + props.page_name + "/new"}>
-          <Fab color="secondary" aria-label="add">
+        <Link to={task_list_strategy.link_to_new_task('')}>
+          <Fab color="primary" aria-label="add">
             <AddIcon />
           </Fab>
         </Link>

@@ -17,6 +17,8 @@ export default function NewTask(props) {
   const { tasks, setTasks } = useContext(TasksContext);
 
   const { from } = useParams();
+  const { project_id } = useParams();
+  const back_link = (from !== undefined ? "/" + from : "/projects/" + project_id);
 
   const [taskName, setTaskName] = useState('');
   const [taskDescription, setTaskDescription] = useState('');
@@ -51,10 +53,10 @@ export default function NewTask(props) {
         <br />
 
         <div className="pageWrapperButtonGroup">
-          <Link to={"/" + from}>
+          <Link to={back_link}>
             <Button variant="outlined" size="small" className="pageWrapperButton">Cancel</Button>
           </Link>
-          <Link to={"/" + from}>
+          <Link to={back_link}>
             <Button 
               variant="contained" 
               size="small" 

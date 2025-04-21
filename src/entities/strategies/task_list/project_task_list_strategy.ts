@@ -29,4 +29,8 @@ export class ProjectTaskListStrategy implements TaskListStrategy {
             .map(task => new DecoratedListItem(task.getId(), task.getId(), task.getIsChecked(), task.getName(), ''))
             ;
     }
+
+    public link_to_new_task(currentProjectId: string): string {
+        return "/tasks/new/projects/" + currentProjectId;
+    }
 }

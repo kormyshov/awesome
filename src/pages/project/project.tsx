@@ -137,9 +137,11 @@ export default function Project(props) {
       </Dialog>
 
       <div className="fabAdd">
-        <Fab color="primary" aria-label="add">
-          <AddIcon />
-        </Fab>
+        <Link to={task_list_strategy.link_to_new_task(id)}>
+          <Fab color="primary" aria-label="add">
+            <AddIcon />
+          </Fab>
+        </Link>
       </div>
     </>
   );
