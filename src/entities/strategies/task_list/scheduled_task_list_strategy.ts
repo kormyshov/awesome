@@ -60,10 +60,16 @@ export class ScheduledTaskListStrategy implements TaskListStrategy {
             .filter(list => list.isEmpty() === false)
     }
 
-    public decorate_list(list: TaskList): DecoratedListItem[] {
+    public decorate_list(list: TaskList, projects: Projects, contacts: Contacts): DecoratedListItem[] {
         return list
             .getItems()
-            .map(task => new DecoratedListItem(task.getId(), task.getId(), task.getIsChecked(), task.getName(), ''))
+            .map(task => new DecoratedListItem(
+                task.getId(), 
+                task.getId(), 
+                task.getIsChecked(), 
+                task.getName(), 
+                task.getProjectId() === '' || task.getProjectId() === undefined ? '' : projects.get(task.getProjectId()).getName()
+            ))
             ;
     }
 

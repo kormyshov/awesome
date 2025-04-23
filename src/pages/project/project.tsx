@@ -64,7 +64,7 @@ export default function Project(props) {
       <NamedList 
         list_name={e.getListName()} 
         is_checked={true} 
-        items={task_list_strategy.decorate_list(e)} 
+        items={task_list_strategy.decorate_list(e, projects, contacts)} 
         from={location.pathname.substring(1)} 
       />))
     ;

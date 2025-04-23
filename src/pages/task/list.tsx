@@ -27,7 +27,7 @@ export default function TaskList(props) {
       <NamedList 
         list_name={e.getListName()} 
         is_checked={true} 
-        items={task_list_strategy.decorate_list(e)}
+        items={task_list_strategy.decorate_list(e, projects, contacts)}
         from={current_page} 
       />))
     ;

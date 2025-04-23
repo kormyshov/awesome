@@ -65,6 +65,6 @@ export class DecoratedListItem {
 
 export interface TaskListStrategy {
     prepare_list(tasks: Tasks, projects: Projects, contacts: Contacts, currentArea: Area, currentProjectId: string): TaskList[];
-    decorate_list(list: TaskList): DecoratedListItem[];
+    decorate_list(list: TaskList, projects: Projects, contacts: Contacts): DecoratedListItem[];
     link_to_new_task(currentProjectId: string): string;
 }
