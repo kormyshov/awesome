@@ -22,7 +22,7 @@ import FormLabel from '@mui/material/FormLabel';
 
 import { SelectChangeEvent } from '@mui/material/Select';
 
-import { TasksContext } from '../../app/App.tsx';
+import { TasksContext, ProjectsContext, AreasContext } from '../../app/App.tsx';
 import { Task } from '../../entities/types/task/task.ts';
 import { TaskStatus } from '../../entities/types/task/task_status.ts';
 import { uploadTasks } from '../../entities/upload/tasks.ts';
@@ -40,6 +40,9 @@ export default function EditTask(props) {
   const { id } = useParams();
   const { tasks, setTasks } = useContext(TasksContext);
   const task: Task = tasks.get(id);
+
+  const { projects } = useContext(ProjectsContext);
+  const { areas } = useContext(AreasContext);
 
   const { from } = useParams();
   const { project_id } = useParams();
@@ -66,7 +69,7 @@ export default function EditTask(props) {
 
   const taskStatusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTaskStatus((event.target as HTMLInputElement).value as TaskStatus);
-    if ((event.target as HTMLInputElement).value === "") {
+    if ((event.target as HTMLInputElement).value === "" || event.target.value === TaskStatus.INBOX) {
       setTaskProject("");
     }
     cantSelectContact = taskStatus !== TaskStatus.WAITING;
@@ -84,6 +87,9 @@ export default function EditTask(props) {
 
   const taskAreaChange = (event: SelectChangeEvent) => {
     setTaskArea(event.target.value);
+    if (taskProject !== "" && projects.get(taskProject).getAreaId() !== event.target.value) {
+      setTaskProject("")
+    }
   };
 
   const [taskProject, setTaskProject] = React.useState(task.getProjectId());
@@ -92,6 +98,9 @@ export default function EditTask(props) {
     setTaskProject(event.target.value);
     if (event.target.value !== "" && taskStatus === TaskStatus.INBOX) {
       setTaskStatus(TaskStatus.NEXT);
+    }
+    if (event.target.value !== "" && projects.get(event.target.value).getAreaId() !== taskArea) {
+      setTaskArea(projects.get(event.target.value).getAreaId());
     }
   };
 
