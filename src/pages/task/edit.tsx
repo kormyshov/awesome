@@ -22,7 +22,7 @@ import FormLabel from '@mui/material/FormLabel';
 
 import { SelectChangeEvent } from '@mui/material/Select';
 
-import { TasksContext, ProjectsContext, AreasContext } from '../../app/App.tsx';
+import { TasksContext, ProjectsContext } from '../../app/App.tsx';
 import { Task } from '../../entities/types/task/task.ts';
 import { TaskStatus } from '../../entities/types/task/task_status.ts';
 import { uploadTasks } from '../../entities/upload/tasks.ts';
@@ -42,7 +42,6 @@ export default function EditTask(props) {
   const task: Task = tasks.get(id);
 
   const { projects } = useContext(ProjectsContext);
-  const { areas } = useContext(AreasContext);
 
   const { from } = useParams();
   const { project_id } = useParams();
