@@ -3,6 +3,8 @@ import { Route, Routes } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
 import TaskList from "../pages/task/list.tsx";
 import ProjectList from "../pages/project/list.tsx";
 import NotFound from '../pages/not_found.tsx';
@@ -79,6 +81,12 @@ export const CurrentAreaContext = React.createContext(
     setCurrentArea: (currentArea: Area) => {}
   }
 );
+
+const smallTheme = createTheme({
+  typography: {
+    fontSize: 12,
+  },
+});
 
 export default function App() {
 
@@ -159,6 +167,7 @@ export default function App() {
   return (
 
     <div id="App">
+      <ThemeProvider theme={smallTheme}>
       <SidebarContext.Provider value={sidebarValue}>
       <CurrentAreaContext.Provider value={currentAreaValue}>
       <AreasContext.Provider value={areasValue}>
@@ -219,6 +228,7 @@ export default function App() {
       </AreasContext.Provider>
       </CurrentAreaContext.Provider>
       </SidebarContext.Provider>
+      </ThemeProvider>
 
     </div>
 
