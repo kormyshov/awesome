@@ -65,11 +65,6 @@ export class Tasks {
         return Array.from(this.items.values());
     }
 
-    public buildMinimalTask(name: string, description: string): void {
-        const builder = new TaskBuilder(name, description);
-        this.set(builder.build());
-    }
-
     public buildCommonTask(
         id: string | undefined,
         name: string,
@@ -87,6 +82,23 @@ export class Tasks {
         }
         this.buildFullTask(
             id, name, description, isChecked, "", status, "", areaId,
+            projectId, waitingContactId, scheduledDate, repeatedRule
+        );
+    }
+
+    public buildNewTask(
+        name: string,
+        description: string,
+        isChecked: boolean,
+        status: TaskStatus,
+        areaId: string,
+        projectId: string,
+        waitingContactId: string,
+        scheduledDate: string,
+        repeatedRule: RepeatedRule | undefined,
+    ): void {
+        this.buildFullTask(
+            undefined, name, description, isChecked, "", status, "", areaId,
             projectId, waitingContactId, scheduledDate, repeatedRule
         );
     }
@@ -163,7 +175,7 @@ export class Tasks {
     }
 
     public buildFullTask(
-        id: string,
+        id: string | undefined,
         name: string,
         description: string,
         isChecked: boolean,
@@ -179,8 +191,12 @@ export class Tasks {
     ): void {
 
         const builder = new TaskBuilder(name, description);
+
+        if (id !== undefined) {
+            builder.setId(id);
+        }
+
         builder
-            .setId(id)
             .setIsChecked(isChecked)
             .setCheckedDate(checkedDate)
             .setStatus(status)
