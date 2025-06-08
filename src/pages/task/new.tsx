@@ -147,6 +147,7 @@ export default function NewTask(props) {
           variant="standard" 
           size="small" 
           className="pageWrapperInput" 
+          multiline
           value={taskDescription} 
           onChange={(e)=>setTaskDescription(e.target.value)}
         />

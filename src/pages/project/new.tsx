@@ -51,8 +51,25 @@ export default function NewProject(props) {
     <>
       <Header page_name="Create project" />
       <div className="pageWrapper">
-        <TextField id="project_name" label="Project name" variant="standard" size="small" className="pageWrapperInput" value={projectName} onChange={(e)=>setProjectName(e.target.value)} />
-        <TextField id="project_description" label="Description" variant="standard" size="small" className="pageWrapperInput" value={projectDescription} onChange={(e)=>setProjectDescription(e.target.value)} />
+        <TextField 
+          id="project_name" 
+          label="Project name" 
+          variant="standard" 
+          size="small" 
+          className="pageWrapperInput" 
+          value={projectName} 
+          onChange={(e)=>setProjectName(e.target.value)} 
+        />
+        <TextField 
+          id="project_description" 
+          label="Description" 
+          variant="standard" 
+          size="small" 
+          className="pageWrapperInput" 
+          multiline
+          value={projectDescription} 
+          onChange={(e)=>setProjectDescription(e.target.value)} 
+        />
         <SelectAreaList 
           area={projectArea}
           areaChange={projectAreaChange}

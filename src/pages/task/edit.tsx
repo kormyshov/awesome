@@ -174,6 +174,7 @@ export default function EditTask(props) {
           variant="standard" 
           size="small" 
           className="pageWrapperInput" 
+          multiline
           value={taskDescription} 
           onChange={(e)=>setTaskDescription(e.target.value)} 
           // sx={{ marginLeft: "10px" }}
