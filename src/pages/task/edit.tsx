@@ -5,7 +5,7 @@ import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 
 import dayjs, { Dayjs } from 'dayjs';
-import 'dayjs/locale/de';
+import 'dayjs/locale/en';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -177,7 +177,6 @@ export default function EditTask(props) {
           multiline
           value={taskDescription} 
           onChange={(e)=>setTaskDescription(e.target.value)} 
-          // sx={{ marginLeft: "10px" }}
         />
 
         <br /><br />
@@ -212,7 +211,7 @@ export default function EditTask(props) {
             }
             <FormControlLabel value={TaskStatus.SCHEDULED} control={<Radio />} label="Scheduled" />
             { taskStatus !== TaskStatus.SCHEDULED ? null :
-              <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="de">
+              <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en">
                 <DatePicker 
                   label="Scheduled date"
                   value={scheduledDate}
@@ -226,7 +225,6 @@ export default function EditTask(props) {
                 tabValue={repeatedRule_freq !== undefined ? 3 - repeatedRule_freq : 0}
                 handleChangeTabValue={handleChangeTabValue}
                 repeatedRule={repeatedRule}
-                // setRepeatedRule={setRepeatedRule}
               /> 
             }
           </RadioGroup>
