@@ -76,7 +76,11 @@ export default function NewTask(props) {
   };
 
   const { currentArea } = useContext(CurrentAreaContext);
-  const [taskArea, setTaskArea] = React.useState(project_id === undefined ? (currentArea.getId() === "all_areas" ? "": currentArea.getId()) : projects.get(project_id).getAreaId());
+  const [taskArea, setTaskArea] = React.useState(
+    project_id === undefined ? 
+    (currentArea.getId() === "all_areas" ? "" : currentArea.getId()) : 
+    projects.get(project_id).getAreaId()
+  );
 
   const taskAreaChange = (event: SelectChangeEvent) => {
     setTaskArea(event.target.value);

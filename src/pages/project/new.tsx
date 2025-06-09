@@ -15,7 +15,7 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import Header from '../../features/header.tsx';
 
 import { useState } from 'react';
-import { ProjectsContext } from '../../app/App.tsx';
+import { CurrentAreaContext, ProjectsContext } from '../../app/App.tsx';
 import { Project } from '../../entities/types/project/project.ts';
 import { ProjectStatus } from '../../entities/types/project/project_status.ts';
 import { uploadProjects } from '../../entities/upload/projects.ts';
@@ -29,7 +29,8 @@ export default function NewProject(props) {
   const [projectName, setProjectName] = useState('');
   const [projectDescription, setProjectDescription] = useState('');
 
-  const [projectArea, setProjectArea] = useState('');
+  const { currentArea } = useContext(CurrentAreaContext);
+  const [projectArea, setProjectArea] = useState(currentArea.getId() === 'all_areas' ? '' : currentArea.getId());
 
   const projectAreaChange = (event: SelectChangeEvent) => {
     setProjectArea(event.target.value);
