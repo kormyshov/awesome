@@ -133,6 +133,7 @@ export class Tasks {
             .setCheckedDate(builder.getCheckedDate())
             .setStatus(TaskStatus.NEXT)
             .setProjectId(builder.getProjectId())
+            .setAreaId(builder.getAreaId())
         ;
 
         this.set(child_builder.build(), false);
