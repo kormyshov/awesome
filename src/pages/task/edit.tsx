@@ -118,6 +118,7 @@ export default function EditTask(props) {
       taskName,
       taskDescription,
       taskIsChecked,
+      task.getCheckedDate(),
       taskStatus,
       taskArea,
       taskProject,

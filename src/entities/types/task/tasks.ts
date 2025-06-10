@@ -70,6 +70,7 @@ export class Tasks {
         name: string,
         description: string,
         isChecked: boolean,
+        checkedDate: string,
         status: TaskStatus,
         areaId: string,
         projectId: string,
@@ -81,7 +82,7 @@ export class Tasks {
             return ;
         }
         this.buildFullTask(
-            id, name, description, isChecked, "", status, "", areaId,
+            id, name, description, isChecked, checkedDate, status, "", areaId,
             projectId, waitingContactId, scheduledDate, repeatedRule
         );
     }
