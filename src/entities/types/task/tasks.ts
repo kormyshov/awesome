@@ -146,7 +146,7 @@ export class Tasks {
 
         if (scheduledDate !== "" && scheduledDate <= (new Date().toISOString())) {
             if (repeatedRule !== undefined) {
-                const tomorrow = new Date(scheduledDate);
+                const tomorrow = new Date();
                 tomorrow.setDate(tomorrow.getDate() + 1);
                 const rrule = new RRule({
                     freq: repeatedRule.getFreq(),
