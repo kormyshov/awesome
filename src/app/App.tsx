@@ -116,30 +116,32 @@ export default function App() {
       const data = await response.json()
       console.log(data)
       data.tasks.forEach((task) => {
-        tasks.buildFullTask(
-          task.id, 
-          task.name, 
-          task.description, 
-          task.isChecked, 
-          task.checkedDate, 
-          task.status, 
-          task.deletedDate, 
-          task.areaId, 
-          task.projectId, 
-          task.waitingContactId, 
-          task.scheduledDate,
-          task.repeatedRule !== undefined ? 
-            new RepeatedRule(
-              task.repeatedRule.freq, 
-              dayjs(task.repeatedRule.dtstart), 
-              task.repeatedRule.interval, 
-              task.repeatedRule.byweekday.map(d => new Weekday(d.weekday, d.n)),
-              task.repeatedRule.bymonthday,
-              task.repeatedRule.bymonth,
-            ) : 
-            undefined,
-          false
-        )
+        if (task.status !== "DELETED" && task.status !== "ARCHIVED") {
+          tasks.buildFullTask(
+            task.id, 
+            task.name, 
+            task.description, 
+            task.isChecked, 
+            task.checkedDate, 
+            task.status, 
+            task.deletedDate, 
+            task.areaId, 
+            task.projectId, 
+            task.waitingContactId, 
+            task.scheduledDate,
+            task.repeatedRule !== undefined ? 
+              new RepeatedRule(
+                task.repeatedRule.freq, 
+                dayjs(task.repeatedRule.dtstart), 
+                task.repeatedRule.interval, 
+                task.repeatedRule.byweekday.map(d => new Weekday(d.weekday, d.n)),
+                task.repeatedRule.bymonthday,
+                task.repeatedRule.bymonth,
+              ) : 
+              undefined,
+            false
+          )
+        }
       })
       setTasks(new Tasks(tasks.getItems()));
       uploadTasks(tasks);
