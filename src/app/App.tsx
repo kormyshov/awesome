@@ -44,7 +44,6 @@ import { SomedayTaskListStrategy } from '../entities/strategies/task_list/someda
 import { ScheduledTaskListStrategy } from '../entities/strategies/task_list/scheduled_task_list_strategy.ts';
 import { ProjectTaskListStrategy } from '../entities/strategies/task_list/project_task_list_strategy.ts';
 import { uploadTasks } from '../entities/upload/tasks.ts';
-import { Task } from '../entities/types/task/task.ts';
 import { TaskStatus } from '../entities/types/task/task_status.ts';
 
 export const ContactsContext = React.createContext(
