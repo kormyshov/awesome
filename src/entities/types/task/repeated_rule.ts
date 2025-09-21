@@ -81,6 +81,15 @@ export class RepeatedRule {
         this.bymonth = bymonth;
     }
 
+    public nomalize() {
+        if (this.freq < 2 && this.bymonthday.length === 0 && this.byweekday.length === 0){
+            this.bymonthday = [1];
+        }
+        if (this.freq === 0 && this.bymonth.length === 0){
+            this.bymonth = [1];
+        }
+    }
+
     public exportRrule(): RRule {
         console.log("this", this);
         if (this.freq === 3){

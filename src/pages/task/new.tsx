@@ -113,6 +113,7 @@ export default function NewTask(props) {
   const [repeatedRule_freq, setRepeatedRuleFreq] = React.useState<number | undefined>(repeatedRule?.getFreq());
 
   const addNewTask = () => {
+    repeatedRule.nomalize();
     console.log("Create new task", repeatedRule);
     tasks.buildNewTask(
       taskName,
