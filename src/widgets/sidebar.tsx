@@ -87,19 +87,20 @@ export default function Sidebar(props) {
               <ListItemText primary="Someday" />
             </ListItemButton>
           </Link>
-          {/* <Link to="/focus" className="linkMenu">
+
+          <Divider />
+
+          <Link to="/focus" className="linkMenu">
             <ListItemButton>
               <ListItemIcon>
-                <Icon>star</Icon>
+                <Icon>center_focus_strong</Icon>
               </ListItemIcon>
               <ListItemText primary="Focus" />
             </ListItemButton>
-          </Link> */}
-      </List>
+          </Link>
 
-      <Divider />
+          <Divider />
       
-      <List>
           <Link to="/areas" className="linkMenu">
             <ListItemButton>
               <ListItemIcon>

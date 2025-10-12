@@ -94,6 +94,10 @@ export class Task {
         }
     }
 
+    public setIsFocus(isFocus: boolean): void {
+        this.isFocus = isFocus;
+    }
+
     public getId(): string {
         return this.id;
     }

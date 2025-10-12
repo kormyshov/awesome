@@ -61,6 +61,10 @@ export class Tasks {
         return Array.from(this.items.values()).filter(task => task.areaIdEqual(areaId));
     }
 
+    public filterIsFocus(): Task[] {
+        return Array.from(this.items.values()).filter(task => task.getIsFocus());
+    }
+
     public toList(): Task[] {
         return Array.from(this.items.values());
     }
@@ -70,6 +74,7 @@ export class Tasks {
         name: string,
         description: string,
         isChecked: boolean,
+        isFocus: boolean,
         checkedDate: string,
         status: TaskStatus,
         areaId: string,
@@ -82,7 +87,7 @@ export class Tasks {
             return ;
         }
         this.buildFullTask(
-            id, name, description, isChecked, checkedDate, status, "", areaId,
+            id, name, description, isChecked, isFocus, checkedDate, status, "", areaId,
             projectId, waitingContactId, scheduledDate, repeatedRule
         );
     }
@@ -91,6 +96,7 @@ export class Tasks {
         name: string,
         description: string,
         isChecked: boolean,
+        isFocus: boolean,
         status: TaskStatus,
         areaId: string,
         projectId: string,
@@ -99,7 +105,7 @@ export class Tasks {
         repeatedRule: RepeatedRule | undefined,
     ): void {
         this.buildFullTask(
-            undefined, name, description, isChecked, "", status, "", areaId,
+            undefined, name, description, isChecked, isFocus, "", status, "", areaId,
             projectId, waitingContactId, scheduledDate, repeatedRule
         );
     }
@@ -181,6 +187,7 @@ export class Tasks {
         name: string,
         description: string,
         isChecked: boolean,
+        isFocus: boolean,
         checkedDate: string,
         status: TaskStatus,
         deletedDate: string,
@@ -200,6 +207,7 @@ export class Tasks {
 
         builder
             .setIsChecked(isChecked)
+            .setIsFocus(isFocus)
             .setCheckedDate(checkedDate)
             .setStatus(status)
             .setDeletedDate(deletedDate)

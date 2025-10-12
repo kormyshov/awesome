@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 
-import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
+import CenterFocusStrong from '@mui/icons-material/CenterFocusStrong';
 
 import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/en';
@@ -13,10 +13,9 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Header from '../../features/header.tsx';
 
 import { useState } from 'react';
-import FormControlLabel from '@mui/material/FormControlLabel';
 
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
@@ -50,7 +49,8 @@ export default function EditTask(props) {
   const [taskName, setTaskName] = useState(task.getName());
   const [taskDescription, setTaskDescription] = useState(task.getDescription());
 
-  const [taskIsChecked, setTaskIsChecked] = React.useState(task.getIsChecked());
+  const [taskIsChecked] = React.useState(task.getIsChecked());
+  const [taskIsFocus, setTaskIsFocus] = React.useState(task.getIsFocus());
 
   const [dialogDelete, setDialogDeleteOpen] = React.useState(false);
 
@@ -66,16 +66,16 @@ export default function EditTask(props) {
 
   let cantSelectContact = taskStatus !== TaskStatus.WAITING;
 
-  const taskStatusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTaskStatus((event.target as HTMLInputElement).value as TaskStatus);
-    if ((event.target as HTMLInputElement).value === "" || event.target.value === TaskStatus.INBOX) {
+  const taskStatusChange = (_: React.MouseEvent<HTMLElement>, newStatus: string | null) => {
+    setTaskStatus(newStatus as TaskStatus);
+    if (newStatus === "" || newStatus === TaskStatus.INBOX) {
       setTaskProject("");
     }
     cantSelectContact = taskStatus !== TaskStatus.WAITING;
-    if ((event.target as HTMLInputElement).value !== TaskStatus.WAITING) {
+    if (newStatus !== TaskStatus.WAITING) {
       setWaitingContact("");
     }
-    if ((event.target as HTMLInputElement).value !== TaskStatus.REPEATED) {
+    if (newStatus !== TaskStatus.REPEATED) {
       setRepeatedRuleFreq(undefined);
     } else {
       setRepeatedRuleFreq(3);
@@ -118,6 +118,7 @@ export default function EditTask(props) {
       taskName,
       taskDescription,
       taskIsChecked,
+      taskIsFocus,
       task.getCheckedDate(),
       taskStatus,
       taskArea,
@@ -146,29 +147,24 @@ export default function EditTask(props) {
     <>
       <Header page_name="Edit task" />
       <div className="pageWrapper">
-        <FormControlLabel 
-          control={
-            <Checkbox
-              checked={taskIsChecked}
-              onChange={(e) => setTaskIsChecked(e.target.checked)}
-            />
-          }
-          label={
-            <TextField 
-              id="task_name" 
-              label="Task name" 
-              variant="standard" 
-              size="small" 
-              className="pageWrapperInput" 
-              value={taskName} 
-              onChange={(e)=>setTaskName(e.target.value)}
-              style={{ width: '150%'}}
-            />
-          }
-          style={{ width: '100%' }}
+        <TextField 
+          id="task_name" 
+          label="Task" 
+          variant="standard" 
+          size="small" 
+          className="pageWrapperInput" 
+          value={taskName} 
+          onChange={(e)=>setTaskName(e.target.value)}
+          sx={{ float: "left", width: "80%" }}
         />
-        <br />
-
+        <ToggleButton
+          value="check"
+          selected={taskIsFocus}
+          onChange={() => setTaskIsFocus(!taskIsFocus)}
+          sx={{ float: "right" }}
+        >
+          <CenterFocusStrong />
+        </ToggleButton>
         <TextField 
           id="task_description" 
           label="Description" 
@@ -193,25 +189,46 @@ export default function EditTask(props) {
         <br /><br />
         <FormControl sx={{ width: "100%" }}>
           <FormLabel id="task_status">Status</FormLabel>
-          <RadioGroup
-            aria-labelledby="task_status"
-            name="radio-buttons-group"
+          <ToggleButtonGroup
             value={taskStatus}
+            exclusive
             onChange={taskStatusChange}
+            aria-label="task_status"
+            size="small"
           >
-            <FormControlLabel value={TaskStatus.INBOX} control={<Radio />} label="Inbox" />
-            <FormControlLabel value={TaskStatus.NEXT} control={<Radio />} label="Next" />
-            <FormControlLabel value={TaskStatus.SOMEDAY} control={<Radio />} label="Someday" />
-            <FormControlLabel value={TaskStatus.WAITING} control={<Radio />} label="Waiting" />
-            { cantSelectContact ? null :
+            <ToggleButton value={TaskStatus.INBOX} aria-label="Inbox">
+              Inbox
+            </ToggleButton>
+            <ToggleButton value={TaskStatus.NEXT} aria-label="Next">
+              Next
+            </ToggleButton>
+            <ToggleButton value={TaskStatus.SOMEDAY} aria-label="Someday">
+              Someday
+            </ToggleButton>
+            <ToggleButton value={TaskStatus.WAITING} aria-label="Waiting">
+              Waiting
+            </ToggleButton>
+            <ToggleButton value={TaskStatus.SCHEDULED} aria-label="Scheduled">
+              Scheduled
+            </ToggleButton>
+            <ToggleButton value={TaskStatus.REPEATED} aria-label="Repeated">
+              Repeated
+            </ToggleButton>
+          </ToggleButtonGroup>
+
+          { cantSelectContact ? null :
+            <>
+              <br />
               <SelectContactList
                 cantSelectContact={cantSelectContact}
                 waitingContact={waitingContact}
                 waitingContactChange={waitingContactChange}
               />
-            }
-            <FormControlLabel value={TaskStatus.SCHEDULED} control={<Radio />} label="Scheduled" />
-            { taskStatus !== TaskStatus.SCHEDULED ? null :
+            </>              
+          }
+          { taskStatus !== TaskStatus.SCHEDULED ? null :
+            <>
+              <br /><br />
               <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en">
                 <DatePicker 
                   label="Scheduled date"
@@ -219,16 +236,15 @@ export default function EditTask(props) {
                   onChange={(newValue) => setScheduledDate(newValue)}
                 />
               </LocalizationProvider>
-            }
-            <FormControlLabel value={TaskStatus.REPEATED} control={<Radio />} label="Repeated" />
-            { taskStatus !== TaskStatus.REPEATED ? null : 
+            </>
+          }
+          { taskStatus !== TaskStatus.REPEATED ? null : 
               <TabsRepeated 
                 tabValue={repeatedRule_freq !== undefined ? 3 - repeatedRule_freq : 0}
                 handleChangeTabValue={handleChangeTabValue}
                 repeatedRule={repeatedRule}
               /> 
-            }
-          </RadioGroup>
+          }
         </FormControl>
         <br /><br />
 

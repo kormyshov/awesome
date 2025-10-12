@@ -41,6 +41,7 @@ import { InboxTaskListStrategy } from '../entities/strategies/task_list/inbox_ta
 import { NextTaskListStrategy } from '../entities/strategies/task_list/next_task_list_strategy.ts';
 import { WaitingTaskListStrategy } from '../entities/strategies/task_list/waiting_task_list_strategy.ts';
 import { SomedayTaskListStrategy } from '../entities/strategies/task_list/someday_task_list_strategy.ts';
+import { FocusTaskListStrategy } from '../entities/strategies/task_list/focus_task_list_strategy.ts';
 import { ScheduledTaskListStrategy } from '../entities/strategies/task_list/scheduled_task_list_strategy.ts';
 import { ProjectTaskListStrategy } from '../entities/strategies/task_list/project_task_list_strategy.ts';
 import { uploadTasks } from '../entities/upload/tasks.ts';
@@ -115,7 +116,7 @@ export default function App() {
       const response = await fetch(getCommand("get_tasks"))
 
       const data = await response.json()
-      console.log(data)
+      console.log('Input data:', data)
       data.tasks.forEach((task) => {
         if (task.status !== TaskStatus.DELETED && task.status !== TaskStatus.ARCHIVED) {
           tasks.buildFullTask(
@@ -123,6 +124,7 @@ export default function App() {
             task.name, 
             task.description, 
             task.isChecked, 
+            task.isFocus,
             task.checkedDate, 
             task.status, 
             task.deletedDate, 
@@ -191,7 +193,7 @@ export default function App() {
             <Route path="waiting" element={<TaskList page_name="Waiting" task_list_strategy={new WaitingTaskListStrategy()} />} />
             <Route path="scheduled" element={<TaskList page_name="Scheduled" task_list_strategy={new ScheduledTaskListStrategy()} />} />
             <Route path="someday" element={<TaskList page_name="Someday" task_list_strategy={new SomedayTaskListStrategy()} />} />
-            {/* <Route path="focus" element={<TaskList page_name="Focus" />} /> */}
+            <Route path="focus" element={<TaskList page_name="Focus" task_list_strategy={new FocusTaskListStrategy()} />} />
 
             <Route path="tasks">
               <Route path="new/:from" element={<NewTask />} />

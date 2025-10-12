@@ -5,6 +5,9 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 
 import Checkbox from '@mui/material/Checkbox';
+import CheckboxOutlineBlank from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckboxChecked from '@mui/icons-material/CheckBox';
+import CenterFocusStrong from '@mui/icons-material/CenterFocusStrong';
 
 import { TasksContext } from '../app/App.tsx';
 import { Task } from '../entities/types/task/task.ts';
@@ -31,6 +34,8 @@ export default function ChecklistItem(props) {
           <Checkbox
             checked={isChecked}
             onChange={(e) => handleSwitchTask(e.target.checked)}
+            icon={task.getIsFocus() ? <CenterFocusStrong /> : <CheckboxOutlineBlank />}
+            checkedIcon={<CheckboxChecked />}
           />
           <Link to={"/tasks/" + props.item_id + "/edit/" + props.from} className="linkMenu">
             <ListItemText primary={props.item_value} secondary={props.item_added_field} />
