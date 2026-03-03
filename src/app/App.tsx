@@ -110,6 +110,8 @@ export default function App() {
   const [currentArea, setCurrentArea] = useState(new Area("all_areas", "All areas", AreaStatus.ACTIVE));
   const currentAreaValue = useMemo(() => ({currentArea, setCurrentArea}), [currentArea]);
 
+  const [dataUpdateFlag, setDataUpdateFlag] = useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
       window.Telegram.WebApp.expand();
@@ -162,6 +164,7 @@ export default function App() {
         projects.add(new ObjProject(project.id, project.name, project.description, project.areaId, project.status))
         setProjects(projects)
       })
+      setDataUpdateFlag(false);
     }
 
     fetchData();
@@ -177,6 +180,12 @@ export default function App() {
       <CurrentAreaContext.Provider value={currentAreaValue}>
       <AreasContext.Provider value={areasValue}>
         <Sidebar />
+        { dataUpdateFlag ?
+          <div style={{ width: '100%', textAlign: 'center', marginTop: '50px' }}>
+            <img src='preview.gif'/>
+          </div>
+          :
+
 
         <ContactsContext.Provider value={contactsValue}>
         <ProjectsContext.Provider value={projectsValue}>
@@ -229,6 +238,8 @@ export default function App() {
         </TasksContext.Provider>
         </ProjectsContext.Provider>
         </ContactsContext.Provider>
+
+        }
 
       </AreasContext.Provider>
       </CurrentAreaContext.Provider>
