@@ -182,7 +182,7 @@ export default function App() {
         <Sidebar />
         { dataUpdateFlag ?
           <div style={{ width: '100%', textAlign: 'center', marginTop: '50px' }}>
-            <img src='preview.gif'/>
+            <img src='preview.gif' alt='Loading...'/>
           </div>
           :
 
