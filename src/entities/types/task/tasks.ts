@@ -141,6 +141,7 @@ export class Tasks {
             .setStatus(TaskStatus.NEXT)
             .setProjectId(builder.getProjectId())
             .setAreaId(builder.getAreaId())
+            .setIsFocus(builder.getIsFocus())
         ;
 
         this.set(child_builder.build(), false);
