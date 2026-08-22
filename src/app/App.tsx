@@ -46,6 +46,7 @@ import { ScheduledTaskListStrategy } from '../entities/strategies/task_list/sche
 import { ProjectTaskListStrategy } from '../entities/strategies/task_list/project_task_list_strategy.ts';
 import { uploadTasks } from '../entities/upload/tasks.ts';
 import { TaskStatus } from '../entities/types/task/task_status.ts';
+import TelegramBackButton from './telegram_back_button.tsx';
 
 export const ContactsContext = React.createContext(
   {
@@ -176,6 +177,7 @@ export default function App() {
 
     <div id="App">
       <ThemeProvider theme={smallTheme}>
+      <TelegramBackButton />
       <SidebarContext.Provider value={sidebarValue}>
       <CurrentAreaContext.Provider value={currentAreaValue}>
       <AreasContext.Provider value={areasValue}>
