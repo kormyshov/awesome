@@ -93,6 +93,89 @@ a {
   width: 100%;
 }
 
+.taskDescriptionEditor {
+  margin-top: 24px !important;
+}
+
+.taskDescriptionHeader {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.taskDescriptionMilkdown {
+  border: 1px solid rgba(0, 0, 0, 0.23);
+  border-radius: 8px;
+  min-height: 196px;
+  overflow: hidden;
+  position: relative;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.taskDescriptionMilkdown:focus-within {
+  border-color: #1976d2;
+  box-shadow: inset 0 0 0 1px #1976d2;
+}
+
+.taskDescriptionMilkdown .milkdown {
+  --crepe-color-background: #fff;
+  --crepe-color-hover: #e3f2fd;
+  --crepe-color-primary: #1976d2;
+  --crepe-color-selected: #bbdefb;
+  --crepe-color-surface: #f7f9fc;
+  --crepe-font-default: Roboto, Arial, sans-serif;
+}
+
+.taskDescriptionMilkdown .milkdown .ProseMirror {
+  min-height: 140px;
+  padding: 16px;
+}
+
+.taskDescriptionMilkdown .milkdown .milkdown-top-bar {
+  flex-wrap: nowrap;
+  overflow: hidden;
+  padding: 0 4px;
+}
+
+.taskDescriptionMilkdown .milkdown .milkdown-top-bar .top-bar-inner {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.taskDescriptionMilkdown .milkdown .milkdown-top-bar .top-bar-inner::-webkit-scrollbar {
+  display: none;
+}
+
+.taskDescriptionLoading {
+  align-items: center;
+  color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  font-size: 14px;
+  padding: 16px;
+}
+
+.taskDescriptionMilkdown .taskDescriptionLoading {
+  left: 0;
+  position: absolute;
+  top: 48px;
+}
+
+@media (max-width: 600px) {
+  .taskDescriptionHeader .MuiToggleButton-root {
+    padding: 4px 8px;
+  }
+
+  .taskDescriptionMilkdown .milkdown .milkdown-top-bar .top-bar-divider {
+    margin: 6px;
+  }
+
+  .taskDescriptionMilkdown .milkdown .milkdown-top-bar .top-bar-heading-button .top-bar-heading-label {
+    min-width: 64px;
+  }
+}
+
 .pageWrapperButtonGroup {
   margin-top: 15px;
 }

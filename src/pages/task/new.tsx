@@ -21,6 +21,7 @@ import CenterFocusStrong from '@mui/icons-material/CenterFocusStrong';
 import { SelectChangeEvent } from '@mui/material/Select';
 
 import Header from '../../features/header.tsx';
+import TaskDescriptionEditor from '../../features/task_description_editor.tsx';
 
 import SelectAreaList from '../../widgets/selects/area_list.tsx';
 import SelectProjectList from '../../widgets/selects/project_list.tsx';
@@ -159,15 +160,9 @@ export default function NewTask(props) {
         >
           <CenterFocusStrong />
         </ToggleButton>
-        <TextField
-          id="task_description" 
-          label="Description" 
-          variant="standard" 
-          size="small" 
-          className="pageWrapperInput" 
-          multiline
-          value={taskDescription} 
-          onChange={(e)=>setTaskDescription(e.target.value)}
+        <TaskDescriptionEditor
+          value={taskDescription}
+          onChange={setTaskDescription}
         />
 
         <br /><br />

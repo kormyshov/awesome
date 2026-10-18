@@ -5,6 +5,7 @@ import { Projects } from "../../types/project/projects.ts";
 import { Contacts } from "../../types/contact/contacts.ts";
 import { Area } from "../../types/area/area.ts";
 import { TaskStatus } from "../../types/task/task_status.ts";
+import { taskDescriptionToPlainText } from "../../types/task/task_description.ts";
 
 
 export class ProjectTaskListStrategy implements TaskListStrategy {
@@ -25,7 +26,9 @@ export class ProjectTaskListStrategy implements TaskListStrategy {
     }
 
     private get_added_field(task: Task, contacts: Contacts) {
-        if (task.getStatus() === TaskStatus.NEXT || task.getStatus() === TaskStatus.SOMEDAY) return task.getDescription();
+        if (task.getStatus() === TaskStatus.NEXT || task.getStatus() === TaskStatus.SOMEDAY) {
+            return taskDescriptionToPlainText(task.getDescription());
+        }
         if (task.getStatus() === TaskStatus.SCHEDULED || task.getStatus() === TaskStatus.REPEATED) return task.getScheduledDate();
         if (task.getStatus() === TaskStatus.WAITING) return contacts.get(task.getWaitingContactId()).getName();
         return '';
