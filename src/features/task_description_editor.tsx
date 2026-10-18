@@ -2,7 +2,6 @@ import React, { Suspense, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
-import FormHelperText from '@mui/material/FormHelperText';
 import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import ToggleButton from '@mui/material/ToggleButton';
@@ -61,9 +60,6 @@ export default function TaskDescriptionEditor({ value, onChange }: TaskDescripti
         />
       )}
 
-      <FormHelperText>
-        Formatting is saved as Markdown. Images and tables are not supported yet.
-      </FormHelperText>
     </FormControl>
   );
 }

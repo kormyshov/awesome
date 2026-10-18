@@ -108,7 +108,7 @@ a {
   border: 1px solid rgba(0, 0, 0, 0.23);
   border-radius: 8px;
   min-height: 196px;
-  overflow: hidden;
+  overflow: visible;
   position: relative;
   transition: border-color 150ms ease, box-shadow 150ms ease;
 }
@@ -133,19 +133,15 @@ a {
 }
 
 .taskDescriptionMilkdown .milkdown .milkdown-top-bar {
-  flex-wrap: nowrap;
-  overflow: hidden;
+  border-radius: 8px 8px 0 0;
+  flex-wrap: wrap;
+  overflow: visible;
   padding: 0 4px;
 }
 
 .taskDescriptionMilkdown .milkdown .milkdown-top-bar .top-bar-inner {
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.taskDescriptionMilkdown .milkdown .milkdown-top-bar .top-bar-inner::-webkit-scrollbar {
-  display: none;
+  flex-wrap: wrap;
+  overflow: visible;
 }
 
 .taskDescriptionLoading {
