@@ -11,6 +11,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 import Header from '../../features/header.tsx';
+import TaskDescriptionEditor from '../../features/task_description_editor.tsx';
 
 import { useState } from 'react';
 
@@ -165,15 +166,9 @@ export default function EditTask(props) {
         >
           <CenterFocusStrong />
         </ToggleButton>
-        <TextField 
-          id="task_description" 
-          label="Description" 
-          variant="standard" 
-          size="small" 
-          className="pageWrapperInput" 
-          multiline
-          value={taskDescription} 
-          onChange={(e)=>setTaskDescription(e.target.value)} 
+        <TaskDescriptionEditor
+          value={taskDescription}
+          onChange={setTaskDescription}
         />
 
         <br /><br />
