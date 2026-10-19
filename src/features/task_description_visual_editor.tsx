@@ -1,11 +1,28 @@
 import React, { useEffect, useRef } from 'react';
 
 import { Crepe, CrepeFeature } from '@milkdown/crepe';
+import type { TopBarFeatureConfig } from '@milkdown/crepe/feature/top-bar';
 import { editorViewOptionsCtx } from '@milkdown/kit/core';
 import { Milkdown, MilkdownProvider, useEditor } from '@milkdown/react';
 
 import '@milkdown/crepe/theme/common/style.css';
 import '@milkdown/crepe/theme/frame.css';
+
+import { taskDescriptionAutoLink } from './task_description_autolink.ts';
+
+
+const hiddenTopBarItems = new Set(['heading-selector', 'code', 'code-block', 'hr']);
+type TopBarBuilder = Parameters<NonNullable<TopBarFeatureConfig['buildTopBar']>>[0];
+
+function simplifyTopBar(builder: TopBarBuilder) {
+  const groups = builder.build();
+
+  for (const group of groups) {
+    group.items = group.items.filter((item) => !hiddenTopBarItems.has(item.key));
+  }
+
+  groups.splice(0, groups.length, ...groups.filter((group) => group.items.length > 0));
+}
 
 
 type TaskDescriptionVisualEditorProps = {
@@ -34,8 +51,11 @@ function MilkdownEditor({ value, onChange }: TaskDescriptionVisualEditorProps) {
       },
       featureConfigs: {
         [CrepeFeature.Placeholder]: {
-          text: 'Add notes, links, checklists, or code…',
+          text: 'Add notes, links, or checklists…',
           mode: 'doc',
+        },
+        [CrepeFeature.TopBar]: {
+          buildTopBar: simplifyTopBar,
         },
       },
     }).on((listener) => {
@@ -44,14 +64,16 @@ function MilkdownEditor({ value, onChange }: TaskDescriptionVisualEditorProps) {
       });
     });
 
-    editor.editor.config((ctx) => {
-      ctx.update(editorViewOptionsCtx, (options) => ({
-        ...options,
-        attributes: {
-          'aria-label': 'Task description',
-        },
-      }));
-    });
+    editor.editor
+      .config((ctx) => {
+        ctx.update(editorViewOptionsCtx, (options) => ({
+          ...options,
+          attributes: {
+            'aria-label': 'Task description',
+          },
+        }));
+      })
+      .use(taskDescriptionAutoLink);
 
     return editor;
   }, []);
