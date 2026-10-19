@@ -11,7 +11,7 @@ import '@milkdown/crepe/theme/frame.css';
 import { taskDescriptionAutoLink } from './task_description_autolink.ts';
 
 
-const hiddenTopBarItems = new Set(['heading-selector', 'code', 'code-block', 'hr']);
+const hiddenTopBarItems = new Set(['heading-selector', 'code', 'code-block', 'hr', 'quote']);
 type TopBarBuilder = Parameters<NonNullable<TopBarFeatureConfig['buildTopBar']>>[0];
 
 function simplifyTopBar(builder: TopBarBuilder) {
